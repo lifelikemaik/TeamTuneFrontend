@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
 import { getPlaylists } from "../redux/actions";
