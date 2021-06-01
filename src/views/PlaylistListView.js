@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
 import { getPlaylists } from "../redux/actions";
-import PlaylistList from "../components/PlaylistList";
+import PlaylistListComponent from "../components/PlaylistListComponent";
 import Loading from "../components/Loading";
 
 /**
@@ -45,7 +45,7 @@ function PlaylistListView(props) {
         <div>error</div>
     ) : (
         // everyhing is fine an the movie list can be displayed
-        <PlaylistList
+        <PlaylistListComponent
             playlists={playlists}
             onClickDisplayMovie={onClickDisplayMovie}
             onAddPlaylist={onAddPlaylist}

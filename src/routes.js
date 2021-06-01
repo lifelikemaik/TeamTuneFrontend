@@ -33,7 +33,7 @@ const routes = [
     },
     {
         path: "/playlists",
-        component: MyPlaylistsView,
+        component: PlaylistListView,
     },
     {
         path: "/myteamtune",

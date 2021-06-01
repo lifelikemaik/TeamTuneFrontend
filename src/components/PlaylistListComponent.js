@@ -142,7 +142,7 @@ function stableSort(array, comparator) {
  * For presenting and changing movies
  * @param {props} props
  */
-function PlaylistList(props) {
+function PlaylistListComponent(props) {
     // with this you can access the above defined style classes
     const classes = useStyles();
 
@@ -253,7 +253,7 @@ function PlaylistList(props) {
 }
 
 // attributes of props and their type
-PlaylistList.propTypes = {
+PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func.isRequired,
     onClickDeleteMovie: PropTypes.func.isRequired,
     onClickDisplayMovie: PropTypes.func.isRequired,
@@ -261,4 +261,4 @@ PlaylistList.propTypes = {
     playlists: PropTypes.array,
 };
 
-export default PlaylistList;
+export default PlaylistListComponent;

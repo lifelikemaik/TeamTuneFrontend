@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-  
-const MyTeamTune = () => {
+import Loading from "../components/Loading";
+import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
+
+/**
+ * Manages process of changing user settings
+ * @param {props} props
+ */
+
+function MyTeamTuneView(props) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'Right',
-        alignItems: 'Right',
-        height: '100vh'
-      }}
-    >
-      <h1>The MyTeamTune page.</h1>
-    </div>
+    <MyTeamTuneComponent/>
   );
-};
-  
-export default MyTeamTune;
+
+}
+
+
+export default connect()(MyTeamTuneView);

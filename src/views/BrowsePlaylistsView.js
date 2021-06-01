@@ -1,20 +1,23 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-  
-const BrowsePlaylists = () => {
+import Loading from "../components/Loading";
+import BrowseComponent from "../components/BrowseComponent";
+
+/**
+ * Manages process of:
+ * browsing playlists
+ * Creating copy of public playlists
+ * following public playlists
+ * 
+ * @param {props} props
+ */
+
+function BrowsePlaylistsView(props) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'Right',
-        alignItems: 'Right',
-        height: '100vh'
-      }}
-    >
-      <h1>The browsing page.</h1>
-    </div>
+    <BrowseComponent/>
   );
-};
-  
-export default BrowsePlaylists;
+
+}
+
+
+export default connect()(BrowsePlaylistsView);
