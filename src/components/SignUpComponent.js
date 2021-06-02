@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import {
     Paper,
     Button,
@@ -34,6 +34,21 @@ const useStyles = makeStyles((theme) => ({
     signUpButton: {
         marginLeft: theme.spacing(1),
     },
+    spotifyDiv: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex"
+    },
+    spotifyButton: {
+        backgroundColor: "#1db954",
+        color: "white",
+        width: "80%",
+        '&:hover': {
+            backgroundColor: "#1db954",
+            opacity: "80%",
+        },
+    },
 }));
 
 /**
@@ -47,6 +62,8 @@ function SignUpComponent(props) {
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState(false);
+    const [isLinkedToSpotify, setIsLinkedToSpotify] = React.useState(false);
+    const [buttonText, setButtonText] = React.useState("Link with Spotify");
 
     const [registerError, setRegisterError] = React.useState("");
 
@@ -77,6 +94,14 @@ function SignUpComponent(props) {
         setPassword2(e.target.value);
         setRegisterError("");
     };
+
+    const onOpenSpotify = (props) => {
+        if (!isLinkedToSpotify) {
+            setButtonText("Linked with Spotify");
+            setIsLinkedToSpotify(true);
+            window.open("https://www.google.com");
+        }
+    }
 
     const onBlurPassword = (e) => {
         if (password !== "" && password2 !== "") {
@@ -137,6 +162,13 @@ function SignUpComponent(props) {
                         }
                         label="Is Admin"
                     />
+                </div>
+                <div className={classes.signUpRow + " " + classes.spotifyDiv}>
+                    <Button
+                        className={classes.spotifyButton}
+                        onClick={() => onOpenSpotify(props)}>
+                        {buttonText}
+                    </Button>
                 </div>
                 {registerError !== "" ? (
                     <div className={classes.signUpRow}>
