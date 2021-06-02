@@ -1,10 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
+import TeamTuneIcon from "@material-ui/icons/LocalMovies";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
@@ -12,13 +12,15 @@ import Brightness3Icon from "@material-ui/icons/Brightness3";
 import KebabMenu from "./KebabMenu";
 
 const useStyles = makeStyles((theme) => ({
-    toolbar: {
-        flexGrow: 1,
-    },
+
     title: {
         flexGrow: 1,
-        paddingLeft: theme.spacing(1),
     },
+    button: {
+        fontSize: 25,
+        flexGrow: 0.5,
+    }
+    
 }));
 
 /**
@@ -46,28 +48,39 @@ function Header(props) {
                 onClose={() => setMenuAnchor(null)}
             />
             <Toolbar className={classes.toolbar}>
-                <LocalMoviesIcon
+                <TeamTuneIcon
                     fontSize="large"
                     onClick={() => props.history.push("/")}
                 />
-                <Typography
-                    className={classes.title}
-                    variant="h5"
+                <Button
+                    className={classes.button}
                     color="inherit"
+                    onClick={() => props.history.push("browse")}
                 >
-                    Movie Database App
-                </Typography>
+                    Browse
+                </Button>
+                <Button
+                    className={classes.button}
+                    color="inherit"
+                    onClick={() => props.history.push("playlists")}
+                >
+                    My Playlists
+                </Button>
+                <Button
+                    className={classes.button}
+                    color="inherit"
+                    onClick={() => props.history.push("myteamtune")}
+                >
+                    My TeamTune
+                </Button>
                 <IconButton onClick={onClickGithub} color="inherit">
-                    <GitHubIcon />
-                </IconButton>
-                <IconButton onClick={props.toggletheme} color="inherit">
-                    {props.darkmode ? <WbSunnyIcon /> : <Brightness3Icon />}
+                    <GitHubIcon/>
                 </IconButton>
                 <IconButton
                     onClick={(event) => setMenuAnchor(event.currentTarget)}
                     color="inherit"
                 >
-                    <MenuIcon />
+                    <MenuIcon/>
                 </IconButton>
             </Toolbar>
         </AppBar>

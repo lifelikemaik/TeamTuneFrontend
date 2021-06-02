@@ -1,7 +1,9 @@
-import MovieListView from "./views/MovieListView";
 import UserLoginView from "./views/UserLoginView";
 import SignUpView from "./views/SignUpView";
 import MovieDetailsView from "./views/MovieDetailsView";
+import PlaylistListView from "./views/PlaylistListView";
+import BrowsePlaylistiew from "./views/BrowsePlaylistsView";
+import MyTeamTuneView from "./views/MyTeamTuneView";
 
 // routes within the movie database example app
 // used for routing
@@ -9,7 +11,7 @@ import MovieDetailsView from "./views/MovieDetailsView";
 const routes = [
     {
         path: "/",
-        component: MovieListView,
+        component: PlaylistListView,
         exact: true,
     },
     {
@@ -23,6 +25,18 @@ const routes = [
     {
         path: "/movie/:id",
         component: MovieDetailsView,
+    },
+    {
+        path: "/browse",
+        component: BrowsePlaylistiew,
+    },
+    {
+        path: "/playlists",
+        component: PlaylistListView,
+    },
+    {
+        path: "/myteamtune",
+        component: MyTeamTuneView,
     },
 ];
 

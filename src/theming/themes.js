@@ -12,7 +12,7 @@ const appThemeOptions = {
             type: "light",
             primary: {
                 light: "#7986cb",
-                main: "#3f51b5",
+                main: "#28df99",
                 dark: "#303f9f",
             },
             secondary: {
