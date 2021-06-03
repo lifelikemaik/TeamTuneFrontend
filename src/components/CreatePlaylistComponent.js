@@ -1,16 +1,10 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button, Grid } from "@material-ui/core";
+import React, {useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Button, Grid, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
-import CustomTextField from "../components/CustomTextField";
-import CustomChip from "../components/CustomChip";
-import DetailsArea from "../components/DetailsArea";
-import MovieCast from "./MovieCast";
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import MovieService from "../services/MovieService";
-import ReleaseDates from "./ReleaseDates";
-import Ratings from "./Ratings";
-import Synopsis from "./Synopsis";
+import FilterSettingRow from "./FilterSettingRow"
 
 const useStyles = makeStyles((theme) => ({
     flexCol: {
@@ -68,6 +62,21 @@ const useStyles = makeStyles((theme) => ({
 function CreatePlaylistComponent(props) {
     const classes = useStyles();
 
+    const [playlistTitle, setPlaylistTitle] = React.useState("TeamTune");
+    const [duration, setDuration] = React.useState("");
+    const [mode, setMode] = React.useState("medium");
+    const [acousticness, setAcousticness] = React.useState("medium");
+    const [danceability, setDanceability] = React.useState("medium");
+    const [energy, setEnergy] = React.useState("medium");
+    const [instrumentalness, setInstrumentalness] = React.useState("medium");
+    const [key, setKey] = React.useState("medium");
+    const [liveness, seLiveness] = React.useState("medium");
+    const [loudness, setLoudness] = React.useState("medium");
+    const [speechiness, setSpeechiness] = React.useState("medium");
+    const [tempo, setTempo] = React.useState("medium");
+    const [valence, setValence] = React.useState("medium");
+
+
     const [movieTitle, setMovieTitle] = React.useState(" ");
     const [movieSynopsis, setMovieSynopsis] = React.useState("");
     const [movieCast, setMovieCast] = React.useState([]);
@@ -80,50 +89,85 @@ function CreatePlaylistComponent(props) {
     const [blurayRelase, setBlurayRelease] = React.useState("");
     const [moviethumbnail, setMovieThumbnail] = React.useState("");
 
-    // for extracting the attributes of the given movie to the approriate state variables
-    const extractMovie = () => {
-        if (!props.movie) {
-            return;
+    /**
+     * Used to convert Radio buttons to values for backend
+     * @param string
+     * @returns {null|number}
+     */
+    const convertRadioValueToNumberMin = (string) => {
+        if (!string) return null;
+        switch (string.toLowerCase()) {
+            case "low":
+                return 0;
+            case "medium":
+                return 0.33;
+            case "high":
+                return 0.66;
+            default:
+                return null;
         }
+    }
 
-        setMovieTitle(props.movie.title);
-        setMovieSynopsis(props.movie.synopsis);
-        setMovieAgeRating(props.movie.mpaa_rating);
-        setMovieRuntime(props.movie.runtime);
-
-        setMovieCast(JSON.parse(JSON.stringify(props.movie.actors)));
-        setCriticsRating(props.movie.criticsRating);
-        setAvgAudienceRating(props.movie.avgAudienceRating);
-        setTheaterRelease(props.movie.theaterRelease);
-        setBlurayRelease(props.movie.blurayRelease);
-        setMovieYear(props.movie.year);
-        setMovieThumbnail(props.movie.thumbnail);
-    };
+    /**
+     * Used to convert Radio buttons to values for backend
+     * @param string
+     * @returns {null|number}
+     */
+    const convertRadioValueToNumberMax = (string) => {
+        if (!string) return null;
+        switch (string.toLowerCase()) {
+            case "low":
+                return 0.33;
+            case "medium":
+                return 0.66;
+            case "high":
+                return 1;
+            default:
+                return null;
+        }
+    }
 
     // creating a object with all relevant data to update or create a changed movie
-    const packMovie = () => {
-        let back = {
-            ...props.movie,
-        };
-
-        back.title = movieTitle;
-        back.synopsis = movieSynopsis;
-        back.runtime = movieRuntime;
-        back.mpaa_rating = movieAgeRating;
-
-        back.theaterRelease = theaterRelease;
-        back.blurayRelease = blurayRelase;
-        back.criticsRating = criticsRating;
-        back.actors = movieCast;
-        back.thumbnail = moviethumbnail;
-
-        return back;
+    const packPlaylist = () => {
+        return {
+            title: playlistTitle,
+            publicity: false,
+            is_own_playlist: true,
+            share_link: "",
+            joined_people: [],
+            music_info: {
+                durations_ms: 0,
+                duration_target: duration,
+                songs: [],
+                number_songs: 0,
+                mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
+                acousticness_min: convertRadioValueToNumberMin(acousticness),
+                acousticness_max: convertRadioValueToNumberMax(acousticness),
+                danceability_min: convertRadioValueToNumberMin(danceability),
+                danceability_max: convertRadioValueToNumberMax(danceability),
+                energy_min: convertRadioValueToNumberMin(energy),
+                energy_max: convertRadioValueToNumberMax(energy),
+                instrumentalness_min: convertRadioValueToNumberMin(instrumentalness),
+                instrumentalness_max: convertRadioValueToNumberMax(instrumentalness),
+                key_min: convertRadioValueToNumberMin(key),
+                key_max: convertRadioValueToNumberMax(key),
+                liveness_min: convertRadioValueToNumberMin(liveness),
+                liveness_max: convertRadioValueToNumberMax(liveness),
+                loudness_min: convertRadioValueToNumberMin(loudness),
+                loudness_max: convertRadioValueToNumberMax(loudness),
+                speechiness_min: convertRadioValueToNumberMin(speechiness),
+                speechiness_max: convertRadioValueToNumberMax(speechiness),
+                tempo_min: convertRadioValueToNumberMin(tempo),
+                tempo_max: convertRadioValueToNumberMax(tempo),
+                valence_min: convertRadioValueToNumberMin(valence),
+                valence_max: convertRadioValueToNumberMax(valence),
+            }
+        }
     };
 
     // triggers when a new movie is given to this component or the new parameter is changed
     useEffect(() => {
         if (!props.new) {
-            extractMovie();
         }
     }, [props.movie, props.new]);
 
@@ -147,15 +191,15 @@ function CreatePlaylistComponent(props) {
     // on change functions
 
     const onChangeTitle = (value) => {
-        setMovieTitle(value);
+        setPlaylistTitle(value.target.value);
     };
 
     const onChangeSynopsis = (value) => {
         setMovieSynopsis(value);
     };
 
-    const onChangeRuntime = (value) => {
-        setMovieRuntime(value);
+    const onChangeDuration = (value) => {
+        setDuration(value.target.value);
     };
 
     const onChangeAgeRating = (value) => {
@@ -195,212 +239,74 @@ function CreatePlaylistComponent(props) {
     const onCancel = () => {
         if (props.new) {
             props.history.push("/");
-        } else {
-            setEditMode(false);
-            extractMovie();
         }
     };
 
     // save is called, functionality differs whether it is a new movie or not
     const onSave = () => {
         if (props.new) {
-            props.onCreate(packMovie());
+            props.onCreate(packPlaylist());
         } else {
             setEditMode(false);
-            props.onSave(packMovie());
+            props.onSave(packPlaylist());
         }
     };
 
     return (
-        <div
-            className={
-                classes.flexCol +
-                " " +
-                classes.padding +
-                " " +
-                classes.center +
-                " " +
-                classes.flex +
-                " " +
-                classes.maxWidth
-            }
-        >
-            {/* Admin Buttons */}
-            <div
-                className={
-                    classes.flexRow +
-                    " " +
-                    classes.flexEnd +
-                    " " +
-                    classes.barMinHeight
-                }
-            >
-                {/* Checks if the current user is admin. Only an admin can alter movies */}
-                {props.isAdmin ? (
-                    editMode ? (
-                        <React.Fragment>
-                            <Button
-                                onClick={onCancel}
-                                variant="contained"
-                                color="primary"
-                                className={classes.marginSides}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={onSave}
-                                variant="contained"
-                                color="primary"
-                                className={classes.marginSides}
-                                disabled={props.new && movieTitle === ""}
-                            >
-                                {props.new ? "Create" : "Save"}
-                            </Button>
-                        </React.Fragment>
-                    ) : (
-                        <Button
-                            onClick={(e) => setEditMode(true)}
-                            variant="contained"
-                            color="primary"
-                            className={classes.marginSides}
-                            disabled={!props.isLoggedIn}
-                        >
-                            Edit
-                        </Button>
-                    )
-                ) : null}
+        <div>
+            <div>
+                <h1>Create a playlist {playlistTitle} d: {danceability}</h1>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        Playlist name
+                    </div>
+                    <div>
+                        <TextField label="Name"
+                                   onChange={onChangeTitle}/>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Duration
+                    </div>
+                    <div>
+                        <TextField label="Duration"
+                                   onChange={onChangeDuration}/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1>Filters</h1>
+                <div>
+                    <FilterSettingRow
+                        title={"Danceability"}
+                        value={danceability}
+                        onChange={setDanceability}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Energy"}
+                        value={energy}
+                        onChange={setEnergy}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Danceability"}
+                        value={danceability}
+                        onChange={setDanceability}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Danceability"}
+                        value={danceability}
+                        onChange={setDanceability}/>
+                </div>
             </div>
 
-            {/* Movie Title */}
-            <div className={classes.pageArea + " " + classes.title}>
-                <CustomTextField
-                    value={movieTitle}
-                    editMode={editMode}
-                    furtherProps={{
-                        fullWidth: true,
-                    }}
-                    align="center"
-                    variant="h2"
-                    onChange={onChangeTitle}
-                />
-            </div>
-
-            {/* Runtime, Year and MPAA as Chips */}
-            <Grid container justify="center" className={classes.pageArea}>
-                <Grid {...girdItemProps}>
-                    <CustomChip
-                        content={movieRuntime}
-                        caption="Runtime"
-                        suffix="Minutes"
-                        editMode={editMode}
-                        onChange={onChangeRuntime}
-                    />
-                </Grid>
-                <Grid {...girdItemProps}>
-                    <CustomChip
-                        content={
-                            movieYear === -1 ? "No Release Year" : movieYear
-                        }
-                        caption="Year"
-                        editMode={false}
-                    />
-                </Grid>
-                <Grid {...girdItemProps}>
-                    <CustomChip
-                        content={movieAgeRating}
-                        caption="MPAA"
-                        editMode={editMode}
-                        onChange={onChangeAgeRating}
-                    />
-                </Grid>
-            </Grid>
-
-            {/* More detail data of the movie, grouped in DetailsArea.js for a consistent look */}
-            <Grid container>
-                {/* Ratings */}
-                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
-                    <DetailsArea
-                        title="Ratings"
-                        content={
-                            <Ratings
-                                criticsRating={
-                                    typeof criticsRating === "number"
-                                        ? criticsRating
-                                        : 0
-                                }
-                                avgAudienceRating={
-                                    typeof avgAudienceRating === "number"
-                                        ? avgAudienceRating
-                                        : 0
-                                }
-                                editMode={editMode}
-                                onChangeCriticsRating={(value) =>
-                                    setCriticsRating(value)
-                                }
-                                onChangeOwnRating={(value) =>
-                                    onChangeOwnRating(value)
-                                }
-                                isAdmin={props.isAdmin}
-                            />
-                        }
-                    />
-                </Grid>
-
-                {/* Release Dates */}
-                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
-                    <DetailsArea
-                        title="Release Dates"
-                        content={
-                            <ReleaseDates
-                                theaterRelease={theaterRelease}
-                                blurayRelase={blurayRelase}
-                                editMode={editMode}
-                                onChangeTheaterRelease={(value) =>
-                                    setTheaterRelease(value)
-                                }
-                                onChangeBlurayRelease={(value) =>
-                                    setBlurayRelease(value)
-                                }
-                            />
-                        }
-                    />
-                </Grid>
-
-                {/* Synopsis */}
-                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
-                    <DetailsArea
-                        title="Synopsis"
-                        content={
-                            <Synopsis
-                                editMode={editMode}
-                                movieSynopsis={movieSynopsis}
-                                moviethumbnail={moviethumbnail}
-                                onChangeThumbnail={onChangeThumbnail}
-                                onChangeSynopsis={onChangeSynopsis}
-                            />
-                        }
-                    />
-                </Grid>
-
-                {/* Cast */}
-                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
-                    <DetailsArea
-                        title="Starring"
-                        content={
-                            <MovieCast
-                                movieCast={movieCast}
-                                editMode={editMode}
-                                toggleEditMode={toggleEditMode}
-                                onAddCastMember={onAddCastMember}
-                                onRemoveCastMember={onRemoveCastMember}
-                                isLoggedIn={props.isLoggedIn}
-                                isAdmin={props.isAdmin}
-                            />
-                        }
-                    />
-                </Grid>
-            </Grid>
         </div>
+
     );
 }
 
