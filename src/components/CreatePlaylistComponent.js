@@ -203,33 +203,11 @@ function CreatePlaylistComponent(props) {
         setPlaylistTitle(value.target.value);
     };
 
-    const onChangeSynopsis = (value) => {
-        setMovieSynopsis(value);
-    };
-
     const onChangeDuration = (value) => {
+        console.log(value.target.value);
         setDuration(value.target.value);
     };
 
-    const onChangeAgeRating = (value) => {
-        setMovieAgeRating(value);
-    };
-
-    const onChangeThumbnail = (value) => {
-        setMovieThumbnail(value);
-    };
-
-    const onChangeOwnRating = async (value) => {
-        await MovieService.rateMovie(props.movie._id, value);
-        let newAvgAudienceRating = await MovieService.getRating(
-            props.movie._id
-        );
-        setAvgAudienceRating(newAvgAudienceRating.rating);
-    };
-
-    const toggleEditMode = () => {
-        setEditMode(!editMode);
-    };
     // ----------------------------------------------------------------------------------------------------
 
     // for cast
@@ -286,6 +264,8 @@ function CreatePlaylistComponent(props) {
                         <TextField label="Duration"
                                    className={classes.inputs}
                                    onChange={onChangeDuration}
+                                   type="number"
+                                   min="0"
                                    variant="outlined"/>
                     </div>
                 </div>
@@ -339,7 +319,7 @@ function CreatePlaylistComponent(props) {
                     <FilterSettingRow
                         title={"Speechiness"}
                         value={speechiness}
-                        onChange={setLoudness}/>
+                        onChange={setSpeechiness}/>
                 </div>
                 <div>
                     <FilterSettingRow

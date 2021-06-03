@@ -43,13 +43,13 @@ function FilterSettingRow(props) {
                     onChange={handleAlignment}
                     aria-label="text alignment"
                 >
-                    <ToggleButton value="low" aria-label="left aligned">
+                    <ToggleButton value="low" aria-label="low" disabled={!checked}>
                         Low
                     </ToggleButton>
-                    <ToggleButton value="medium" aria-label="centered">
+                    <ToggleButton value="medium" aria-label="medium" disabled={!checked}>
                         Medium
                     </ToggleButton>
-                    <ToggleButton value="high" aria-label="right aligned">
+                    <ToggleButton value="high" aria-label="high" disabled={!checked}>
                         High
                     </ToggleButton>
                 </ToggleButtonGroup>
