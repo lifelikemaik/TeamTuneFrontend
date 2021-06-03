@@ -6,15 +6,24 @@ import {withRouter} from "react-router-dom";
 
 function FilterSettingRow(props) {
 
-    const [checked, setChecked] = React.useState("false");
+    // For when user unchecks and checks again, so previous value is retained
+    const [previousValue, setPreviousValue] = React.useState(props.value);
+    // Whether box is checked or not
+    const [checked, setChecked] = React.useState(true);
+
     const handleChange = (event) => {
+        event.persist();
         setChecked(event.target.checked);
-        props.onChange(null);
+        if (!event.target.checked) {
+            props.onChange(null);
+        } else {
+            props.onChange(previousValue);
+        }
     };
     const handleAlignment = (event, newAlignment) => {
         props.onChange(newAlignment);
+        setPreviousValue(newAlignment);
     };
-
 
 
     return (

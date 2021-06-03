@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     flexRow: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "row"
     },
     justifySpaceBetween: {
         justifyContent: "space-between",
@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     },
     padding: {
         padding: theme.spacing(2),
+    },
+    margin20: {
+        margin: "20px",
+    },
+    marginInputs: {
+        marginLeft: "40px",
+    },
+    inputs: {
+      width: "300px",
     },
     maxWidth: {
         width: "100%",
@@ -70,7 +79,7 @@ function CreatePlaylistComponent(props) {
     const [energy, setEnergy] = React.useState("medium");
     const [instrumentalness, setInstrumentalness] = React.useState("medium");
     const [key, setKey] = React.useState("medium");
-    const [liveness, seLiveness] = React.useState("medium");
+    const [liveness, setLiveness] = React.useState("medium");
     const [loudness, setLoudness] = React.useState("medium");
     const [speechiness, setSpeechiness] = React.useState("medium");
     const [tempo, setTempo] = React.useState("medium");
@@ -253,27 +262,31 @@ function CreatePlaylistComponent(props) {
     };
 
     return (
-        <div>
+        <div className={classes.margin20}>
             <div>
-                <h1>Create a playlist {playlistTitle} d: {danceability}</h1>
+                <h1>Create a playlist</h1>
             </div>
-            <div>
+            <div className={classes.flexRow}>
                 <div>
                     <div>
-                        Playlist name
+                        <h2>Playlist name</h2>
                     </div>
                     <div>
                         <TextField label="Name"
-                                   onChange={onChangeTitle}/>
+                                   className={classes.inputs}
+                                   onChange={onChangeTitle}
+                                   variant="outlined"/>
                     </div>
                 </div>
-                <div>
+                <div className={classes.marginInputs}>
                     <div>
-                        Duration
+                        <h2>Duration</h2>
                     </div>
                     <div>
                         <TextField label="Duration"
-                                   onChange={onChangeDuration}/>
+                                   className={classes.inputs}
+                                   onChange={onChangeDuration}
+                                   variant="outlined"/>
                     </div>
                 </div>
             </div>
@@ -293,15 +306,52 @@ function CreatePlaylistComponent(props) {
                 </div>
                 <div>
                     <FilterSettingRow
-                        title={"Danceability"}
-                        value={danceability}
-                        onChange={setDanceability}/>
+                        title={"Acousticness"}
+                        value={acousticness}
+                        onChange={setAcousticness}/>
                 </div>
                 <div>
                     <FilterSettingRow
-                        title={"Danceability"}
-                        value={danceability}
-                        onChange={setDanceability}/>
+                        title={"Instrumentality"}
+                        value={instrumentalness}
+                        onChange={setInstrumentalness}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Key"}
+                        value={key}
+                        onChange={setKey}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Liveness"}
+                        value={liveness}
+                        onChange={setLiveness}/>
+                </div>
+
+                <div>
+                    <FilterSettingRow
+                        title={"Loudness"}
+                        value={loudness}
+                        onChange={setLoudness}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Speechiness"}
+                        value={speechiness}
+                        onChange={setLoudness}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Tempo"}
+                        value={tempo}
+                        onChange={setTempo}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Valence"}
+                        value={valence}
+                        onChange={setValence}/>
                 </div>
             </div>
 
