@@ -193,7 +193,7 @@ function CreatePlaylistComponent(props) {
                 </Button>
                 <Button variant="contained" color="primary"
                         className={classes.cancelButton}
-                        disabled={!duration && !playlistTitle}
+                        disabled={!duration || !playlistTitle}
                         onClick={onSave}>
                     Create Playlist
                 </Button>
