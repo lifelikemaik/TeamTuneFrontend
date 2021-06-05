@@ -3,7 +3,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Button, Grid, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
-import MovieService from "../services/MovieService";
 import FilterSettingRow from "./FilterSettingRow"
 
 const useStyles = makeStyles((theme) => ({
@@ -65,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(1),
         right: theme.spacing(2),
     },
+    saveButtonDiv: {
+        float: "right"
+    },
+    cancelButton: {
+        marginRight: "15px"
+    }
 }));
 
 /**
@@ -74,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 function CreatePlaylistComponent(props) {
     const classes = useStyles();
 
-    const [playlistTitle, setPlaylistTitle] = React.useState("TeamTune");
+    const [playlistTitle, setPlaylistTitle] = React.useState("");
     const [duration, setDuration] = React.useState("");
     const [mode, setMode] = React.useState("medium");
     const [acousticness, setAcousticness] = React.useState("medium");
@@ -87,19 +92,6 @@ function CreatePlaylistComponent(props) {
     const [speechiness, setSpeechiness] = React.useState("medium");
     const [tempo, setTempo] = React.useState("medium");
     const [valence, setValence] = React.useState("medium");
-
-
-    const [movieTitle, setMovieTitle] = React.useState(" ");
-    const [movieSynopsis, setMovieSynopsis] = React.useState("");
-    const [movieCast, setMovieCast] = React.useState([]);
-    const [movieAgeRating, setMovieAgeRating] = React.useState("");
-    const [movieRuntime, setMovieRuntime] = React.useState("");
-    const [movieYear, setMovieYear] = React.useState("");
-    const [criticsRating, setCriticsRating] = React.useState("");
-    const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
-    const [theaterRelease, setTheaterRelease] = React.useState("");
-    const [blurayRelase, setBlurayRelease] = React.useState("");
-    const [moviethumbnail, setMovieThumbnail] = React.useState("");
 
     /**
      * Used to convert Radio buttons to values for backend
@@ -137,6 +129,11 @@ function CreatePlaylistComponent(props) {
             default:
                 return null;
         }
+    }
+
+    const canBeSaved = () => {
+        console.log(!!playlistTitle, !!duration)
+        return !!playlistTitle && !!duration
     }
 
     // creating a object with all relevant data to update or create a changed movie
@@ -177,27 +174,8 @@ function CreatePlaylistComponent(props) {
         }
     };
 
-    // triggers when a new movie is given to this component or the new parameter is changed
-    useEffect(() => {
-        if (!props.new) {
-        }
-    }, [props.movie, props.new]);
 
-    // triggers when the new parameter is changed and setts the edit mode to true
-    useEffect(() => {
-        if (props.new) {
-            setEditMode(true);
-        }
-    }, [props.new]);
 
-    // indicates whether the movie can be changed
-    const [editMode, setEditMode] = React.useState(null);
-
-    // props for all grid items used below in the JSX
-    const girdItemProps = {
-        item: true,
-        className: classes.padding,
-    };
 
     // ----------------------------------------------------------------------------------------------------
     // on change functions
@@ -213,17 +191,6 @@ function CreatePlaylistComponent(props) {
 
     // ----------------------------------------------------------------------------------------------------
 
-    // for cast
-    const onAddCastMember = (castMember) => {
-        movieCast.push(castMember);
-        setMovieCast([...movieCast]);
-    };
-
-    // for cast
-    const onRemoveCastMember = (index) => {
-        movieCast.splice(index, 1);
-        setMovieCast([...movieCast]);
-    };
 
     // cancel is called, functionality differs whether it is a new movie or not
     const onCancel = () => {
@@ -333,14 +300,16 @@ function CreatePlaylistComponent(props) {
                         onChange={setValence}/>
                 </div>
             </div>
-            <div>
-                <Button variant="contained"
+            <div className={classes.saveButtonDiv}>
+                <Button className={classes.cancelButton}
+                        variant="contained"
                         onClick={onCancel}>
                     Cancel
                 </Button>
                 <Button variant="contained" color="primary"
+                        disabled={!duration && !playlistTitle}
                         onClick={onSave}>
-                    Save
+                    Create Playlist
                 </Button>
             </div>
 
