@@ -69,6 +69,14 @@ const useStyles = makeStyles((theme) => ({
     },
     cancelButton: {
         marginRight: "15px"
+    },
+    footer: {
+        marginTop: "1rem",
+        padding: "1rem",
+        position: "fixed",
+        bottom: "0",
+        left: "0",
+        width: "100%",
     }
 }));
 
@@ -175,6 +183,23 @@ function CreatePlaylistComponent(props) {
     };
 
 
+    const Footer = () => (
+        <div className={classes.footer}>
+            <div className={classes.saveButtonDiv}>
+                <Button className={classes.cancelButton}
+                        variant="contained"
+                        onClick={onCancel}>
+                    Cancel
+                </Button>
+                <Button variant="contained" color="primary"
+                        className={classes.cancelButton}
+                        disabled={!duration && !playlistTitle}
+                        onClick={onSave}>
+                    Create Playlist
+                </Button>
+            </div>
+        </div>
+    );
 
 
     // ----------------------------------------------------------------------------------------------------
@@ -300,19 +325,7 @@ function CreatePlaylistComponent(props) {
                         onChange={setValence}/>
                 </div>
             </div>
-            <div className={classes.saveButtonDiv}>
-                <Button className={classes.cancelButton}
-                        variant="contained"
-                        onClick={onCancel}>
-                    Cancel
-                </Button>
-                <Button variant="contained" color="primary"
-                        disabled={!duration && !playlistTitle}
-                        onClick={onSave}>
-                    Create Playlist
-                </Button>
-            </div>
-
+            <Footer/>
         </div>
 
     );
