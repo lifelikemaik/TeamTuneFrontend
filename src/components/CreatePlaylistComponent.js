@@ -37,11 +37,14 @@ const useStyles = makeStyles((theme) => ({
     margin20: {
         margin: "20px",
     },
+    marginTop: {
+        marginTop: "25px",
+    },
     marginInputs: {
         marginLeft: "40px",
     },
     inputs: {
-      width: "300px",
+        width: "300px",
     },
     maxWidth: {
         width: "100%",
@@ -224,19 +227,13 @@ function CreatePlaylistComponent(props) {
 
     // cancel is called, functionality differs whether it is a new movie or not
     const onCancel = () => {
-        if (props.new) {
-            props.history.push("/");
-        }
+        props.history.push("/");
+
     };
 
     // save is called, functionality differs whether it is a new movie or not
     const onSave = () => {
-        if (props.new) {
-            props.onCreate(packPlaylist());
-        } else {
-            setEditMode(false);
-            props.onSave(packPlaylist());
-        }
+        props.onCreate(packPlaylist());
     };
 
     return (
@@ -244,6 +241,7 @@ function CreatePlaylistComponent(props) {
             <div>
                 <h1>Create a playlist</h1>
             </div>
+            <hr className={classes.rounded}/>
             <div className={classes.flexRow}>
                 <div>
                     <div>
@@ -270,6 +268,7 @@ function CreatePlaylistComponent(props) {
                     </div>
                 </div>
             </div>
+            <hr className={classes.rounded + " " + classes.marginTop}/>
             <div>
                 <h1>Filters</h1>
                 <div>
@@ -333,6 +332,16 @@ function CreatePlaylistComponent(props) {
                         value={valence}
                         onChange={setValence}/>
                 </div>
+            </div>
+            <div>
+                <Button variant="contained"
+                        onClick={onCancel}>
+                    Cancel
+                </Button>
+                <Button variant="contained" color="primary"
+                        onClick={onSave}>
+                    Save
+                </Button>
             </div>
 
         </div>

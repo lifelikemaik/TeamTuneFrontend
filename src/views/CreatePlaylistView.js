@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect, useSelector} from "react-redux";
 
-import {getMovie, changeMovie, addMovie, addPlaylist} from "../redux/actions";
+import {addPlaylist} from "../redux/actions";
 import CreatePlaylistComponent from "../components/CreatePlaylistComponent";
 
 /**
@@ -36,6 +36,6 @@ function CreatePlaylistView(props) {
 // here the function getMovie, changeMovie and addMovie are mentionend
 // this is an alternative way of calling connecting them with redux
 // another way is shown in MovieListView.js
-export default connect(null, {getMovie, changeMovie, addMovie})(
+export default connect(null, {addPlaylist})(
     CreatePlaylistView
 );
