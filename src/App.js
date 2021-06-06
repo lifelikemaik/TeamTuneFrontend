@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
 import {
     MuiThemeProvider,
@@ -34,8 +34,9 @@ function App() {
         document.title = "TeamTune App";
     }, []);
 
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     // create store for redux
-    const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+    const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
     // theme for app
     const [theme, setTheme] = React.useState(AppTheme.LIGHT);

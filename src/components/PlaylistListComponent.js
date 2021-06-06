@@ -246,7 +246,7 @@ function PlaylistListComponent(props) {
                 color="primary"
                 className={classes.addMovieButton}
             >
-                Add Movie
+                Add Playlist
             </Button>
         </div>
     );
