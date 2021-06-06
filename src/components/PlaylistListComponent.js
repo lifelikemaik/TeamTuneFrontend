@@ -224,6 +224,7 @@ function PlaylistListComponent(props) {
                                                 props.onClickDeleteMovie
                                             }
                                             isAdmin={props.isAdmin}
+                                            isBrowse={props.isBrowse}
                                         />
                                     );
                                 })}
@@ -240,25 +241,33 @@ function PlaylistListComponent(props) {
                     onChangeRowsPerPage={onChangeRowsPerPage}
                 />
             </Paper>
-            <Button
-                onClick={props.onAddPlaylist}
-                variant="contained"
-                color="primary"
-                className={classes.addMovieButton}
-            >
-                Add Playlist
-            </Button>
+            <div>
+                {props.isBrowse ? (
+                    <div/>
+                ) : (
+                    <Button
+                        onClick={props.onAddPlaylist}
+                        variant="contained"
+                        color="primary"
+                        className={classes.addMovieButton}
+                    >
+                        Add Playlist
+                    </Button>
+                )}
+            </div>
+
         </div>
     );
 }
 
 // attributes of props and their type
 PlaylistListComponent.propTypes = {
-    onAddPlaylist: PropTypes.func.isRequired,
+    onAddPlaylist: PropTypes.func,
     onClickDeleteMovie: PropTypes.func.isRequired,
     onClickDisplayMovie: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool,
     playlists: PropTypes.array,
+    isBrowse: PropTypes.bool.isRequired,
 };
 
 export default PlaylistListComponent;

@@ -37,10 +37,6 @@ function BrowsePlaylistsView(props) {
     props.history.push("/playlist/" + id);
   };
 
-  const onAddPlaylist = () => {
-    // navigate to an empty mask for entering details of the new playlist
-    props.history.push("/playlist/new");
-  };
 
 
   return !playlists ? (
@@ -54,9 +50,9 @@ function BrowsePlaylistsView(props) {
       <PlaylistListComponent
           playlists={playlists}
           onClickDisplayMovie={onClickDisplayPlaylist}
-          onAddPlaylist={onAddPlaylist}
           isLoggedIn={!!user.user}
           isAdmin={!!user.user ? user.user.role === "admin" : false}
+          isBrowse={true}
       />
   );
 

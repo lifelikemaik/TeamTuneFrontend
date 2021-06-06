@@ -8,7 +8,7 @@ function PlaylistListRowButtons(props) {
 
     return (
         <div>
-            {props.isPublic ? (
+            {props.isBrowse ? (
                 <div>
                     <Button variant="contained">
                         Follow
@@ -19,15 +19,23 @@ function PlaylistListRowButtons(props) {
                 </div>
             ) : (
                 <div>
-                    <Button variant="contained">
-                        Share Link
-                    </Button>
-                    <Button variant="contained">
-                        Share Playlist
-                    </Button>
-                    <Button variant="contained">
-                        Create Copy
-                    </Button>
+                    {props.playlist.is_own_playlist ? (
+                        <div>
+                            <Button variant="contained">
+                                Share Link
+                            </Button>
+                            <Button variant="contained">
+                                Share Playlist
+                            </Button>
+                            <Button variant="contained">
+                                Create Copy
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button variant="contained">
+                            Create Copy
+                        </Button>
+                    )}
                 </div>
             )}
         </div>
@@ -35,7 +43,8 @@ function PlaylistListRowButtons(props) {
 }
 
 PlaylistListRowButtons.propTypes = {
-    isPublic: PropTypes.bool,
+    playlist: PropTypes.object,
+    isBrowse: PropTypes.bool.isRequired,
 };
 
 export default PlaylistListRowButtons;

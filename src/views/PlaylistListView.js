@@ -51,6 +51,7 @@ function PlaylistListView(props) {
             onAddPlaylist={onAddPlaylist}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === "admin" : false}
+            isBrowse={false}
         />
     );
 }
