@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import BrowseComponent from "../components/BrowseComponent";
-import {getPlaylists} from "../redux/actions";
+import {getPublicPlaylists} from "../redux/actions";
 import PlaylistListComponent from "../components/PlaylistListComponent";
 
 /**
@@ -29,7 +29,7 @@ function BrowsePlaylistsView(props) {
   const loadPlaylists = async () => {
     // trigger the redux action getPlaylists
     // TODO getPublicPlaylists
-    props.dispatch(getPlaylists());
+    props.dispatch(getPublicPlaylists());
   };
 
   const onClickDisplayPlaylist = (id) => {
