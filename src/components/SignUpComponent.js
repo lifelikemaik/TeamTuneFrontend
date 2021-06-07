@@ -95,11 +95,21 @@ function SignUpComponent(props) {
         setRegisterError("");
     };
 
+    var generateRandomString = function(length) {
+        var text = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
+        for (var i = 0; i < length; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      };
+
     const onOpenSpotify = (props) => {
         if (!isLinkedToSpotify) {
             setButtonText("Linked with Spotify");
             setIsLinkedToSpotify(true);
-            window.open("https://www.google.com");
+            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:3000/callback&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public&state=" + generateRandomString(16));
         }
     }
 
@@ -112,6 +122,9 @@ function SignUpComponent(props) {
             }
         }
     };
+
+    
+    
 
     return (
         <div className={classes.usersignUpRoot}>
