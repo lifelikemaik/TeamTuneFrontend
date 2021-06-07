@@ -194,7 +194,8 @@ function SignUpComponent(props) {
                             password === "" ||
                             password2 === "" ||
                             registerError !== "" ||
-                            password !== password2
+                            password !== password2 ||
+                            isLinkedToSpotify === false
                         }
                         type="submit"
                     >
