@@ -4,6 +4,7 @@ import MovieDetailsView from "./views/MovieDetailsView";
 import PlaylistListView from "./views/PlaylistListView";
 import BrowsePlaylistiew from "./views/BrowsePlaylistsView";
 import MyTeamTuneView from "./views/MyTeamTuneView";
+import CallbackView from "./views/CallbackView";
 
 // routes within the movie database example app
 // used for routing
