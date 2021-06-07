@@ -55,21 +55,21 @@ function Header(props) {
                 <Button
                     className={classes.button}
                     color="inherit"
-                    onClick={() => props.history.push("browse")}
+                    onClick={() => props.history.push("/browse")}
                 >
                     Browse
                 </Button>
                 <Button
                     className={classes.button}
                     color="inherit"
-                    onClick={() => props.history.push("playlists")}
+                    onClick={() => props.history.push("/playlists")}
                 >
                     My Playlists
                 </Button>
                 <Button
                     className={classes.button}
                     color="inherit"
-                    onClick={() => props.history.push("myteamtune")}
+                    onClick={() => props.history.push("/myteamtune")}
                 >
                     My TeamTune
                 </Button>
