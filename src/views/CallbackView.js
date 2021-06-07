@@ -1,7 +1,8 @@
 // import React, { useEffect } from "react";
 import { connect } from "react-redux";
 // import Loading from "../components/Loading";
-import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
+import CallbackComponent from "../components/CallbackComponent";
+const queryString = require('query-string');
 
 /**
  * Manages process of changing user settings
@@ -12,7 +13,7 @@ function CallbackView(props) {
   // close window after retrieval of link
   // window.close();
   return (
-    <MyTeamTuneComponent/>
+    <CallbackComponent/>
   );
 }
 
