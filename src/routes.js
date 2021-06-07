@@ -38,6 +38,10 @@ const routes = [
         path: "/myteamtune",
         component: MyTeamTuneView,
     },
+    {
+        path: "/callback",
+        component: CallbackView,
+    },
 ];
 
 export default routes;
