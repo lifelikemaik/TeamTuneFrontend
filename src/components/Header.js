@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import TeamTuneIcon from "@material-ui/icons/LocalMovies";
+import TeamTuneIcon from "./TeamTuneIcon";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
@@ -48,10 +48,10 @@ function Header(props) {
                 onClose={() => setMenuAnchor(null)}
             />
             <Toolbar className={classes.toolbar}>
-                <TeamTuneIcon
-                    fontSize="large"
-                    onClick={() => props.history.push("/")}
-                />
+
+                <TeamTuneIcon fontSize="medium" onClick={() => props.history.push("/")}
+                    />
+
                 <Button
                     className={classes.button}
                     color="inherit"
