@@ -53,7 +53,10 @@ function PlaylistListRow(props) {
             </TableCell>
 
             <TableCell>
-                <PlaylistListRowButtons isPublic={props.playlist.is_own_playlist}/>
+                <PlaylistListRowButtons
+                    playlist={props.playlist}
+                    isBrowse={props.isBrowse}
+                />
             </TableCell>
         </TableRow>
     );
@@ -65,6 +68,7 @@ PlaylistListRow.propTypes = {
     onClickDisplayMovie: PropTypes.func,
     onClickDeleteMovie: PropTypes.func,
     isAdmin: PropTypes.bool,
+    isBrowse: PropTypes.bool.isRequired,
 };
 
 export default PlaylistListRow;
