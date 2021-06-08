@@ -49,8 +49,14 @@ function Header(props) {
             />
             <Toolbar className={classes.toolbar}>
 
-                <TeamTuneIcon fontSize="medium" onClick={() => props.history.push("/")}
-                    />
+                <IconButton onClick={() => props.history.push("/")} color="inherit"
+                >
+                    <div style={ {width: 50} }>
+                        <TeamTuneIcon/>
+                    </div>
+                </IconButton>
+
+
 
                 <Button
                     className={classes.button}
