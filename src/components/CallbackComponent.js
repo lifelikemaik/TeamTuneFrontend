@@ -1,5 +1,5 @@
 import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
+import queryString from 'query-string';
 
 /**
  * For presenting and changing the user settings and more
@@ -7,9 +7,12 @@ import React from "react";
  */
 function CallbackComponent(props) {
 
+    const params = new URLSearchParams();
+    // console.log(queryString.parse(this.props.location.search));
+    // queryString.parse(this.props.location.search)
+    window.close();
     return (
-        <div
-                style={{
+        <div style={{
                     display: 'flex',
                     justifyContent: 'Right',
                     alignItems: 'Right',

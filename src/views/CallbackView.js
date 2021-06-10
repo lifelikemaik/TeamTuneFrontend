@@ -11,7 +11,7 @@ const queryString = require('query-string');
 
 function CallbackView(props) {
   // close window after retrieval of link
-  // window.close();
+  window.close();
   return (
     <CallbackComponent/>
   );
