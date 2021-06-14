@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import {
     Paper,
     Button,
@@ -8,6 +8,8 @@ import {
     FormControlLabel,
     Checkbox,
 } from "@material-ui/core";
+
+
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -34,6 +36,21 @@ const useStyles = makeStyles((theme) => ({
     signUpButton: {
         marginLeft: theme.spacing(1),
     },
+    spotifyDiv: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex"
+    },
+    spotifyButton: {
+        backgroundColor: "#1db954",
+        color: "white",
+        width: "80%",
+        '&:hover': {
+            backgroundColor: "#1db954",
+            opacity: "80%",
+        },
+    },
 }));
 
 /**
@@ -41,12 +58,17 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function SignUpComponent(props) {
+
+    
     const classes = useStyles();
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState(false);
+    const [isLinkedToSpotify, setIsLinkedToSpotify] = React.useState(false);
+    const [code, setCode] = React.useState("");
+    const [buttonText, setButtonText] = React.useState("Link with Spotify");
 
     const [registerError, setRegisterError] = React.useState("");
 
@@ -58,9 +80,23 @@ function SignUpComponent(props) {
         }
     }, [props.user]);
 
+    useEffect(() => {
+        // mostly compatible: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
+        //console.log(window.location.search);
+        const params = new URLSearchParams(window.location.search);
+        const paramcode = params.get("code");
+        console.log(paramcode);
+        const isLinked = params.get("isLinked");
+        if (isLinked === "true"){
+            setIsLinkedToSpotify(true); // Button only pressed once possible
+            setButtonText("Spotify account linked");
+        }
+        setCode(paramcode);
+    }, []);
+
     const onRegister = (e) => {
         e.preventDefault();
-        props.onRegister(username, password, isAdmin);
+        props.onRegister(username, password, isAdmin, code);
     };
 
     const onChangeUsername = (e) => {
@@ -78,6 +114,26 @@ function SignUpComponent(props) {
         setRegisterError("");
     };
 
+    var generateRandomString = function(length) {
+        var text = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
+        for (var i = 0; i < length; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      };
+
+    const onOpenSpotify = (props) => {
+        if (!isLinkedToSpotify) {
+            // setButtonText("Spotify account linked");
+            // setIsLinkedToSpotify(true);
+
+            // Button only pressed once possible
+            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:4000/callback/register&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public&state=" + generateRandomString(16),"_self");
+        }
+    }
+
     const onBlurPassword = (e) => {
         if (password !== "" && password2 !== "") {
             if (password !== password2) {
@@ -88,6 +144,9 @@ function SignUpComponent(props) {
         }
     };
 
+    
+    
+
     return (
         <div className={classes.usersignUpRoot}>
             <Paper className={classes.signUpPaper} component="form">
@@ -95,6 +154,13 @@ function SignUpComponent(props) {
                     <Typography variant="h4" align="center">
                         Welcome to the Movie Database App!
                     </Typography>
+                </div>
+                <div className={classes.signUpRow + " " + classes.spotifyDiv}>
+                    <Button
+                        className={classes.spotifyButton}
+                        onClick={() => onOpenSpotify(props)}>
+                        {buttonText}
+                    </Button>
                 </div>
                 <div className={classes.signUpRow}>
                     <TextField
@@ -162,7 +228,8 @@ function SignUpComponent(props) {
                             password === "" ||
                             password2 === "" ||
                             registerError !== "" ||
-                            password !== password2
+                            password !== password2 ||
+                            isLinkedToSpotify === false
                         }
                         type="submit"
                     >
