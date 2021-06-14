@@ -49,6 +49,7 @@ export function getPublicPlaylists() {
 }
 
 export const getPlaylist = (id) => {
+    console.log('getplaylist')
     function onSuccess(playlist) {
         return { type: "GETPLAYLIST_SUCCESS", playlist: playlist };
     }
@@ -59,6 +60,7 @@ export const getPlaylist = (id) => {
     return async (dispatch, getState) => {
         try {
             let playlist = await PlaylistService.getPlaylist(id);
+            console.log('playlist. ', playlist);
             dispatch(onSuccess(playlist));
         } catch (e) {
             onFailure(e);

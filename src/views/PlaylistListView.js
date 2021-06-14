@@ -27,9 +27,9 @@ function PlaylistListView(props) {
         props.dispatch(getPlaylists());
     };
 
-    const onClickDisplayMovie = (id) => {
+    const onClickDisplayPlaylist = (id) => {
         // navigate to details of the selected movie
-        props.history.push("/movie/" + id);
+        props.history.push("/playlist/" + id);
     };
 
     const onAddPlaylist = () => {
@@ -47,7 +47,7 @@ function PlaylistListView(props) {
         // everyhing is fine an the movie list can be displayed
         <PlaylistListComponent
             playlists={playlists}
-            onClickDisplayMovie={onClickDisplayMovie}
+            onClickDisplayPlaylist={onClickDisplayPlaylist}
             onAddPlaylist={onAddPlaylist}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === "admin" : false}

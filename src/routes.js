@@ -6,6 +6,7 @@ import BrowsePlaylistiew from "./views/BrowsePlaylistsView";
 import MyTeamTuneView from "./views/MyTeamTuneView";
 import CallbackView from "./views/CallbackView";
 import CreatePlaylistView from "./views/CreatePlaylistView";
+import PlaylistDetailView from "./views/PlaylistDetailView";
 
 
 // routes within the movie database example app
@@ -36,6 +37,10 @@ const routes = [
     {
         path: "/playlists",
         component: PlaylistListView,
+    },
+    {
+      path: "/playlist/:id",
+      component: PlaylistDetailView,
     },
     {
         path: "/playlist/new",
