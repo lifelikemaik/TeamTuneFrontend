@@ -19,6 +19,20 @@ export default class PlaylistService {
         });
     }
 
+    static getPublicPlaylists() {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                this.baseURL()+"/public",
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static getPlaylist(id) {
         return new Promise(async (resolve, reject) => {
             HttpService.get(

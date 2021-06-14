@@ -4,6 +4,8 @@ export default function entities(state = {}, action) {
             return { movies: action.movies };
         case "GETPLAYLISTS_SUCCESS":
             return { playlists: action.playlists };
+        case "GETPUBLICPLAYLISTS_SUCCESS":
+            return { playlists: action.playlists };
         case "DELETEMOVIE_SUCCESS":
             return { movies: action.movies };
         case "ADDMOVIE_SUCCESS":

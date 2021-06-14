@@ -24,6 +24,30 @@ export function getPlaylists() {
     };
 }
 
+export function getPublicPlaylists() {
+    // when the backend call was successfull and the playlists are retrieved
+    // in the dispatcher the playlists will be added to the global state
+    function onSuccess(playlists) {
+        return { type: "GETPUBLICPLAYLISTS_SUCCESS", playlists: playlists };
+    }
+    // when the backend call was failed
+    function onFailure(error) {
+        // error handling
+        console.log("failed to get the public playlists", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            // ask for the playlists in the backend
+            let playlists = await PlaylistService.getPublicPlaylists();
+            // call onSuccess in context of redux
+            dispatch(onSuccess(playlists));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export const getPlaylist = (id) => {
     function onSuccess(playlist) {
         return { type: "GETPLAYLIST_SUCCESS", playlist: playlist };
