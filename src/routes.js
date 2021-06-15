@@ -14,7 +14,7 @@ import CreatePlaylistView from "./views/CreatePlaylistView";
 const routes = [
     {
         path: "/",
-        component: PlaylistListView,
+        component: BrowsePlaylistiew,
         exact: true,
     },
     {
