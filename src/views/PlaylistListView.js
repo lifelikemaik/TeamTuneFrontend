@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
-import { getPlaylists } from "../redux/actions";
+import { getUserPlaylists } from "../redux/actions";
 import PlaylistListComponent from "../components/PlaylistListComponent";
 import Loading from "../components/Loading";
 
@@ -12,7 +12,7 @@ import Loading from "../components/Loading";
  */
 function PlaylistListView(props) {
     // state from the redux store
-    const playlists = useSelector((state) => state.entities.playlists);
+    const playlists = useSelector((state) => state.user.user.playlists);
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ function PlaylistListView(props) {
 
     const loadPlaylists = async () => {
         // trigger the redux action getMovies
-        props.dispatch(getPlaylists());
+        props.dispatch(getUserPlaylists());
     };
 
     const onClickDisplayMovie = (id) => {
