@@ -10,6 +10,7 @@ import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 
 import KebabMenu from "./KebabMenu";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         fontSize: 25,
+        flexGrow: 0.5,
+    },
+    div: {
         flexGrow: 0.5,
     }
     
@@ -32,13 +36,18 @@ function Header(props) {
 
     const [menuAnchor, setMenuAnchor] = React.useState(null);
 
-    const onClickGithub = (event) => {
+    const user = useSelector((state) => {
+        // return the currnetly logged in user from redux store
+        return state.user;
+    });
+
+    /*const onClickGithub = (event) => {
         var win = window.open(
             "https://github.com/sebischair/seba-master-movie-frontend",
             "_blank"
         );
         win.focus();
-    };
+    };*/
 
     return (
         <AppBar position="sticky">
@@ -58,30 +67,61 @@ function Header(props) {
 
 
 
-                <Button
-                    className={classes.button}
-                    color="inherit"
-                    onClick={() => props.history.push("/browse")}
-                >
-                    Browse
-                </Button>
-                <Button
-                    className={classes.button}
-                    color="inherit"
-                    onClick={() => props.history.push("/playlists")}
-                >
-                    My Playlists
-                </Button>
-                <Button
-                    className={classes.button}
-                    color="inherit"
-                    onClick={() => props.history.push("/myteamtune")}
-                >
-                    My TeamTune
-                </Button>
-                <IconButton onClick={onClickGithub} color="inherit">
+                {user.user
+                    ? [
+                        <Button
+                            className={classes.button}
+                            color="inherit"
+                            onClick={() => props.history.push("/browse")}
+                        >
+                            Browse
+                        </Button>,
+                        <Button
+                            className={classes.button}
+                            color="inherit"
+                            onClick={() => props.history.push("/playlists")}
+                        >
+                            My Playlists
+                        </Button>,
+                        <Button
+                            className={classes.button}
+                            color="inherit"
+                            onClick={() => props.history.push("/myteamtune")}
+                        >
+                            My TeamTune
+                        </Button>
+                    ]
+                    : [
+                        <Button
+                            className={classes.button}
+                            color="inherit"
+                            onClick={() => props.history.push("/browse")}
+                        >
+                            Browse
+                        </Button>,
+                        <div>
+                            <Button
+                                className={classes.button}
+                                color="inherit"
+                                onClick={() => props.history.push("/login")}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                className={classes.button}
+                                color="inherit"
+                                onClick={() => props.history.push("/register")}
+                            >
+                                Register
+                            </Button>
+                        </div>
+
+                    ]}
+
+
+                {/*<IconButton onClick={onClickGithub} color="inherit">
                     <GitHubIcon/>
-                </IconButton>
+                </IconButton>*/}
                 <IconButton
                     onClick={(event) => setMenuAnchor(event.currentTarget)}
                     color="inherit"
