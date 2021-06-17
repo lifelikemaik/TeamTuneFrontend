@@ -1,37 +1,41 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/core";
+import {withRouter} from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {AppBar, Button, IconButton, Toolbar, Divider, Typography} from "@material-ui/core";
 
-import MenuIcon from "@material-ui/icons/Menu";
 import TeamTuneIcon from "./TeamTuneIcon";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import WbSunnyIcon from "@material-ui/icons/WbSunny";
-import Brightness3Icon from "@material-ui/icons/Brightness3";
 
-import KebabMenu from "./KebabMenu";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
+import {logout} from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
 
-    title: {
+    main_options: {
+        fontSize: 25,
         flexGrow: 1,
+        paddingLeft: 45,
+        paddingRight: 45,
+        fontFamily: "Libre Franklin, sans-serif",
     },
-    button: {
-        fontSize: 30,
-        flexGrow: 1,
-    },
-    div: {
-        flexGrow: 0.5,
+    side_options: {
+        fontSize: 20,
+        flexGrow: 0.8,
+        paddingLeft: 15,
+        paddingRight: 15,
     },
     toolbar: {
-        marginLeft: -12,
-        flexGrow: 1,
+        display: "flex",
+        justifyContent: "space-between",
     },
-    menuButton: {
-        marginRight: -12,
-        marginLeft: 'auto',
-    }
+    header: {
+        paddingRight: 80,
+        paddingLeft: 110,
+    },
+    logo_type: {
+        //TODO Font is not applied yet
+        fontFamily: "Libre Franklin, sans-serif",
+        fontWeight: 900,
+    },
 }));
 
 /**
@@ -39,106 +43,121 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function Header(props) {
-    const classes = useStyles();
+    const {header, main_options, side_options, toolbar, logo_type} = useStyles();
 
-    const [menuAnchor, setMenuAnchor] = React.useState(null);
 
     const user = useSelector((state) => {
-        // return the currnetly logged in user from redux store
+        // return the currently logged in user from redux store
         return state.user;
     });
 
-    /*const onClickGithub = (event) => {
-        var win = window.open(
-            "https://github.com/sebischair/seba-master-movie-frontend",
-            "_blank"
+    const onClickLogout = () => {
+        // trigger redux logout action
+        logout();
+        // navigate to the home page
+        props.history.push("/");
+    };
+
+    const displayHeader = () => {
+        return (
+            <Toolbar className={toolbar}>
+                {teamTuneLogo}
+                <div>
+                    {getMenuButtons()}
+                </div>
+            </Toolbar>
         );
-        win.focus();
-    };*/
+    };
 
-    return (
-        <AppBar position="sticky">
-            <Toolbar>
-                <KebabMenu
-                    className={classes.menuButton}
-                    open={Boolean(menuAnchor)}
-                    anchor={menuAnchor}
-                    onClose={() => setMenuAnchor(null)}
-                />
-                <IconButton onClick={() => props.history.push("/")} color="inherit"
+    const logoType = (
+        <Typography variant="h4"  classname={logo_type}>
+            TeamTune
+        </Typography>
+    );
+
+    const teamTuneLogo = (
+        <IconButton onClick={() => props.history.push("/")} color="inherit"
+        >
+            <div style={{width: 50}}>
+                <TeamTuneIcon/>
+            </div>
+            {logoType}
+        </IconButton>
+    );
+
+    const getMenuButtons = () => {
+        return <div>
+            <section className={toolbar}>
+                <Button
+                    className={main_options}
+                    color="inherit"
+                    onClick={() => props.history.push("/browse")}
                 >
-                    <div style={{ width: 50 }}>
-                        <TeamTuneIcon />
-                    </div>
-                </IconButton>
-
+                    Browse
+                </Button>
                 {user.user
                     ? [
-                        <section className={classes.toolbar}>
-                            <Button
-                                className={classes.button}
-                                color="inherit"
-                                onClick={() => props.history.push("/browse")}
-                            >
-                                Browse
-                            </Button>,
-                            <Button
-                                className={classes.button}
-                                color="inherit"
-                                onClick={() => props.history.push("/playlists")}
-                            >
-                                My Playlists
-                            </Button>,
-                            <Button
-                                className={classes.button}
-                                color="inherit"
-                                onClick={() => props.history.push("/myteamtune")}
-                            >
-                                My TeamTune
-                            </Button>
-                        </section>
+                        // Buttons to show when user is logged in
+                        <Button
+                            className={main_options}
+                            color="inherit"
+                            onClick={() => props.history.push("/playlists")}
+                        >
+                            My Playlists
+                        </Button>,
+                        <Button
+                            className={main_options}
+                            color="inherit"
+                            onClick={() => props.history.push("/myteamtune")}
+                        >
+                            My TeamTune
+                        </Button>,
+                        <Divider orientation="vertical" flexItem variant="middle"/>,
+                        <Button
+                            className={side_options}
+                            color="inherit"
+                            onClick={onClickLogout}
+                        >
+                            Log out
+                        </Button>
                     ]
                     : [
-                        <section className={classes.toolbar}>
-                                                    <Button
-                            className={classes.button}
+                        // Buttons to show when user is not logged in
+                        <Button
+                            className={main_options}
                             color="inherit"
-                            onClick={() => props.history.push("/browse")}
                         >
-                            Browse
+                            Premium
+                        </Button>,
+                        <Divider orientation="vertical" flexItem variant="middle"/>,
+                        <Button
+                            className={side_options}
+                            color="inherit"
+                            onClick={() => props.history.push("/login")}
+                        >
+                            Log in
+                        </Button>,
+                        <Button
+                            className={side_options}
+                            color="inherit"
+                            onClick={() => props.history.push("/register")}
+                        >
+                            Sign up
                         </Button>
-                        
-                            <Button
-                                className={classes.button}
-                                color="inherit"
-                                onClick={() => props.history.push("/login")}
-                            >
-                                Login
-                            </Button>
-                            <Button
-                                className={classes.button}
-                                color="inherit"
-                                onClick={() => props.history.push("/register")}
-                            >
-                                Register
-                            </Button>
-                        
-                        </section>
                     ]}
+            </section>
+        </div>
 
+    };
 
-                {/*<IconButton onClick={onClickGithub} color="inherit">
-                    <GitHubIcon/>
-                </IconButton>*/}
-                <IconButton
-                    onClick={(event) => setMenuAnchor(event.currentTarget)}
-                    color="inherit"
-                >
-                    <MenuIcon />
-                </IconButton>
-            </Toolbar>
-        </AppBar>
+    return (
+        <header>
+            <AppBar className={header} position="sticky">
+                {displayHeader()}
+            </AppBar>
+        </header>
     );
+
 }
 
 export default withRouter(Header);
