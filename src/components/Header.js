@@ -10,7 +10,7 @@ import WbSunnyIcon from "@material-ui/icons/WbSunny";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 
 import KebabMenu from "./KebabMenu";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -19,12 +19,19 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         fontSize: 25,
-        flexGrow: 0.5,
+        flexGrow: 1,
     },
     div: {
         flexGrow: 0.5,
+    },
+    toolbar: {
+        marginLeft: -12,
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: -12,
+        marginLeft: 'auto',
     }
-    
 }));
 
 /**
@@ -51,55 +58,56 @@ function Header(props) {
 
     return (
         <AppBar position="sticky">
-            <KebabMenu
-                open={Boolean(menuAnchor)}
-                anchor={menuAnchor}
-                onClose={() => setMenuAnchor(null)}
-            />
-            <Toolbar className={classes.toolbar}>
-
+            <Toolbar>
+                <KebabMenu
+                    className={classes.menuButton}
+                    open={Boolean(menuAnchor)}
+                    anchor={menuAnchor}
+                    onClose={() => setMenuAnchor(null)}
+                />
                 <IconButton onClick={() => props.history.push("/")} color="inherit"
                 >
-                    <div style={ {width: 50} }>
-                        <TeamTuneIcon/>
+                    <div style={{ width: 50 }}>
+                        <TeamTuneIcon />
                     </div>
                 </IconButton>
 
-
-
                 {user.user
                     ? [
-                        <Button
-                            className={classes.button}
-                            color="inherit"
-                            onClick={() => props.history.push("/browse")}
-                        >
-                            Browse
-                        </Button>,
-                        <Button
-                            className={classes.button}
-                            color="inherit"
-                            onClick={() => props.history.push("/playlists")}
-                        >
-                            My Playlists
-                        </Button>,
-                        <Button
-                            className={classes.button}
-                            color="inherit"
-                            onClick={() => props.history.push("/myteamtune")}
-                        >
-                            My TeamTune
-                        </Button>
+                        <section className={classes.toolbar}>
+                            <Button
+                                className={classes.button}
+                                color="inherit"
+                                onClick={() => props.history.push("/browse")}
+                            >
+                                Browse
+                            </Button>,
+                            <Button
+                                className={classes.button}
+                                color="inherit"
+                                onClick={() => props.history.push("/playlists")}
+                            >
+                                My Playlists
+                            </Button>,
+                            <Button
+                                className={classes.button}
+                                color="inherit"
+                                onClick={() => props.history.push("/myteamtune")}
+                            >
+                                My TeamTune
+                            </Button>
+                        </section>
                     ]
                     : [
-                        <Button
+                        <section className={classes.toolbar}>
+                                                    <Button
                             className={classes.button}
                             color="inherit"
                             onClick={() => props.history.push("/browse")}
                         >
                             Browse
-                        </Button>,
-                        <div>
+                        </Button>
+                        
                             <Button
                                 className={classes.button}
                                 color="inherit"
@@ -114,8 +122,8 @@ function Header(props) {
                             >
                                 Register
                             </Button>
-                        </div>
-
+                        
+                        </section>
                     ]}
 
 
@@ -126,7 +134,7 @@ function Header(props) {
                     onClick={(event) => setMenuAnchor(event.currentTarget)}
                     color="inherit"
                 >
-                    <MenuIcon/>
+                    <MenuIcon />
                 </IconButton>
             </Toolbar>
         </AppBar>
