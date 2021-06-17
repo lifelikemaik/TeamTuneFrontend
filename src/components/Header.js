@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     button: {
-        fontSize: 25,
+        fontSize: 30,
         flexGrow: 1,
     },
     div: {
