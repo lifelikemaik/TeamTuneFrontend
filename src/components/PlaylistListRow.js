@@ -25,10 +25,12 @@ function PlaylistListRow(props) {
     // with this you can access the above defined style classes
     const classes = useStyles();
 
+    console.log(props)
+
     return (
         <TableRow
             key={props.playlist._id}
-            onClick={() => props.onClickDisplayMovie(props.playlist._id)}
+            onClick={() => props.onClickDisplayPlaylist(props.playlist._id)}
             height="118px"
         >
             <TableCell>
@@ -65,7 +67,7 @@ function PlaylistListRow(props) {
 // attributes of props and their type
 PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
-    onClickDisplayMovie: PropTypes.func,
+    onClickDisplayPlaylist: PropTypes.func,
     onClickDeleteMovie: PropTypes.func,
     isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,

@@ -217,8 +217,8 @@ function PlaylistListComponent(props) {
                                         <PlaylistListRow
                                             key={index}
                                             playlist={playlist}
-                                            onClickDisplayMovie={
-                                                props.onClickDisplayMovie
+                                            onClickDisplayPlaylist={
+                                                props.onClickDisplayPlaylist
                                             }
                                             onClickDeleteMovie={
                                                 props.onClickDeleteMovie
@@ -264,7 +264,7 @@ function PlaylistListComponent(props) {
 PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func,
     onClickDeleteMovie: PropTypes.func.isRequired,
-    onClickDisplayMovie: PropTypes.func.isRequired,
+    onClickDisplayPlaylist: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool,
     playlists: PropTypes.array,
     isBrowse: PropTypes.bool.isRequired,
