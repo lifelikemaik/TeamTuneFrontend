@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     signUpPaper: {
-        width: "500px",
+        width: "550px",
         padding: theme.spacing(2),
     },
     signUpRow: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     spotifyButton: {
         backgroundColor: "#1db954",
         color: "white",
-        width: "80%",
+        width: "60%",
         '&:hover': {
             backgroundColor: "#1db954",
             opacity: "80%",
@@ -152,7 +152,7 @@ function SignUpComponent(props) {
             <Paper className={classes.signUpPaper} component="form">
                 <div className={classes.signUpRow}>
                     <Typography variant="h4" align="center">
-                        Welcome to the Movie Database App!
+                    Welcome to the TeamTune App!
                     </Typography>
                 </div>
                 <div className={classes.signUpRow + " " + classes.spotifyDiv}>

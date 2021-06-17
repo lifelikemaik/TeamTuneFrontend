@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     loginPaper: {
-        width: "500px",
+        width: "550px",
         padding: theme.spacing(2),
     },
     loginRow: {
@@ -67,6 +67,11 @@ function LoginComponent(props) {
     return (
         <div className={classes.userLoginRoot}>
             <Paper className={classes.loginPaper} component="form">
+            <div className={classes.loginRow}>
+                    <Typography variant="h4" align="center">
+                        Welcome to the TeamTune App!
+                    </Typography>
+                </div>
                 <div className={classes.loginRow}>
                     <TextField
                         label="Username"
