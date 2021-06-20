@@ -39,12 +39,12 @@ const routes = [
         component: PlaylistListView,
     },
     {
-      path: "/playlist/:id",
-      component: PlaylistDetailView,
-    },
-    {
         path: "/playlist/new",
         component: CreatePlaylistView
+    },
+    {
+      path: "/playlist/:id",
+      component: PlaylistDetailView,
     },
     {
         path: "/myteamtune",
