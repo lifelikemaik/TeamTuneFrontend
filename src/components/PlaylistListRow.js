@@ -25,8 +25,6 @@ function PlaylistListRow(props) {
     // with this you can access the above defined style classes
     const classes = useStyles();
 
-    console.log(props)
-
     return (
         <TableRow
             key={props.playlist._id}

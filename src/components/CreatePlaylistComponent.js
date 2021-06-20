@@ -138,11 +138,7 @@ function CreatePlaylistComponent(props) {
                 return null;
         }
     }
-
-    const canBeSaved = () => {
-        console.log(!!playlistTitle, !!duration)
-        return !!playlistTitle && !!duration
-    }
+    
 
     // creating a object with all relevant data to update or create a changed movie
     const packPlaylist = () => {
@@ -210,7 +206,6 @@ function CreatePlaylistComponent(props) {
     };
 
     const onChangeDuration = (value) => {
-        console.log(value.target.value);
         setDuration(value.target.value);
     };
 
