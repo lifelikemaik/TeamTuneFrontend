@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
     Paper,
     Button,
@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     signUpPaper: {
         width: "550px",
         padding: theme.spacing(2),
+        marginLeft: "auto",
+        marginRight: "auto",
     },
     signUpRow: {
         paddingTop: theme.spacing(1),
@@ -51,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
             opacity: "80%",
         },
     },
+    explanation: {
+        marginBottom: 50,
+        width: "750px",
+    },
 }));
 
 /**
@@ -59,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function SignUpComponent(props) {
 
-    
+
     const classes = useStyles();
 
     const [username, setUsername] = React.useState("");
@@ -87,7 +93,7 @@ function SignUpComponent(props) {
         const paramcode = params.get("code");
         console.log(paramcode);
         const isLinked = params.get("isLinked");
-        if (isLinked === "true"){
+        if (isLinked === "true") {
             setIsLinkedToSpotify(true); // Button only pressed once possible
             setButtonText("Spotify account linked");
         }
@@ -114,15 +120,15 @@ function SignUpComponent(props) {
         setRegisterError("");
     };
 
-    var generateRandomString = function(length) {
+    var generateRandomString = function (length) {
         var text = '';
         var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      
+
         for (var i = 0; i < length; i++) {
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
         return text;
-      };
+    };
 
     const onOpenSpotify = (props) => {
         if (!isLinkedToSpotify) {
@@ -130,7 +136,7 @@ function SignUpComponent(props) {
             // setIsLinkedToSpotify(true);
 
             // Button only pressed once possible
-            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:4000/callback/register&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public&state=" + generateRandomString(16),"_self");
+            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:4000/callback/register&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public&state=" + generateRandomString(16), "_self");
         }
     }
 
@@ -144,15 +150,23 @@ function SignUpComponent(props) {
         }
     };
 
-    
-    
+
+
 
     return (
         <div className={classes.usersignUpRoot}>
+            <section className={classes.explanation}>
+                <Typography variant="h4" align="center" fontFamily="Libre Franklin, sans-serif" className={classes.signUpRow}>
+                    What is TeamTune?
+                </Typography>
+                <Typography variant="h5" align="center">
+                    TeamTune is a platform that allows people, companies and music enthusiasts to collaboratively create a Spotify playlist for every occasion by merging the different tastes with an intelligent recommender system.
+                </Typography>
+            </section>
             <Paper className={classes.signUpPaper} component="form">
                 <div className={classes.signUpRow}>
                     <Typography variant="h4" align="center">
-                    Welcome to the TeamTune App!
+                        Welcome to the TeamTune App!
                     </Typography>
                 </div>
                 <div className={classes.signUpRow + " " + classes.spotifyDiv}>

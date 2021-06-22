@@ -45,6 +45,23 @@ export function register(username, password, isAdmin, code) {
     };
 }
 
+export function deleteAccount(username, password) {
+    function onSuccess(user) {
+        return { type: "DELETE_SUCCESS", user: user };
+    }
+    function onFailure(error) {
+        return { type: "DELETE_FAILURE", error: error };
+    }
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.deleteAccount(username, password);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+}
+
 export function getUserPlaylists() {
     function onSuccess(playlists) {
         return { type: "GETUSERPLAYLISTS_SUCCESS", playlists: playlists };

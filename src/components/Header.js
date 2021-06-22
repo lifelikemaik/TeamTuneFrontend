@@ -1,12 +1,12 @@
 import React from "react";
-import {withRouter} from "react-router-dom";
-import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, Button, IconButton, Toolbar, Divider, Typography} from "@material-ui/core";
-
+import { withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { AppBar, Button, IconButton, Toolbar, Divider, Typography } from "@material-ui/core";
+import Dropdown from "react-bootstrap/Dropdown";
 import TeamTuneIcon from "./TeamTuneIcon";
 
-import {useSelector} from "react-redux";
-import {logout} from "../redux/actions";
+import { useSelector } from "react-redux";
+import { logout } from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Libre Franklin, sans-serif",
         fontWeight: 900,
     },
+    icon_type: {
+        marginLeft: 100,
+    },
 }));
 
 /**
@@ -43,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function Header(props) {
-    const {header, main_options, side_options, toolbar, logo_type} = useStyles();
+    const { header, main_options, side_options, toolbar, logo_type, icon_type } = useStyles();
 
 
     const user = useSelector((state) => {
@@ -70,16 +73,15 @@ function Header(props) {
     };
 
     const logoType = (
-        <Typography variant="h4"  classname={logo_type}>
+        <Typography variant="h4" classname={logo_type}>
             TeamTune
         </Typography>
     );
 
     const teamTuneLogo = (
-        <IconButton onClick={() => props.history.push("/")} color="inherit"
-        >
-            <div style={{width: 50}}>
-                <TeamTuneIcon/>
+        <IconButton onClick={() => props.history.push("/")} color="inherit" classname={icon_type}>
+            <div style={{ width: 50, marginLeft: -100 }}>
+                <TeamTuneIcon />
             </div>
             {logoType}
         </IconButton>
@@ -112,7 +114,32 @@ function Header(props) {
                         >
                             My TeamTune
                         </Button>,
-                        <Divider orientation="vertical" flexItem variant="middle"/>,
+                        /*
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" >
+                                Dropdown Button
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu placement="bottomCenter" className={main_options}>
+                                <Dropdown.Item as="button"
+                                    onClick={() => props.history.push("/myteamtune/account")}
+                                >
+                                    Account Settings
+                                </Dropdown.Item>
+                                <Dropdown.Item as="button"
+                                    onClick={() => props.history.push("/myteamtune/subcription")}
+                                >
+                                    Subscription Settings
+                                </Dropdown.Item>
+                                <Dropdown.Item as="button"
+                                    onClick={() => props.history.push("/myteamtune/deleteAccount")}
+                                >
+                                    Delete Account
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>,
+                        */
+                        <Divider orientation="vertical" flexItem variant="middle" />,
                         <Button
                             className={side_options}
                             color="inherit"
@@ -129,7 +156,7 @@ function Header(props) {
                         >
                             Premium
                         </Button>,
-                        <Divider orientation="vertical" flexItem variant="middle"/>,
+                        <Divider orientation="vertical" flexItem variant="middle" />,
                         <Button
                             className={side_options}
                             color="inherit"

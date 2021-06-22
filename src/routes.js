@@ -4,9 +4,13 @@ import MovieDetailsView from "./views/MovieDetailsView";
 import PlaylistListView from "./views/PlaylistListView";
 import BrowsePlaylistiew from "./views/BrowsePlaylistsView";
 import MyTeamTuneView from "./views/MyTeamTuneView";
+import MyTeamTuneAccountView from "./views/MyTeamTuneAccountView";
+import MyTeamTuneSubscriptionView from "./views/MyTeamTuneSubscriptionView";
+import MyTeamTuneDeleteAccountView from "./views/MyTeamTuneDeleteAccountView";
 import CallbackView from "./views/CallbackView";
 import CreatePlaylistView from "./views/CreatePlaylistView";
 import PlaylistDetailView from "./views/PlaylistDetailView";
+
 
 
 // routes within the movie database example app
@@ -49,6 +53,18 @@ const routes = [
     {
         path: "/myteamtune",
         component: MyTeamTuneView,
+    },
+    {
+        path: "/myteamtune/account",
+        component: MyTeamTuneAccountView,
+    },
+    {
+        path: "/myteamtune/subscription",
+        component: MyTeamTuneSubscriptionView,
+    },
+    {
+        path: "/myteamtune/deleteAccount",
+        component: MyTeamTuneDeleteAccountView,
     },
     {
         path: "/callback",
