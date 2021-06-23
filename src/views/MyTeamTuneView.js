@@ -9,8 +9,17 @@ import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
  */
 
 function MyTeamTuneView(props) {
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+      if (user.user) {
+          props.history.push("/");
+      }
+  }, [user, props.history]);
+
   return (
-    <MyTeamTuneComponent/>
+    <MyTeamTuneComponent user={user}/>
   );
 
 }

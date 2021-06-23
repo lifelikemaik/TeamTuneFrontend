@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function VerticalTabs() {
+function VerticalTabs(props) {
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -84,14 +85,15 @@ function VerticalTabs() {
                 <Tab label="Subscription" {...a11yProps(1)} />
                 <Tab label="Delete TeamTune Account" {...a11yProps(2)} />
             </Tabs>
-            {/*
+            {/*}
             <TabPanel value={value} index={0}>
-                <MyTeamTuneAccountComponent />
+                <MyTeamTuneAccountComponent user={props.user}/>
             </TabPanel>
-            */}
+    */}
             <TabPanel value={value} index={1}>
                 <MyTeamTuneSubscriptionComponent />
             </TabPanel>
+
             <TabPanel value={value} index={2}>
                 <MyTeamTuneDeleteAccountComponent />
             </TabPanel>
@@ -105,7 +107,7 @@ function VerticalTabs() {
  */
 function MyTeamTuneComponent(props) {
     return (
-        <VerticalTabs />
+        <VerticalTabs user={props.user} />
     );
 }
 

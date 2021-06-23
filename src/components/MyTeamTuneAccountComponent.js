@@ -49,7 +49,8 @@ function MyTeamTuneAccountComponent(props) {
 
     const [loginError, setLoginError] = React.useState("");
 
-    useEffect(() => {
+    useEffect(() => { 
+        console.log(props.user)
         if (props.user.error) {
             setLoginError(props.user.error);
         } else {

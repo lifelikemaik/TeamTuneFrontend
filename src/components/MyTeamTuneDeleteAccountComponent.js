@@ -40,10 +40,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 /**
- * For presenting and changing the user settings and more
+ * For deleting the account of a logged in user
  * @param {props} props
  */
-
 
 function MyTeamTuneDeleteAccountComponent(props) {
 

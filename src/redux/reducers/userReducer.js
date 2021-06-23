@@ -29,6 +29,10 @@ export default function user(state = getUser(), action) {
             return { user: action.playlists };
         case "LOGIN_FAILURE":
             return { error: "Password or username incorrect." };
+        case "DELETE_SUCCESS":
+            return { user: action.user };
+        case "DELETE_FAILURE":
+            return { error: "Cannot delete user account"};
         case "LOGIN_RESET":
             return {};
         case "LOGOUT":

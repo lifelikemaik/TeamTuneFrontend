@@ -55,18 +55,6 @@ const routes = [
         component: MyTeamTuneView,
     },
     {
-        path: "/myteamtune/account",
-        component: MyTeamTuneAccountView,
-    },
-    {
-        path: "/myteamtune/subscription",
-        component: MyTeamTuneSubscriptionView,
-    },
-    {
-        path: "/myteamtune/deleteAccount",
-        component: MyTeamTuneDeleteAccountView,
-    },
-    {
         path: "/callback",
         component: CallbackView,
     },
