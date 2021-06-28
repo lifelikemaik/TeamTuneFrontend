@@ -158,9 +158,11 @@ function CreatePlaylistComponent(props) {
         return {
             title: playlistTitle,
             publicity: false,
+            spotify_id: "",
             is_own_playlist: true,
             share_link: "",
             joined_people: [],
+            is_teamtune_playlist: true,
             music_info: {
                 durations_ms: 0,
                 duration_target: duration,

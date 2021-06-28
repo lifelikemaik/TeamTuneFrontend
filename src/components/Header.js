@@ -70,7 +70,7 @@ function Header(props) {
     };
 
     const logoType = (
-        <Typography variant="h4"  classname={logo_type}>
+        <Typography variant="h4"  className={logo_type}>
             TeamTune
         </Typography>
     );

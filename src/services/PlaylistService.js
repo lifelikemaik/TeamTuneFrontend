@@ -33,6 +33,20 @@ export default class PlaylistService {
         });
     }
 
+    static getUserPlaylists() {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                this.baseURL()+"/my_playlists",
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static getPlaylist(id) {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
