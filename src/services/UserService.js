@@ -47,17 +47,4 @@ export default class UserService {
         window.localStorage.removeItem("jwtToken");
     }
 
-    static getUserPlaylists() {
-        return new Promise(async (resolve, reject) => {
-            HttpService.get(
-                this.baseURL()+"/my_playlists",
-                function (data) {
-                    resolve(data);
-                },
-                function (textStatus) {
-                    reject(textStatus);
-                }
-            );
-        });
-    }
 }

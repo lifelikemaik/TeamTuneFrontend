@@ -25,8 +25,6 @@ export default function user(state = getUser(), action) {
     switch (action.type) {
         case "LOGIN_SUCCESS":
             return { user: action.user };
-        case "GETUSERPLAYLISTS_SUCCESS":
-            return { user: action.playlists };
         case "LOGIN_FAILURE":
             return { error: "Password or username incorrect." };
         case "LOGIN_RESET":

@@ -12,7 +12,7 @@ import Loading from "../components/Loading";
  */
 function PlaylistListView(props) {
     // state from the redux store
-    const playlists = useSelector((state) => state.user.user.playlists);
+    const playlists = useSelector((state) => state.entities.playlists);
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
