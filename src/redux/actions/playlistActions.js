@@ -1,16 +1,16 @@
-import PlaylistService from "../../services/PlaylistService";
-import UserService from "../../services/UserService";
+import PlaylistService from '../../services/PlaylistService';
+import UserService from '../../services/UserService';
 
 export function getPlaylists() {
     // when the backend call was successfull and the movies are retrieved
     // in the dispatcher the movies will be added to the global state
     function onSuccess(playlists) {
-        return { type: "GETPLAYLISTS_SUCCESS", playlists: playlists };
+        return { type: 'GETPLAYLISTS_SUCCESS', playlists: playlists };
     }
     // when the backend call was failed
     function onFailure(error) {
         // error handling
-        console.log("failed to get the playlists", error);
+        console.log('failed to get the playlists', error);
     }
 
     return async (dispatch) => {
@@ -29,12 +29,12 @@ export function getPublicPlaylists() {
     // when the backend call was successfull and the playlists are retrieved
     // in the dispatcher the playlists will be added to the global state
     function onSuccess(playlists) {
-        return { type: "GETPUBLICPLAYLISTS_SUCCESS", playlists: playlists };
+        return { type: 'GETPUBLICPLAYLISTS_SUCCESS', playlists: playlists };
     }
     // when the backend call was failed
     function onFailure(error) {
         // error handling
-        console.log("failed to get the public playlists", error);
+        console.log('failed to get the public playlists', error);
     }
 
     return async (dispatch) => {
@@ -51,10 +51,10 @@ export function getPublicPlaylists() {
 
 export function getUserPlaylists() {
     function onSuccess(playlists) {
-        return { type: "GETUSERPLAYLISTS_SUCCESS", playlists: playlists };
+        return { type: 'GETUSERPLAYLISTS_SUCCESS', playlists: playlists };
     }
     function onFailure(error) {
-        console.log("failed to get users playlists", error);
+        console.log('failed to get users playlists', error);
     }
 
     return async (dispatch) => {
@@ -67,12 +67,30 @@ export function getUserPlaylists() {
     };
 }
 
-export const getPlaylist = (id) => {
-    function onSuccess(playlist) {
-        return { type: "GETPLAYLIST_SUCCESS", playlist: playlist };
+export function searchForSong(songName, currentPlaylist) {
+    function onSuccess(songs) {
+        return { type: 'SEARCHFORSONG_SUCCESS', songs: songs, currentPlaylist: currentPlaylist};
     }
     function onFailure(error) {
-        console.log("failed to load a playlist", error);
+        console.log('failed to search for song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const songs = await PlaylistService.searchForSong(songName);
+            dispatch(onSuccess(songs));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export const getPlaylist = (id) => {
+    function onSuccess(playlist) {
+        return { type: 'GETPLAYLIST_SUCCESS', playlist: playlist };
+    }
+    function onFailure(error) {
+        console.log('failed to load a playlist', error);
     }
 
     return async (dispatch, getState) => {
@@ -87,10 +105,10 @@ export const getPlaylist = (id) => {
 
 export function addPlaylist(playlist) {
     function onSuccess() {
-        return { type: "ADDPlaylist_SUCCESS" };
+        return { type: 'ADDPlaylist_SUCCESS' };
     }
     function onFailure(error) {
-        console.log("add playlist failure", error);
+        console.log('add playlist failure', error);
     }
 
     return async (dispatch) => {

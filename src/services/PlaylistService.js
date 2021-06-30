@@ -82,4 +82,24 @@ export default class PlaylistService {
             );
         });
     }
+
+    static searchForSong(songName) {
+        const url = PlaylistService.baseURL() + '/songs/' + songName
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined) {
+                        resolve(data);
+                    } else {
+                        reject('Error while searching for song');
+                    }
+                },
+                function (textStatus) {
+                    console.log('error');
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }
