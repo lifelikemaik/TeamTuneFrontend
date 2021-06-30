@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         width: '100%',
     },
+    addToPlaylistButton: {
+        float: 'right',
+        marginLeft: 'auto'
+    }
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -355,6 +359,14 @@ function PlaylistDetailsComponent(props) {
                         onChange={(event, value) => console.log(value)}
                         className={classes.textField}
                         options={foundSongs.map((song) => song.name)}
+                        renderOption={(option) => (
+                            <React.Fragment>
+                                <div className={classes.searchRow}>
+                                    <span>{option}</span>
+                                    <Button className={classes.addToPlaylistButton}>Add to Playlist</Button>
+                                </div>
+                            </React.Fragment>
+                        )}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
