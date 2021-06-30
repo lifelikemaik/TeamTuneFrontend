@@ -177,10 +177,20 @@ function PlaylistListComponent(props) {
                 <Typography variant="h4" align="center">
                     Welcome to the TeamTune App!
                 </Typography>
-                <Divider className={classes.headerDivider}/>
-                <Typography align="center">
-                    Here are your playlists on TeamTune.
-                </Typography>
+            </div>
+            <div>
+                {props.isBrowse ? (
+                    <div/>
+                ) : (
+                    <Button
+                        onClick={props.onAddPlaylist}
+                        variant="contained"
+                        color="primary"
+                        className={classes.addMovieButton}
+                    >
+                        Add Playlist
+                    </Button>
+                )}
             </div>
             <Paper className={classes.playlistListPaper}>
                 <TableContainer>
@@ -200,7 +210,7 @@ function PlaylistListComponent(props) {
                                         width={headCell.width}
                                     />
                                 ))}
-                                <TableCell width="20%">Buttons</TableCell>
+                                <TableCell width="20%">Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -241,20 +251,7 @@ function PlaylistListComponent(props) {
                     onChangeRowsPerPage={onChangeRowsPerPage}
                 />
             </Paper>
-            <div>
-                {props.isBrowse ? (
-                    <div/>
-                ) : (
-                    <Button
-                        onClick={props.onAddPlaylist}
-                        variant="contained"
-                        color="primary"
-                        className={classes.addMovieButton}
-                    >
-                        Add Playlist
-                    </Button>
-                )}
-            </div>
+
 
         </div>
     );
