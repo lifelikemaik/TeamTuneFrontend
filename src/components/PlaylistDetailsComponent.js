@@ -24,6 +24,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Delete } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -99,8 +100,17 @@ function PlaylistDetailsComponent(props) {
 
     const foundSongsState = useSelector((state) => state.entities.songs);
 
+    const autoCompleteRef = React.createRef();
+
     useEffect(() => {
-        console.log('foundSongsState change: ', foundSongsState);
+        console.log('foundSongs: ', foundSongsState);
+        if (!foundSongsState) {
+            setFoundSongs([]);
+        } else {
+            setFoundSongs(foundSongsState);
+            const textField = autoCompleteRef.current.children[1].children[0]
+            textField.focus();
+        }
     }, [foundSongsState]);
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -317,6 +327,55 @@ function PlaylistDetailsComponent(props) {
                 <h2>
                     {playlist.title} - {durationHours}:{durationMinutesModulo}
                 </h2>
+            </div>
+            {/*
+            <div className={classes.searchRow}>
+                <div className={classes.textInput}>
+                    <TextField
+                        className={classes.textField}
+                        label="Search for a song"
+                        type="search"
+                        onChange={onChangeSearch}
+                    />
+                </div>
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => onSearchSong(searchString)}
+                    >
+                        Search
+                    </Button>
+                </div>
+            </div>
+            */}
+            <div className={classes.searchRow}>
+                <div className={classes.textInput}>
+                    <Autocomplete
+                        onChange={(event, value) => console.log(value)}
+                        className={classes.textField}
+                        options={foundSongs.map((song) => song.name)}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                ref={autoCompleteRef}
+                                onChange={(event, value) => onChangeSearch(event) }
+                                label="Search for songs"
+                                variant="outlined"
+                                fullWidth
+                            />
+                        )}
+                    />
+                </div>
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => onSearchSong(searchString)}
+                    >
+                        Search
+                    </Button>
+                </div>
             </div>
             <div>
                 <Paper className={classes.playlistListPaper}>
