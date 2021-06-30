@@ -1,4 +1,5 @@
 import PlaylistService from "../../services/PlaylistService";
+import UserService from "../../services/UserService";
 
 export function getPlaylists() {
     // when the backend call was successfull and the movies are retrieved
@@ -48,8 +49,25 @@ export function getPublicPlaylists() {
     };
 }
 
+export function getUserPlaylists() {
+    function onSuccess(playlists) {
+        return { type: "GETUSERPLAYLISTS_SUCCESS", playlists: playlists };
+    }
+    function onFailure(error) {
+        console.log("failed to get users playlists", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            let playlists = await PlaylistService.getUserPlaylists();
+            dispatch(onSuccess(playlists));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export const getPlaylist = (id) => {
-    console.log('getplaylist')
     function onSuccess(playlist) {
         return { type: "GETPLAYLIST_SUCCESS", playlist: playlist };
     }
@@ -60,7 +78,6 @@ export const getPlaylist = (id) => {
     return async (dispatch, getState) => {
         try {
             let playlist = await PlaylistService.getPlaylist(id);
-            console.log('playlist. ', playlist);
             dispatch(onSuccess(playlist));
         } catch (e) {
             onFailure(e);

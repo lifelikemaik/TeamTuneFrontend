@@ -20,7 +20,7 @@ function CreatePlaylistView(props) {
         // trigger redux action add playlist
         props.addPlaylist(playlist);
         // navigate back to the playlist list
-        props.history.push("/");
+        props.history.push("/playlists");
     };
 
     return (

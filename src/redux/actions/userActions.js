@@ -69,13 +69,4 @@ export function getUserPlaylists() {
     function onFailure(error) {
         console.log("failed to get users playlists", error);
     }
-
-    return async (dispatch) => {
-        try {
-            let playlists = await UserService.getUserPlaylists();
-            dispatch(onSuccess(playlists));
-        } catch (e) {
-            onFailure(e);
-        }
-    };
 }

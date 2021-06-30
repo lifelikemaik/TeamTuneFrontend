@@ -101,6 +101,19 @@ function CreatePlaylistComponent(props) {
     const [tempo, setTempo] = React.useState("medium");
     const [valence, setValence] = React.useState("medium");
 
+
+    let settingDescriptions = new Map();
+    settingDescriptions.set("danceability", "How suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity")
+        .set("energy", "Perceptual measure of intensity and activity.Typically, energetic tracks feel fast, loud, and noisy")
+        .set("acousticness", "A confidence measure of whether the track is acoustic as opposed to electric or electronic means")
+        .set("instrumentalness", "Whether a track contains no vocals. Rap or spoken word tracks are clearly “vocal”")
+        .set("liveness", "Detects the presence of an audience in the recording")
+        .set("loudness", "The overall loudness of a track in decibels (dB) averaged across the entire track")
+        .set("speechiness", "Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the higher the value")
+        .set("tempo", "The overall estimated tempo of a track in beats per minute (BPM)")
+        .set("key", "The key the track is in")
+        .set("valence", "A measure describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)");
+
     /**
      * Used to convert Radio buttons to values for backend
      * @param string
@@ -138,20 +151,18 @@ function CreatePlaylistComponent(props) {
                 return null;
         }
     }
-
-    const canBeSaved = () => {
-        console.log(!!playlistTitle, !!duration)
-        return !!playlistTitle && !!duration
-    }
+    
 
     // creating a object with all relevant data to update or create a changed movie
     const packPlaylist = () => {
         return {
             title: playlistTitle,
             publicity: false,
+            spotify_id: "",
             is_own_playlist: true,
             share_link: "",
             joined_people: [],
+            is_teamtune_playlist: true,
             music_info: {
                 durations_ms: 0,
                 duration_target: duration,
@@ -210,7 +221,6 @@ function CreatePlaylistComponent(props) {
     };
 
     const onChangeDuration = (value) => {
-        console.log(value.target.value);
         setDuration(value.target.value);
     };
 
@@ -267,36 +277,35 @@ function CreatePlaylistComponent(props) {
                     <FilterSettingRow
                         title={"Danceability"}
                         value={danceability}
+                        description={settingDescriptions.get("danceability")}
                         onChange={setDanceability}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Energy"}
                         value={energy}
+                        description={settingDescriptions.get("energy")}
                         onChange={setEnergy}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Acousticness"}
                         value={acousticness}
+                        description={settingDescriptions.get("acousticness")}
                         onChange={setAcousticness}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Instrumentality"}
                         value={instrumentalness}
+                        description={settingDescriptions.get("instrumentalness")}
                         onChange={setInstrumentalness}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Key"}
-                        value={key}
-                        onChange={setKey}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Liveness"}
                         value={liveness}
+                        description={settingDescriptions.get("liveness")}
                         onChange={setLiveness}/>
                 </div>
 
@@ -304,24 +313,35 @@ function CreatePlaylistComponent(props) {
                     <FilterSettingRow
                         title={"Loudness"}
                         value={loudness}
+                        description={settingDescriptions.get("loudness")}
                         onChange={setLoudness}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Speechiness"}
                         value={speechiness}
+                        description={settingDescriptions.get("speechiness")}
                         onChange={setSpeechiness}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Tempo"}
                         value={tempo}
+                        description={settingDescriptions.get("tempo")}
                         onChange={setTempo}/>
+                </div>
+                <div>
+                    <FilterSettingRow
+                        title={"Key"}
+                        value={key}
+                        description={settingDescriptions.get("key")}
+                        onChange={setKey}/>
                 </div>
                 <div>
                     <FilterSettingRow
                         title={"Valence"}
                         value={valence}
+                        description={settingDescriptions.get("valence")}
                         onChange={setValence}/>
                 </div>
             </div>

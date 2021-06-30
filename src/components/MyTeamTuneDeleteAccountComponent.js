@@ -27,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
         display: "flex"
     },
     deleteAccButton: {
+        marginTop: 10,
+        backgroundColor: "#28DF99",
+        color: "black",
+        width: "40%",
+        height: "40px",
+        fontSize: 17,
+        '&:hover': {
             backgroundColor: "#1db954",
-            color: "white",
-            width: "40%",
-            '&:hover': {
-                backgroundColor: "#1db954",
-                opacity: "80%",
-            },
+            color: "black",
+            opacity: "90%",
+        },
     },
 }));
 
@@ -47,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 function MyTeamTuneDeleteAccountComponent(props) {
 
     const classes = useStyles();
-    
+
     const [username, deleteAccount] = React.useState("");
 
 
@@ -55,7 +59,7 @@ function MyTeamTuneDeleteAccountComponent(props) {
         e.preventDefault();
         props.onDeleteAccount(username);
     };
-    
+
     return (
         <div className={classes.deleteAccRoot}>
             <Paper className={classes.deleteAccPaper} component="form">
@@ -65,9 +69,9 @@ function MyTeamTuneDeleteAccountComponent(props) {
                     </Typography>
                 </div>
                 <div className={classes.deleteAccButtons}>
-                    <Button 
-                    className={classes.deleteAccButton} 
-                    onClick={onDeleteAccount}>
+                    <Button
+                        className={classes.deleteAccButton}
+                        onClick={onDeleteAccount}>
                         Delete Account
                     </Button>
                 </div>

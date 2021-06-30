@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Checkbox} from "@material-ui/core";
+import {Checkbox, Tooltip, withStyles} from "@material-ui/core";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {withRouter} from "react-router-dom";
-
+import HelpIcon from '@material-ui/icons/HelpOutline';
+import SvgIcon from "@material-ui/icons/Help";
 
 function FilterSettingRow(props) {
 
@@ -25,6 +26,18 @@ function FilterSettingRow(props) {
         setPreviousValue(newAlignment);
     };
 
+    const LightTooltip = withStyles((theme) => ({
+        tooltip: {
+            boxShadow: theme.shadows[1],
+            fontSize: 15,
+        },
+    }))(Tooltip);
+
+    const customizedTooltip = (
+        <LightTooltip title={props.description} arrow placement="right">
+            <SvgIcon component={HelpIcon} fontSize="small"/>
+        </LightTooltip>
+    );
 
     return (
         <div>
@@ -34,7 +47,8 @@ function FilterSettingRow(props) {
                     onChange={handleChange}
                     inputProps={{'aria-label': 'primary checkbox'}}
                 />
-                <span>{props.title}</span>
+                <span>{props.title} </span>
+                {customizedTooltip}
             </div>
             <div>
                 <ToggleButtonGroup
