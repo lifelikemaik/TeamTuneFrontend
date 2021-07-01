@@ -14,7 +14,6 @@ import ScrollContainer from "./components/ScrollContainer";
 import reducers from "./redux/reducers";
 import routes from "./routes";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import AppTheme from "./theming/themetypes";
 import AppThemeOptions from "./theming/themes";
 
@@ -62,7 +61,6 @@ function App() {
                                     <Route key={i} {...route} />
                                 ))}
                             </Switch>
-                            <Footer />
                         </ScrollContainer>
                     </React.Fragment>
                 </Provider>

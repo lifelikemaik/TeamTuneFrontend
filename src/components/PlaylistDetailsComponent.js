@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import React from "react";
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary, Button, IconButton,
+    AccordionSummary, IconButton,
     List,
     ListItem,
-    ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -75,16 +75,16 @@ function PlaylistDetailsComponent(props) {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const sortHeaders =(fieldSet) => {
+    const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
         let localSortedDirection = sortedDirection;
         if (fieldSet) {
             if (prevSortedField && prevSortedField === fieldSet && localSortedDirection === 'asc') {
-                localSortedDirection ='desc';
+                localSortedDirection = 'desc';
             } else if (prevSortedField && prevSortedField === fieldSet && localSortedDirection === 'desc') {
                 localSortedDirection = null;
             } else {
-                localSortedDirection ='asc';
+                localSortedDirection = 'asc';
             }
             setSortedDirection(localSortedDirection);
             setPrevSortedField(fieldSet)
@@ -104,6 +104,22 @@ function PlaylistDetailsComponent(props) {
         }
     }
 
+    const getProperty = (property) => {
+        if (!(property[1] === "Not set")) {
+            return (
+                <span className={classes.descriptionSpan}>{property[0]}: {property[1] + "     "}</span>
+            )
+        }
+    };
+
+    const getPropertyListItem = (property) => {
+        if (!(property[1] === "Not set")) {
+            return (
+                <ListItem>{property[0]}: {property[1]}</ListItem>
+            )
+        }
+    };
+
     const durationMinutes = playlist.music_info.durations_ms / (1000 * 60);
     const durationHours = Math.trunc(durationMinutes / 60);
     const durationMinutesModulo = Math.round(durationMinutes % 60);
@@ -119,128 +135,99 @@ function PlaylistDetailsComponent(props) {
         }
     }
 
-    const acousticness = getStringValue(playlist.music_info.acousticness_min, playlist.music_info.acousticness_max);
-    const danceability = getStringValue(playlist.music_info.danceability_min, playlist.music_info.danceability_max);
-    const energy = getStringValue(playlist.music_info.energy_min, playlist.music_info.energy_max);
-    const instrumentalness = getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max);
-    const key = getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max);
-    const liveness = getStringValue(playlist.music_info.liveness_min, playlist.music_info.liveness_max);
-    const loudness = getStringValue(playlist.music_info.loudness_min, playlist.music_info.loudness_max);
-    const speechiness = getStringValue(playlist.music_info.speechiness_min, playlist.music_info.speechiness_max);
-    const tempo = getStringValue(playlist.music_info.tempo_min, playlist.music_info.tempo_max);
-    const valence = getStringValue(playlist.music_info.valence_min, playlist.music_info.valence_max);
+    const properties = [
+        ["Acousticness", getStringValue(playlist.music_info.acousticness_min, playlist.music_info.acousticness_max)],
+        ["Danceability", getStringValue(playlist.music_info.danceability_min, playlist.music_info.danceability_max)],
+        ["Energy", getStringValue(playlist.music_info.energy_min, playlist.music_info.energy_max)],
+        ["Instrumentalness", getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max)],
+        ["Key", getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max)],
+        ["Liveness", getStringValue(playlist.music_info.liveness_min, playlist.music_info.liveness_max)],
+        ["Loudness", getStringValue(playlist.music_info.loudness_min, playlist.music_info.loudness_max)],
+        ["Speechiness", getStringValue(playlist.music_info.speechiness_min, playlist.music_info.speechiness_max)],
+        ["Tempo", getStringValue(playlist.music_info.tempo_min, playlist.music_info.tempo_max)],
+        ["Valence", getStringValue(playlist.music_info.valence_min, playlist.music_info.valence_max)]
+    ];
 
-    return(<div className={classes.root}>
-                <h1>Playlist Overview</h1>
-                <hr/>
-                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography className={classes.heading}>Accordion 1</Typography>
-                        <Typography className={classes.secondaryHeading}>
-                            {expanded ? (<div></div>) : (<div>
-                                <span className={classes.descriptionSpan}>Acousticness: {acousticness}</span>
-                                <span className={classes.descriptionSpan}>Danceability: {danceability}</span>
-                                <span className={classes.descriptionSpan}>Energy: {energy}</span>
-                                <span className={classes.descriptionSpan}>Instrumentalness: {instrumentalness}</span>
-                                <span className={classes.descriptionSpan}>Key: {key}</span>
-                                <span className={classes.descriptionSpan}>Liveness: {liveness}</span>
-                                <span className={classes.descriptionSpan}>Loudness: {loudness}</span>
-                                <span className={classes.descriptionSpan}>Speechiness: {speechiness}</span>
-                                <span className={classes.descriptionSpan}>Tempo: {tempo}</span>
-                                <span className={classes.descriptionSpan}>Valence: {valence}</span>
-                            </div>)}
+    return (<div className={classes.root}>
+        <h1>Playlist Overview</h1>
 
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            <List component="nav" aria-label="secondary mailbox folders">
-                                <ListItem>
-                                    Acousticness: {acousticness}
-                                </ListItem>
-                                <ListItem>
-                                    Danceability: {danceability}
-                                </ListItem>
-                                <ListItem>
-                                    Energy: {energy}
-                                </ListItem>
-                                <ListItem>
-                                    Instrumentalness: {instrumentalness}
-                                </ListItem>
-                                <ListItem>
-                                    Key: {key}
-                                </ListItem>
-                                <ListItem>
-                                    Liveness: {liveness}
-                                </ListItem>
-                                <ListItem>
-                                    Loudness: {loudness}
-                                </ListItem>
-                                <ListItem>
-                                    Speechiness: {speechiness}
-                                </ListItem>
-                                <ListItem>
-                                    Tempo: {tempo}
-                                </ListItem>
-                                <ListItem>
-                                    Valence: {valence}
-                                </ListItem>
-                            </List>
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <hr/>
+        {(!playlist.is_teamtune_playlist ? <div></div> :
                 <div>
-                    <h2>{playlist.title} - {durationHours}:{durationMinutesModulo}</h2>
-                </div>
-                <div>
-                    <Paper className={classes.playlistListPaper}>
-                        <TableContainer>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="right" onClick={() => sortHeaders('number')}>
-                                            #
-                                        </TableCell>
-                                        <TableCell align="right" onClick={() => sortHeaders('title')}>
-                                            Title
-                                        </TableCell>
-                                        <TableCell align="right" onClick={() => sortHeaders('interpret')}>
-                                            Interpret
-                                        </TableCell>
-                                        <TableCell align="right" onClick={() => sortHeaders('added_by')}>
-                                            Added by
-                                        </TableCell>
-                                        <TableCell align="right" onClick={() => sortHeaders('duration_ms')}>
-                                            Duration
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            Delete
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {playlist.music_info.songs.map((song, index) => (
-                                        <TableRow key={song.interpret}>
-                                            <TableCell align="right" component="th" scope="row">{index}</TableCell>
-                                            <TableCell align="right">{song.title}</TableCell>
-                                            <TableCell align="right">{song.interpret}</TableCell>
-                                            <TableCell align="right">{song.added_by}</TableCell>
-                                            <TableCell align="right">{song.duration_ms}</TableCell>
-                                            <TableCell align="right"><IconButton><Delete/></IconButton></TableCell>
-                                        </TableRow>
+                    <hr/>
+                    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon/>}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography className={classes.heading}>Playlist Properties</Typography>
+                            <Typography className={classes.secondaryHeading}>
+                                {expanded ? (<div></div>) : (<div>
+                                    {properties.map(getProperty)}
+                                </div>)}
 
-                                        ))}
-                                </TableBody>
-
-                            </Table>
-                        </TableContainer>
-                    </Paper>
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>
+                                <List component="nav" aria-label="secondary mailbox folders">
+                                    {properties.map(getPropertyListItem)}
+                                </List>
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                    <hr/>
                 </div>
+        )}
+
+
+        <div>
+            <h2>{playlist.title} - {durationHours}:{durationMinutesModulo}</h2>
+        </div>
+        <div>
+            <Paper className={classes.playlistListPaper}>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="right" onClick={() => sortHeaders('number')}>
+                                    #
+                                </TableCell>
+                                <TableCell align="right" onClick={() => sortHeaders('title')}>
+                                    Title
+                                </TableCell>
+                                <TableCell align="right" onClick={() => sortHeaders('interpret')}>
+                                    Interpret
+                                </TableCell>
+                                <TableCell align="right" onClick={() => sortHeaders('added_by')}>
+                                    Added by
+                                </TableCell>
+                                <TableCell align="right" onClick={() => sortHeaders('duration_ms')}>
+                                    Duration
+                                </TableCell>
+                                <TableCell align="right">
+                                    Delete
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {playlist.music_info.songs.map((song, index) => (
+                                <TableRow key={song.interpret}>
+                                    <TableCell align="right" component="th" scope="row">{index}</TableCell>
+                                    <TableCell align="right">{song.title}</TableCell>
+                                    <TableCell align="right">{song.interpret}</TableCell>
+                                    <TableCell align="right">{song.added_by}</TableCell>
+                                    <TableCell align="right">{song.duration_ms}</TableCell>
+                                    <TableCell align="right"><IconButton><Delete/></IconButton></TableCell>
+                                </TableRow>
+
+                            ))}
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+            </Paper>
+        </div>
     </div>);
 }
 
@@ -252,5 +239,5 @@ PlaylistDetailsComponent.propTypes = {
     onSave: PropTypes.func,
 };
 
-// withRouter() allows accsing the necessary functionality to navigate from this component
+// withRouter() allows accessing the necessary functionality to navigate from this component
 export default withRouter(PlaylistDetailsComponent);

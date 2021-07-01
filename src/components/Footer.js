@@ -25,16 +25,7 @@ function Footer(props) {
 
     return (
         <div className={classes.footerRoot}>
-            <CopyrightIcon size="small" />
-            <Typography variant="h6">
-                <Link
-                    href="https://wwwmatthes.in.tum.de/pages/1mqqqoqe7gapz/SEBA-Master-Web-Application-Engineering"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    sebis
-                </Link>
-            </Typography>
+
         </div>
     );
 }

@@ -32,9 +32,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 110,
     },
     logo_type: {
-        //TODO Font is not applied yet
         fontFamily: "Libre Franklin, sans-serif",
-        fontWeight: 900,
     },
 }));
 
