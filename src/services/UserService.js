@@ -47,4 +47,35 @@ export default class UserService {
         window.localStorage.removeItem("jwtToken");
     }
 
+    static deleteAccount(user, pass) {
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                `${UserService.baseURL()}/deleteAccount`,
+                {
+                    username: user,
+                    password: pass,
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static getUserPlaylists() {
+        return new Promise(async (resolve, reject) => {
+            HttpService.get(
+                this.baseURL()+"/my_playlists",
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }
