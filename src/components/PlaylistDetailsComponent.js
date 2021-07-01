@@ -130,12 +130,20 @@ function PlaylistDetailsComponent(props) {
         props.searchForSong(songName);
     };
 
+    const getAllArtistsString = (artists) => {
+        const reducer = (accumulator, currentValue) => accumulator + currentValue.name + ', ';
+        return artists.reduce(reducer, '').slice(0, -2);
+    }
+
+    const getStringFromMilliseconds = (milliseconds) => {
+        const minutes = Math.floor(milliseconds / 1000 / 60);
+        const seconds = Math.round((milliseconds / 1000) % 60);
+        return minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+    }
+
     const onAddSongToPlaylist = (song) => {
         const playlistId = props.playlist.spotify_id;
         const songId = song.spotify_id;
-        console.log('props.playlist: ', props.playlist);
-        console.log('songId: ', songId);
-        console.log('playlistId: ', playlistId);
         if (songId && playlistId) {
             props.addSongToPlaylist(playlistId, songId);
         } else {
@@ -369,14 +377,13 @@ function PlaylistDetailsComponent(props) {
             <div className={classes.searchRow}>
                 <div className={classes.textInput}>
                     <Autocomplete
-                        onChange={(event, value) => console.log(value)}
                         className={classes.textField}
                         options={foundSongs}
                         getOptionLabel={(option) => option.name}
                         renderOption={(option) => (
                             <React.Fragment>
                                 <div className={classes.searchRow}>
-                                    <span>{option.name}</span>
+                                    <span>{option.name} - {getAllArtistsString(option.artists)} - {getStringFromMilliseconds(option.duration_ms)}</span>
                                     <Button className={classes.addToPlaylistButton} onClick={() => onAddSongToPlaylist(option)}>Add to Playlist</Button>
                                 </div>
                             </React.Fragment>
