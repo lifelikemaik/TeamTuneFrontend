@@ -90,20 +90,21 @@ export function searchForSong(songName, currentPlaylist) {
 }
 
 export function addSongToPlaylist(playlistId, songId) {
-    function onSuccess(songs) {
+    function onSuccess() {
         return { type: 'ADDSONG_SUCCESS' };
     }
     function onFailure(error) {
-        console.log('failed to search for song: ', error);
+        console.log('failed to add song: ', error);
     }
 
     return async (dispatch) => {
         try {
-            const songs = await PlaylistService.addSongToPlaylist(
+            const result = await PlaylistService.addSongToPlaylist(
                 playlistId,
                 songId
             );
-            dispatch(onSuccess(songs));
+            console.log('result: ', result);
+            dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
         }

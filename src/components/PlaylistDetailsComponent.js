@@ -130,10 +130,17 @@ function PlaylistDetailsComponent(props) {
         props.searchForSong(songName);
     };
 
-    const onAddSongToPlaylist = (songId) => {
+    const onAddSongToPlaylist = (song) => {
+        const playlistId = props.playlist.spotify_id;
+        const songId = song.spotify_id;
+        console.log('props.playlist: ', props.playlist);
         console.log('songId: ', songId);
-        const spotify_id = props.playlist.spotify_id
-        console.log('spotify_id: ', spotify_id);
+        console.log('playlistId: ', playlistId);
+        if (songId && playlistId) {
+            props.addSongToPlaylist(playlistId, songId);
+        } else {
+            console.error('No songId or no spotify_id of playlist found, playlist probably has no spotify_id.')
+        }
     }
 
     const sortHeaders = (fieldSet) => {
@@ -364,11 +371,12 @@ function PlaylistDetailsComponent(props) {
                     <Autocomplete
                         onChange={(event, value) => console.log(value)}
                         className={classes.textField}
-                        options={foundSongs.map((song) => song.name)}
+                        options={foundSongs}
+                        getOptionLabel={(option) => option.name}
                         renderOption={(option) => (
                             <React.Fragment>
                                 <div className={classes.searchRow}>
-                                    <span>{option}</span>
+                                    <span>{option.name}</span>
                                     <Button className={classes.addToPlaylistButton} onClick={() => onAddSongToPlaylist(option)}>Add to Playlist</Button>
                                 </div>
                             </React.Fragment>
