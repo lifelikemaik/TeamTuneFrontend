@@ -102,4 +102,19 @@ export default class PlaylistService {
             );
         });
     }
+
+    static addSongToPlaylist(playlistId, songId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId + '/songs/' + songId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

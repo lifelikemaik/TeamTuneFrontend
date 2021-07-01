@@ -14,6 +14,8 @@ export default function entities(state = {}, action) {
             return { ...state };
         case 'ADDPlaylist_SUCCESS':
             return { ...state };
+        case 'ADDSONG_SUCCESS':
+            return { ...state };
         case 'SEARCHFORSONG_SUCCESS':
             return { songs: action.songs };
         default:

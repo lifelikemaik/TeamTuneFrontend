@@ -130,6 +130,12 @@ function PlaylistDetailsComponent(props) {
         props.searchForSong(songName);
     };
 
+    const onAddSongToPlaylist = (songId) => {
+        console.log('songId: ', songId);
+        const spotify_id = props.playlist.spotify_id
+        console.log('spotify_id: ', spotify_id);
+    }
+
     const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
         let localSortedDirection = sortedDirection;
@@ -363,7 +369,7 @@ function PlaylistDetailsComponent(props) {
                             <React.Fragment>
                                 <div className={classes.searchRow}>
                                     <span>{option}</span>
-                                    <Button className={classes.addToPlaylistButton}>Add to Playlist</Button>
+                                    <Button className={classes.addToPlaylistButton} onClick={() => onAddSongToPlaylist(option)}>Add to Playlist</Button>
                                 </div>
                             </React.Fragment>
                         )}
@@ -472,11 +478,9 @@ function PlaylistDetailsComponent(props) {
 
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {
-    movie: PropTypes.object,
-    new: PropTypes.bool,
-    onCreate: PropTypes.func,
-    onSave: PropTypes.func,
+    playlist: PropTypes.object,
     searchForSong: PropTypes.func,
+    addSongToPlaylist: PropTypes.func,
 };
 
 // withRouter() allows accessing the necessary functionality to navigate from this component

@@ -69,7 +69,11 @@ export function getUserPlaylists() {
 
 export function searchForSong(songName, currentPlaylist) {
     function onSuccess(songs) {
-        return { type: 'SEARCHFORSONG_SUCCESS', songs: songs, currentPlaylist: currentPlaylist};
+        return {
+            type: 'SEARCHFORSONG_SUCCESS',
+            songs: songs,
+            currentPlaylist: currentPlaylist,
+        };
     }
     function onFailure(error) {
         console.log('failed to search for song: ', error);
@@ -78,6 +82,27 @@ export function searchForSong(songName, currentPlaylist) {
     return async (dispatch) => {
         try {
             const songs = await PlaylistService.searchForSong(songName);
+            dispatch(onSuccess(songs));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function addSongToPlaylist(playlistId, songId) {
+    function onSuccess(songs) {
+        return { type: 'ADDSONG_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('failed to search for song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const songs = await PlaylistService.addSongToPlaylist(
+                playlistId,
+                songId
+            );
             dispatch(onSuccess(songs));
         } catch (e) {
             onFailure(e);
