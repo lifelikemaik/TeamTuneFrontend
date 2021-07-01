@@ -10,11 +10,11 @@ import MyTeamTuneAccountComponent from "../components/MyTeamTuneAccountComponent
  */
 
  function MyTeamTuneAccountView(props) {
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.props.user);
 
-    useEffect(() => { console.log("MyTeamTuneAccountView")
+    useEffect(() => { console.log("TEST")
         if (user.user) {
-            props.history.push("/");
+            console.log("TEST")
         }
     }, [user, props.history]);
 
@@ -24,6 +24,7 @@ import MyTeamTuneAccountComponent from "../components/MyTeamTuneAccountComponent
         <MyTeamTuneAccountComponent
             user={user}
         />
+        
     );
 }
 

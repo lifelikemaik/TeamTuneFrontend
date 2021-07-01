@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useSelector } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Paper,
@@ -7,6 +7,7 @@ import {
     Typography,
     FormControlLabel,
     Checkbox,
+    Divider,
 } from "@material-ui/core";
 
 
@@ -14,11 +15,17 @@ const useStyles = makeStyles((theme) => ({
     changePWRoot: {
         margin: "auto",
     },
-    changePWPaper: {
-        width: "550px",
+    changeUserNamePaper: {
+        width: "600px",
+        marginBottom: 50,
         padding: theme.spacing(2),
     },
-    changePWRow: {
+    changePWPaper: {
+        width: "600px",
+        padding: theme.spacing(2),
+    },
+    changeCredentialsRow: {
+        fontFamily: "Libre Franklin, sans-serif",
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         "&:last-child": {
@@ -28,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(0),
         },
     },
-    changePWButtons: {
+    changeCredentialsButtons: {
         display: "flex",
         justifyContent: "flex-end",
     },
-    changePWButton: {
+    c: {
         marginLeft: theme.spacing(1),
     },
 }));
@@ -45,86 +52,141 @@ function MyTeamTuneAccountComponent(props) {
     const classes = useStyles();
 
     const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [currentPassword, setCurrentPassword] = React.useState("");
+    const [newPassword, setPassword] = React.useState("");
+    const [newPassword2, setPassword2] = React.useState("");
 
-    const [loginError, setLoginError] = React.useState("");
+    const [changeUserNameError, setChangeUserNameError] = React.useState("");
+    const [changePasswordError, setChangePasswordError] = React.useState("");
 
-    useEffect(() => { 
-        console.log(props.user)
+
+    useEffect(() => {
         if (props.user.error) {
-            setLoginError(props.user.error);
+            setChangeUserNameError(props.user.error);
+            setChangePasswordError(props.user.error);
         } else {
-            setLoginError("");
+            console.log(props.user);
+            setChangeUserNameError("");
+            setChangePasswordError("");
         }
     }, [props.user]);
 
-    const onLogin = (e) => {
-        e.preventDefault();
-        props.onLogin(username, password);
-    };
-
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
-        setLoginError("");
+        setChangeUserNameError("");
     };
 
-    const onChangePassword = (e) => {
+    const onChangeCurrentPassword = (e) => {
         setPassword(e.target.value);
-        setLoginError("");
+        setChangePasswordError("");
+    };
+    
+    const onChangeNewPassword = (e) => {
+        setPassword(e.target.value);
+        setChangePasswordError("");
+    };
+
+    const onChangeNewPassword2 = (e) => {
+        setPassword2(e.target.value);
+        setChangePasswordError("");
+    };
+
+    const onBlurPassword = (e) => {
+        if (newPassword !== "" && newPassword2 !== "") {
+            if (newPassword !== newPassword2) {
+                setChangePasswordError("Passwords do not match.");
+            } else {
+                setChangePasswordError("");
+            }
+        }
     };
 
     return (
         <div className={classes.changePWRoot}>
-            <Paper className={classes.changePWPaper} component="form">
-                <div className={classes.changePWRow}>
+            <Paper className={classes.changeUserNamePaper} component="form">
+                <div className={classes.changeCredentialsRow}>
                     <Typography variant="h4" align="center">
-                        Welcome to the TeamTune App!
+                        Change your username
                     </Typography>
                 </div>
-                <div className={classes.changePWRow}>
+                <div className={classes.changeCredentialsRow}>
+                    <p>Current username: {(props.user.user.username)}</p>
+                </div>
+                <div className={classes.changeCredentialsRow}>
                     <TextField
-                        label="Username"
+                        label="Enter new username"
                         fullWidth
                         value={username}
                         onChange={onChangeUsername}
-                        error={loginError !== ""}
+                        error={changeUserNameError !== ""}
                     />
                 </div>
-                <div className={classes.changePWRow}>
+                <div className={classes.changeCredentialsRow + " " + classes.changeCredentialsButtons}>
+                    <div>
+                        <Button
+                            className={classes.changeCredentialsButton}
+                            variant="contained"
+                            color="primary"
+                            onClick={onChangeUsername}
+                            disabled={username === ""}
+                            type="submit"
+                        >
+                            Change Username
+                        </Button>
+                    </div>
+                </div>
+            </Paper>
+
+            <Paper className={classes.changePWPaper} component="form">
+                <div className={classes.changeCredentialsRow}>
+                    <Typography variant="h4" align="center">
+                        Change your password
+                    </Typography>
+                </div>
+                <div className={classes.changeCredentialsRow}>
                     <TextField
-                        label="Password"
+                        label="Enter your current password"
                         fullWidth
-                        value={password}
-                        onChange={onChangePassword}
-                        error={loginError !== ""}
+                        value={currentPassword}
+                        onChange={onChangeCurrentPassword}
+                        error={changePasswordError !== ""}
+                        onBlur={onBlurPassword}
                         type="password"
                     />
                 </div>
-                {loginError !== "" ? (
-                    <div className={classes.changePWRow}>
-                        <Typography color="error">{loginError}</Typography>
-                    </div>
-                ) : null}
-                <div className={classes.changePWRow + " " + classes.changePWButtons}>
-                    <Button onClick={props.onSignUp}>
-                        Not Registered yet?
-                    </Button>
+                <div className={classes.changeCredentialsRow}>
+                    <TextField
+                        label="New password"
+                        fullWidth
+                        value={newPassword}
+                        onChange={onChangeNewPassword}
+                        error={changePasswordError !== ""}
+                        onBlur={onBlurPassword}
+                        type="password"
+                    />
+                </div>
+                <div className={classes.changeCredentialsRow}>
+                    <TextField
+                        label="Repeat new password"
+                        fullWidth
+                        value={newPassword2}
+                        onChange={onChangeNewPassword2}
+                        error={changePasswordError !== ""}
+                        onBlur={onBlurPassword}
+                        type="password"
+                    />
+                </div>
+                <div className={classes.changeCredentialsRow + " " + classes.changeCredentialsButtons}>
                     <div>
                         <Button
-                            className={classes.changePWButton}
-                            onClick={props.onCancel}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            className={classes.changePWButton}
+                            className={classes.changeCredentialsButton}
                             variant="contained"
                             color="primary"
-                            onClick={onLogin}
-                            disabled={username === "" || password === ""}
+                            onClick={onChangeNewPassword2}
+                            disabled={newPassword2 === ""}
                             type="submit"
                         >
-                            Login
+                            Change Password
                         </Button>
                     </div>
                 </div>

@@ -85,17 +85,15 @@ function VerticalTabs(props) {
                 <Tab label="Subscription" {...a11yProps(1)} />
                 <Tab label="Delete TeamTune Account" {...a11yProps(2)} />
             </Tabs>
-            {/*}
             <TabPanel value={value} index={0}>
                 <MyTeamTuneAccountComponent user={props.user}/>
             </TabPanel>
-    */}
             <TabPanel value={value} index={1}>
-                <MyTeamTuneSubscriptionComponent />
+                <MyTeamTuneSubscriptionComponent user={props.user}/>
             </TabPanel>
 
             <TabPanel value={value} index={2}>
-                <MyTeamTuneDeleteAccountComponent />
+                <MyTeamTuneDeleteAccountComponent user={props.user}/>
             </TabPanel>
         </div>
     );

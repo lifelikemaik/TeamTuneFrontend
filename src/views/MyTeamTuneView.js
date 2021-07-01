@@ -11,13 +11,13 @@ import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
 function MyTeamTuneView(props) {
 
   const user = useSelector((state) => state.user);
-/*
+
   useEffect(() => {
       if (user.user) {
-          props.history.push("/");
+          console.log(user)
       }
   }, [user, props.history]);
-  */
+  
 
   return (
     <MyTeamTuneComponent user={user}/>
