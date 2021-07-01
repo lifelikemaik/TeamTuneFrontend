@@ -61,12 +61,3 @@ export function deleteAccount(username, password) {
         }
     };
 }
-
-export function getUserPlaylists() {
-    function onSuccess(playlists) {
-        return { type: "GETUSERPLAYLISTS_SUCCESS", playlists: playlists };
-    }
-    function onFailure(error) {
-        console.log("failed to get users playlists", error);
-    }
-}
