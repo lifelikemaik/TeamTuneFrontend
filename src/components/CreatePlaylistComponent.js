@@ -163,6 +163,7 @@ function CreatePlaylistComponent(props) {
             share_link: "",
             joined_people: [],
             is_teamtune_playlist: true,
+            track_count: 0,
             music_info: {
                 durations_ms: 0,
                 duration_target: duration,

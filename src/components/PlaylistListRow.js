@@ -39,17 +39,9 @@ function PlaylistListRow(props) {
             </TableCell>
 
             <TableCell>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
-                >
-                    <Typography align="center">
-                        00:00
-                    </Typography>
-                </div>
+                <Typography align="center">
+                    {props.playlist.track_count}
+                </Typography>
             </TableCell>
 
             <TableCell>

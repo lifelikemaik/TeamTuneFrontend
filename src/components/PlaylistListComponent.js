@@ -83,8 +83,8 @@ const sortableHeadCells = [
         width: "30%",
     },
     {
-        id: "length",
-        label: "Length",
+        id: "track_count",
+        label: "Track Count",
         width: "30%",
     },
 ];
