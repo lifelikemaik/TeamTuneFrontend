@@ -1,6 +1,6 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {IconButton, TableCell, TableRow, Typography} from "@material-ui/core";
+import {IconButton, Paper, TableCell, TableRow, Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     image: {
         borderRadius: theme.shape.borderRadius,
         boxShadow: theme.shadows[2],
-        maxWidth: 54,
+        maxWidth: 140,
     },
 }));
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function PlaylistListRow(props) {
     // with this you can access the above defined style classes
-    const classes = useStyles();
+    const {image} = useStyles();
 
     return (
         <TableRow
@@ -32,7 +32,7 @@ function PlaylistListRow(props) {
             height="118px"
         >
             <TableCell>
-                <ImageIcon/>
+                <img className={image} src={props.playlist.image_url} />
             </TableCell>
             <TableCell>
                 <Typography variant="h6">{props.playlist.title}</Typography>
