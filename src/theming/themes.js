@@ -11,14 +11,14 @@ const appThemeOptions = {
         palette: {
             type: "light",
             primary: {
-                light: "#7986cb",
-                main: "#28df99",
-                dark: "#303f9f",
+                light: "#3f3a3a",
+                main: "#191414",
+                dark: "#000000",
             },
             secondary: {
-                light: "#ff4081",
-                main: "#f50057",
-                dark: "#c51162",
+                light: "#96ffd3",
+                main: "#62D2A2",
+                dark: "#29a073",
             },
             background: {
                 paper: "#fff",
@@ -43,6 +43,11 @@ const appThemeOptions = {
             background: {
                 paper: "#303030",
                 default: "#000",
+            },
+            header_text: {
+                light: "#62D2A2",
+                main: "#fafafa",
+                dark: "#191414"
             },
         },
         ...themeindependent,

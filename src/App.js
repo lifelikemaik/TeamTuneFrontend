@@ -53,7 +53,6 @@ function App() {
                     <React.Fragment>
                         <Header
                             darkmode={theme === AppTheme.DARK}
-                            toggletheme={toggleTheme}
                         />
                         <ScrollContainer>
                             <Switch>
