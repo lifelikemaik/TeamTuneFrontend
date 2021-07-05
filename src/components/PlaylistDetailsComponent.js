@@ -61,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
     },
     addToPlaylistButton: {
         float: 'right',
-        marginLeft: 'auto'
-    }
+        marginLeft: 'auto',
+    },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -113,22 +113,21 @@ function PlaylistDetailsComponent(props) {
             setFoundSongs([]);
         } else {
             setFoundSongs(foundSongsState);
-            if (searchString !== '')
-            setSearchOpen(true);
+            if (searchString !== '') setSearchOpen(true);
         }
     }, [foundSongsState]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
-    
+
     const onOpen = () => {
         setSearchOpen(!searchOpen);
-    }
+    };
 
     const onClose = () => {
         setSearchOpen(!searchOpen);
-    }
+    };
 
     const onChangeSearch = (value) => {
         setSearchString(value.target.value);
@@ -139,16 +138,27 @@ function PlaylistDetailsComponent(props) {
         props.searchForSong(songName);
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && searchString !== '') {
+            onSearchSong(searchString);
+        }
+    };
+
     const getAllArtistsString = (artists) => {
-        const reducer = (accumulator, currentValue) => accumulator + currentValue.name + ', ';
+        const reducer = (accumulator, currentValue) =>
+            accumulator + currentValue.name + ', ';
         return artists.reduce(reducer, '').slice(0, -2);
-    }
+    };
 
     const getStringFromMilliseconds = (milliseconds) => {
         const minutes = Math.floor(milliseconds / 1000 / 60);
         const seconds = Math.round((milliseconds / 1000) % 60);
-        return minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
-    }
+        return (
+            minutes.toString().padStart(2, '0') +
+            ':' +
+            seconds.toString().padStart(2, '0')
+        );
+    };
 
     const onAddSongToPlaylist = (song) => {
         const playlistId = props.playlist.spotify_id;
@@ -156,9 +166,11 @@ function PlaylistDetailsComponent(props) {
         if (songId && playlistId) {
             props.addSongToPlaylist(playlistId, songId);
         } else {
-            console.error('No songId or no spotify_id of playlist found, playlist probably has no spotify_id.')
+            console.error(
+                'No songId or no spotify_id of playlist found, playlist probably has no spotify_id.'
+            );
         }
-    }
+    };
 
     const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
@@ -374,8 +386,21 @@ function PlaylistDetailsComponent(props) {
                         renderOption={(option) => (
                             <React.Fragment>
                                 <div className={classes.searchRow}>
-                                    <span>{option.name} - {getAllArtistsString(option.artists)} - {getStringFromMilliseconds(option.duration_ms)}</span>
-                                    <Button className={classes.addToPlaylistButton} onClick={() => onAddSongToPlaylist(option)}>Add to Playlist</Button>
+                                    <span>
+                                        {option.name} -{' '}
+                                        {getAllArtistsString(option.artists)} -{' '}
+                                        {getStringFromMilliseconds(
+                                            option.duration_ms
+                                        )}
+                                    </span>
+                                    <Button
+                                        className={classes.addToPlaylistButton}
+                                        onClick={() =>
+                                            onAddSongToPlaylist(option)
+                                        }
+                                    >
+                                        Add to Playlist
+                                    </Button>
                                 </div>
                             </React.Fragment>
                         )}
@@ -383,10 +408,13 @@ function PlaylistDetailsComponent(props) {
                             <TextField
                                 {...params}
                                 ref={autoCompleteRef}
-                                onChange={(event, value) => onChangeSearch(event) }
+                                onChange={(event, value) =>
+                                    onChangeSearch(event)
+                                }
                                 label="Search for songs"
                                 variant="outlined"
                                 fullWidth
+                                onKeyDown={handleKeyDown}
                             />
                         )}
                     />
