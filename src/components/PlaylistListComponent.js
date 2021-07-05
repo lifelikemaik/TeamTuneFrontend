@@ -173,11 +173,6 @@ function PlaylistListComponent(props) {
 
     return (
         <div className={classes.playlistListRoot}>
-            <div className={classes.playlistListHeader}>
-                <Typography variant="h4" align="center">
-                    Welcome to the TeamTune App!
-                </Typography>
-            </div>
             <div>
                 {props.isBrowse ? (
                     <div/>
@@ -185,10 +180,10 @@ function PlaylistListComponent(props) {
                     <Button
                         onClick={props.onAddPlaylist}
                         variant="contained"
-                        color="primary"
+                        color="secondary"
                         className={classes.addMovieButton}
                     >
-                        Add Playlist
+                        Create Playlist
                     </Button>
                 )}
             </div>
