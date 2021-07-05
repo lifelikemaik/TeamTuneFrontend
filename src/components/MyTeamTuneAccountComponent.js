@@ -63,25 +63,25 @@ function MyTeamTuneAccountComponent(props) {
     const [newPassword, setNewPassword] = React.useState("");
     const [newPassword2, setNewPassword2] = React.useState("");
 
-    const [changeUserNameError, setChangeUserNameError] = React.useState("");
+    const [changeUsernameError, setChangeUsernameError] = React.useState("");
     const [changePasswordError, setChangePasswordError] = React.useState("");
 
 
     useEffect(() => {
         if (props.user.error) {
-            setChangeUserNameError(props.user.error);
+            setChangeUsernameError(props.user.error);
             setChangePasswordError(props.user.error);
         } else {
             console.log(props.user);
             console.log(newUsername)
-            setChangeUserNameError("");
+            setChangeUsernameError("");
             setChangePasswordError("");
         }
     }, [props.user]);
 
     const onChangeUsername = (e) => {
         setNewUsername(e.target.value);
-        setChangeUserNameError("");
+        setChangeUsernameError("");
     };
 
     const onChangeCurrentPassword = (e) => {
@@ -136,7 +136,7 @@ function MyTeamTuneAccountComponent(props) {
                         fullWidth
                         value={newUsername}
                         onChange={onChangeUsername}
-                        error={changeUserNameError !== ""}
+                        error={changeUsernameError !== ""}
                     />
                 </div>
                 <div className={classes.changeCredentialsRow + " " + classes.changeCredentialsButtons}>
@@ -146,7 +146,7 @@ function MyTeamTuneAccountComponent(props) {
                             variant="contained"
                             color="primary"
                             onClick={onUpdateUserName}
-                            disabled={newUsername === ""}
+                            disabled={newUsername === "" || changeUsernameError !== ""}
                             type="submit"
                         >
                             Change Username
@@ -201,7 +201,7 @@ function MyTeamTuneAccountComponent(props) {
                             variant="contained"
                             color="primary"
                             onClick={onUpdatePassword}            
-                            disabled={currentPassword !== props.user.user.password || currentPassword === "" || newPassword === "" || newPassword2 === ""}
+                            disabled={currentPassword === "" || newPassword === "" || newPassword2 === "" || changePasswordError !== ""}
                             type="submit"
                         >
                             Change Password

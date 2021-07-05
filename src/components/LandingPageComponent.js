@@ -1,39 +1,42 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import Box from '@material-ui/core/Box';
 import { AppBar, Button, IconButton, Toolbar, Divider, Typography } from "@material-ui/core";
 import TeamTuneIcon from "./TeamTuneIcon";
+import LandingPageImage from "./LandingPageImage";
 
 import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    landingPageImage: {
+        width: '60%',
+        marginLeft: 340,
+        marginTop: -140,
+        padding: theme.spacing(5),
 
-    main_options: {
-        fontSize: 25,
-        flexGrow: 1,
-        paddingLeft: 45,
-        paddingRight: 45,
-        fontFamily: "Libre Franklin, sans-serif",
     },
-    side_options: {
-        fontSize: 20,
-        flexGrow: 0.8,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    toolbar: {
+    welcomeText: {
+        marginTop: 20,
         display: "flex",
-        justifyContent: "space-between",
-    },
-    header: {
-        paddingRight: 80,
-        paddingLeft: 110,
-    },
-    logo_type: {
+        justifyContent: "center",
+        alignItems: "center",
+        bgcolor: 'background.paper',
         fontFamily: "Libre Franklin, sans-serif",
     },
-    icon_type: {
-        marginLeft: 100,
+    welcomeTextLine: {
+        marginTop: 10,
+    },
+    welcomeTextBox: {
+        width: 500,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
 }));
 
@@ -42,10 +45,26 @@ const useStyles = makeStyles((theme) => ({
  * Landing page and "home" screen of the web app
  * @param {props} props
  */
+
+
 function LandingPageComponent(props) {
 
+    const classes = useStyles();
+
     return (
-        <div></div>
+        <div>
+            <h1 className={classes.welcomeText}>
+                Welcome to the TeamTune App!
+            </h1>
+            <Typography variant="h5" align="center" flexWrap="wrap" className={classes.welcomeText}>
+                TeamTune is a platform that allows people, companies and music enthusiasts to collaboratively create a Spotify playlist for every occasion by merging the different tastes with an intelligent recommender system.
+            </Typography>
+
+
+
+            <LandingPageImage className={classes.landingPageImage} />
+        </div>
+
     );
 }
 
