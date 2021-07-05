@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, Button, IconButton, Toolbar, Divider, Typography, Drawer, MenuItem, Link} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import TeamTuneIcon from "./TeamTuneIcon";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 import {useSelector} from "react-redux";
 import {logout} from "../redux/actions";
