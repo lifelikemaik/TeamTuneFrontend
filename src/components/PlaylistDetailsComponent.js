@@ -101,6 +101,7 @@ function PlaylistDetailsComponent(props) {
     const [sortedDirection, setSortedDirection] = React.useState(null);
     const [searchString, setSearchString] = React.useState('');
     const [foundSongs, setFoundSongs] = React.useState([]);
+    const [searchOpen, setSearchOpen] = React.useState(false);
 
     const foundSongsState = useSelector((state) => state.entities.songs);
 
@@ -112,14 +113,22 @@ function PlaylistDetailsComponent(props) {
             setFoundSongs([]);
         } else {
             setFoundSongs(foundSongsState);
-            const textField = autoCompleteRef.current.children[1].children[0]
-            textField.focus();
+            if (searchString !== '')
+            setSearchOpen(true);
         }
     }, [foundSongsState]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
+    
+    const onOpen = () => {
+        setSearchOpen(!searchOpen);
+    }
+
+    const onClose = () => {
+        setSearchOpen(!searchOpen);
+    }
 
     const onChangeSearch = (value) => {
         setSearchString(value.target.value);
@@ -353,33 +362,15 @@ function PlaylistDetailsComponent(props) {
                     {playlist.title} - {durationHours}:{durationMinutesModulo}
                 </h2>
             </div>
-            {/*
-            <div className={classes.searchRow}>
-                <div className={classes.textInput}>
-                    <TextField
-                        className={classes.textField}
-                        label="Search for a song"
-                        type="search"
-                        onChange={onChangeSearch}
-                    />
-                </div>
-                <div>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => onSearchSong(searchString)}
-                    >
-                        Search
-                    </Button>
-                </div>
-            </div>
-            */}
             <div className={classes.searchRow}>
                 <div className={classes.textInput}>
                     <Autocomplete
                         className={classes.textField}
                         options={foundSongs}
                         getOptionLabel={(option) => option.name}
+                        open={searchOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
                         renderOption={(option) => (
                             <React.Fragment>
                                 <div className={classes.searchRow}>
