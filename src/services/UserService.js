@@ -65,6 +65,23 @@ export default class UserService {
         });
     }
 
+    static updateUserName(user) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${UserService.baseURL()}/updateUserName`,
+                {
+                    username: user,
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static getUserPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(

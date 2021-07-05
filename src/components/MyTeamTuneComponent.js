@@ -91,7 +91,6 @@ function VerticalTabs(props) {
             <TabPanel value={value} index={1}>
                 <MyTeamTuneSubscriptionComponent user={props.user}/>
             </TabPanel>
-
             <TabPanel value={value} index={2}>
                 <MyTeamTuneDeleteAccountComponent user={props.user}/>
             </TabPanel>

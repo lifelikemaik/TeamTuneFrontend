@@ -1,4 +1,5 @@
 import React, { useEffect, useSelector } from 'react';
+import { PropTypes } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Paper,
@@ -39,8 +40,13 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "flex-end",
     },
-    c: {
+    changeCredentialsButton: {
         marginLeft: theme.spacing(1),
+        '&:hover': {
+            backgroundColor: "#1db954",
+            color: "black",
+            opacity: "90%",
+        },
     },
 }));
 
@@ -52,9 +58,10 @@ function MyTeamTuneAccountComponent(props) {
     const classes = useStyles();
 
     const [username, setUsername] = React.useState("");
+    const [newUsername, setNewUsername] = React.useState("");
     const [currentPassword, setCurrentPassword] = React.useState("");
-    const [newPassword, setPassword] = React.useState("");
-    const [newPassword2, setPassword2] = React.useState("");
+    const [newPassword, setNewPassword] = React.useState("");
+    const [newPassword2, setNewPassword2] = React.useState("");
 
     const [changeUserNameError, setChangeUserNameError] = React.useState("");
     const [changePasswordError, setChangePasswordError] = React.useState("");
@@ -66,29 +73,40 @@ function MyTeamTuneAccountComponent(props) {
             setChangePasswordError(props.user.error);
         } else {
             console.log(props.user);
+            console.log(newUsername)
             setChangeUserNameError("");
             setChangePasswordError("");
         }
     }, [props.user]);
 
     const onChangeUsername = (e) => {
-        setUsername(e.target.value);
+        setNewUsername(e.target.value);
         setChangeUserNameError("");
     };
 
     const onChangeCurrentPassword = (e) => {
-        setPassword(e.target.value);
+        setCurrentPassword(e.target.value);
         setChangePasswordError("");
     };
-    
+
     const onChangeNewPassword = (e) => {
-        setPassword(e.target.value);
+        setNewPassword(e.target.value);
         setChangePasswordError("");
     };
 
     const onChangeNewPassword2 = (e) => {
-        setPassword2(e.target.value);
+        setNewPassword2(e.target.value);
         setChangePasswordError("");
+    };
+
+    const onUpdateUserName = (e) => { console.log(newUsername)
+        e.preventDefault();
+        props.onUpdateUserName(newUsername);
+    };
+
+    const onUpdatePassword = (e) => {
+        e.preventDefault();
+        props.onUpdatePassword(props.user.user.username, newPassword);
     };
 
     const onBlurPassword = (e) => {
@@ -116,7 +134,7 @@ function MyTeamTuneAccountComponent(props) {
                     <TextField
                         label="Enter new username"
                         fullWidth
-                        value={username}
+                        value={newUsername}
                         onChange={onChangeUsername}
                         error={changeUserNameError !== ""}
                     />
@@ -127,8 +145,8 @@ function MyTeamTuneAccountComponent(props) {
                             className={classes.changeCredentialsButton}
                             variant="contained"
                             color="primary"
-                            onClick={onChangeUsername}
-                            disabled={username === ""}
+                            onClick={onUpdateUserName}
+                            disabled={newUsername === ""}
                             type="submit"
                         >
                             Change Username
@@ -182,8 +200,8 @@ function MyTeamTuneAccountComponent(props) {
                             className={classes.changeCredentialsButton}
                             variant="contained"
                             color="primary"
-                            onClick={onChangeNewPassword2}
-                            disabled={newPassword2 === ""}
+                            onClick={onUpdatePassword}            
+                            disabled={currentPassword !== props.user.user.password || currentPassword === "" || newPassword === "" || newPassword2 === ""}
                             type="submit"
                         >
                             Change Password

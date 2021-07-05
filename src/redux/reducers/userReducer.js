@@ -30,7 +30,11 @@ export default function user(state = getUser(), action) {
         case "DELETE_SUCCESS":
             return { user: action.user };
         case "DELETE_FAILURE":
-            return { error: "Cannot delete user account"};
+            return { error: "Cannot delete user account" };
+        case "UPDATE_SUCCESS":
+            return { user: action.user };
+        case "UPDATE_FAILURE":
+            return { error: "Cannot change username." };
         case "LOGIN_RESET":
             return {};
         case "LOGOUT":
