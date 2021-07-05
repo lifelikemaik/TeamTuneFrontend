@@ -112,7 +112,9 @@ function PlaylistDetailsComponent(props) {
         if (!foundSongsState) {
             setFoundSongs([]);
         } else {
-            setFoundSongs(foundSongsState);
+            setFoundSongs(
+                foundSongsState.map((song) => validateSongWithFilters(song))
+            );
             if (searchString !== '') setSearchOpen(true);
         }
     }, [foundSongsState]);
@@ -157,6 +159,40 @@ function PlaylistDetailsComponent(props) {
             minutes.toString().padStart(2, '0') +
             ':' +
             seconds.toString().padStart(2, '0')
+        );
+    };
+
+    // Not checked since it has weird (not normed) values: key, loudness, tempo, acousticness (not sure about that)
+    const validateSongWithFilters = (song) => {
+        let songValid = true;
+        if (playlist.music_info.danceability_min) {
+            songValid = songValid && checkSongForFeature(song, 'danceability');
+        }
+        if (playlist.music_info.energy_min) {
+            songValid = songValid && checkSongForFeature(song, 'energy');
+        }
+        if (playlist.music_info.instrumentalness_min) {
+            songValid = songValid && checkSongForFeature(song, 'instrumentalness');
+        }
+        if (playlist.music_info.liveness_min) {
+            songValid = songValid && checkSongForFeature(song, 'liveness');
+        }
+        if (playlist.music_info.speechiness_min) {
+            songValid = songValid && checkSongForFeature(song, 'speechiness');
+        }
+        if (playlist.music_info.valence_min) {
+            songValid = songValid && checkSongForFeature(song, 'valence');
+        }
+        song.valid = songValid;
+        return song;
+    };
+
+    const checkSongForFeature = (song, audio_feature) => {
+        return (
+            playlist.music_info[audio_feature + '_min'] <=
+                song.audio_features[audio_feature] &&
+            playlist.music_info[audio_feature + '_max'] >=
+                song.audio_features[audio_feature]
         );
     };
 
@@ -383,6 +419,7 @@ function PlaylistDetailsComponent(props) {
                         open={searchOpen}
                         onOpen={onOpen}
                         onClose={onClose}
+                        getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
                         renderOption={(option) => (
                             <React.Fragment>
                                 <div className={classes.searchRow}>
