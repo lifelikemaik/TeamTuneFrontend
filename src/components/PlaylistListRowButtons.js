@@ -29,7 +29,14 @@ function PlaylistListRowButtons(props) {
                                 </Button>
                             )}
 
-                            <Button variant="contained">Create Copy</Button>
+                            <Button
+                                variant="contained"
+                                onClick={() =>
+                                    props.onCopyPlaylist(props.playlist._id)
+                                }
+                            >
+                                Create Copy
+                            </Button>
                         </div>
                     ) : (
                         <Button variant="contained">Create Copy</Button>

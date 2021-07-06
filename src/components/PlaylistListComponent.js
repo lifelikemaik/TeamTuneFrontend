@@ -229,6 +229,7 @@ function PlaylistListComponent(props) {
                                                 props.onClickDeletePlaylist
                                             }
                                             onMakePlaylistPublic={props.onMakePlaylistPublic}
+                                            onCopyPlaylist={props.onCopyPlaylist}
                                             isAdmin={props.isAdmin}
                                             isBrowse={props.isBrowse}
                                         />

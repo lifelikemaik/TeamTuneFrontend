@@ -166,3 +166,22 @@ export function updatePlaylist(playlistId, updatedPlaylist) {
         }
     };
 }
+
+export function copyPlaylist(playlistId) {
+
+    function onSuccess() {
+        return { type: 'COPYPLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('copy playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.copyPlaylist(playlistId);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}

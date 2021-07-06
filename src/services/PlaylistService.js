@@ -134,4 +134,20 @@ export default class PlaylistService {
             );
         });
     }
+
+    static copyPlaylist(playlistId) {
+        const url = PlaylistService.baseURL() + '/copy/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                {},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

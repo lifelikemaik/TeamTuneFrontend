@@ -49,6 +49,7 @@ function PlaylistListRow(props) {
                     playlist={props.playlist}
                     isBrowse={props.isBrowse}
                     onMakePlaylistPublic={props.onMakePlaylistPublic}
+                    onCopyPlaylist={props.onCopyPlaylist}
                 />
             </TableCell>
         </TableRow>
