@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { connect, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Button, TextField, Typography } from "@material-ui/core";
 
@@ -52,12 +53,18 @@ function MyTeamTuneDeleteAccountComponent(props) {
 
     const classes = useStyles();
 
-    const [username, deleteAccount] = React.useState("");
+    const user = useSelector((state) => state.user);
+    useEffect(() => {
+        if (user.user) {
 
+           /* console.log(user)*/
+        }
+    }, [user, props.history]);
 
     const onDeleteAccount = (e) => {
         e.preventDefault();
-        props.onDeleteAccount(username);
+       console.log(props);
+        props.onDeleteAccount(props.user.user.username);
     };
 
     return (

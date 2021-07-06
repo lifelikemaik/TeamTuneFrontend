@@ -86,13 +86,15 @@ function VerticalTabs(props) {
                 <Tab label="Delete TeamTune Account" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <MyTeamTuneAccountComponent user={props.user}/>
+                <MyTeamTuneAccountComponent user={props.user} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <MyTeamTuneSubscriptionComponent user={props.user}/>
+                <MyTeamTuneSubscriptionComponent user={props.user} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <MyTeamTuneDeleteAccountComponent user={props.user}/>
+                
+                <MyTeamTuneDeleteAccountComponent user={props.user} onDeleteAccount={props.onDeleteAccount} />
+                {/*console.log(props)*/}
             </TabPanel>
         </div>
     );
@@ -104,7 +106,7 @@ function VerticalTabs(props) {
  */
 function MyTeamTuneComponent(props) {
     return (
-        <VerticalTabs user={props.user} />
+        <VerticalTabs user={props.user} onDeleteAccount={props.onDeleteAccount} />
     );
 }
 

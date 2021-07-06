@@ -64,7 +64,7 @@ export function updateUserName(newUsername) {
 }
 
 
-export function deleteAccount(username, password) {
+export function deleteAccount(username) {
     function onSuccess(user) {
         return { type: "DELETE_SUCCESS", user: user };
     }
@@ -73,7 +73,7 @@ export function deleteAccount(username, password) {
     }
     return async (dispatch) => {
         try {
-            let resp = await UserService.deleteAccount(username, password);
+            let resp = await UserService.deleteAccount(username);
             dispatch(onSuccess(resp.user));
         } catch (e) {
             dispatch(onFailure(e));
