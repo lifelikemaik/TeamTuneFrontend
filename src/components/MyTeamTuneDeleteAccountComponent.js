@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { connect, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Button, TextField, Typography } from "@material-ui/core";
 
@@ -8,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     deleteAccPaper: {
         width: "900px",
-        padding: theme.spacing(5),
+        padding: theme.spacing(2),
     },
     deleteAccRow: {
         paddingTop: theme.spacing(1),
@@ -27,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
         display: "flex"
     },
     deleteAccButton: {
+        marginLeft: theme.spacing(1),
         marginTop: 10,
-        backgroundColor: "#28DF99",
-        color: "black",
         width: "40%",
         height: "40px",
         fontSize: 17,
+        color: "white",
+        backgroundColor: "black",
         '&:hover': {
             backgroundColor: "#1db954",
-            color: "black",
             opacity: "90%",
         },
     },
@@ -52,12 +53,18 @@ function MyTeamTuneDeleteAccountComponent(props) {
 
     const classes = useStyles();
 
-    const [username, deleteAccount] = React.useState("");
+    const user = useSelector((state) => state.user);
+    useEffect(() => {
+        if (user.user) {
 
+            /* console.log(user)*/
+        }
+    }, [user, props.history]);
 
     const onDeleteAccount = (e) => {
         e.preventDefault();
-        props.onDeleteAccount(username);
+        console.log(props);
+        props.onDeleteAccount(props.user.user.username);
     };
 
     return (

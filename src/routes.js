@@ -7,6 +7,7 @@ import MyTeamTuneView from "./views/MyTeamTuneView";
 import CallbackView from "./views/CallbackView";
 import CreatePlaylistView from "./views/CreatePlaylistView";
 import PlaylistDetailView from "./views/PlaylistDetailView";
+import LandingPageView from "./views/LandingPageView";
 
 
 
@@ -16,7 +17,7 @@ import PlaylistDetailView from "./views/PlaylistDetailView";
 const routes = [
     {
         path: "/",
-        component: BrowsePlaylistView,
+        component: LandingPageView,
         exact: true,
     },
     {

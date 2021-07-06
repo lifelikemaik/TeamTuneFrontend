@@ -155,14 +155,7 @@ function SignUpComponent(props) {
 
     return (
         <div className={classes.usersignUpRoot}>
-            <section className={classes.explanation}>
-                <Typography variant="h4" align="center" fontFamily="Libre Franklin, sans-serif" className={classes.signUpRow}>
-                    What is TeamTune?
-                </Typography>
-                <Typography variant="h5" align="center">
-                    TeamTune is a platform that allows people, companies and music enthusiasts to collaboratively create a Spotify playlist for every occasion by merging the different tastes with an intelligent recommender system.
-                </Typography>
-            </section>
+
             <Paper className={classes.signUpPaper} component="form">
                 <div className={classes.signUpRow}>
                     <Typography variant="h4" align="center">

@@ -1,30 +1,40 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import { login } from "../redux/actions";
+import { updateUsername } from "../redux/actions";
 import MyTeamTuneAccountComponent from "../components/MyTeamTuneAccountComponent";
+
 
 /**
  * Manages process of changing user settings
  * @param {props} props
  */
 
- function MyTeamTuneAccountView(props) {
+function MyTeamTuneAccountView(props) {
     const user = useSelector((state) => state.props.user);
 
-    useEffect(() => { console.log("TEST")
+    useEffect(() => {
         if (user.user) {
-            console.log("TEST")
+            console.log(props.user);
         }
     }, [user, props.history]);
 
+    const onUpdateUsername = (newUsername) => {
+        props.dispatch(updateUsername(newUsername));
+    };
+
+    const onUpdatePassword = (newPassword) => {
+        props.dispatch(updatePassword(newPassword));
+    };
 
 
     return (
         <MyTeamTuneAccountComponent
             user={user}
+            onUpdateUsername={onUpdateUsername}
+            onUpdatePassword={onUpdatePassword}
         />
-        
+
     );
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import Loading from "../components/Loading";
+import { updateUsername } from "../redux/actions";
+import { deleteAccount } from "../redux/actions";
 import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
 
 /**
@@ -11,16 +12,29 @@ import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
 function MyTeamTuneView(props) {
 
   const user = useSelector((state) => state.user);
+  const onUpdateUsername = (newUsername) => {
+    props.dispatch(updateUsername(newUsername));
+  };
+
+  const onDeleteAccount = (username) => {
+    props.dispatch(deleteAccount(username));
+  };
 
   useEffect(() => {
-      if (user.user) {
-          console.log(user)
-      }
+    if (user.user) {
+      
+     /* console.log(user)*/
+      
+    }
   }, [user, props.history]);
-  
+
 
   return (
-    <MyTeamTuneComponent user={user}/>
+    <MyTeamTuneComponent
+      user={user}
+      onUpdateUsername={onUpdateUsername}
+      onDeleteAccount={onDeleteAccount}
+    />
   );
 
 }

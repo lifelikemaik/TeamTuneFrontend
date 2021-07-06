@@ -38,14 +38,13 @@ const useStyles = makeStyles((theme) => ({
     },
     upgradeSubscriptionButton: {
         marginTop: 50,
-        backgroundColor: "#28DF99",
-        color: "black",
+        color: "white",
+        backgroundColor: "black",
         width: "40%",
         height: "40px",
         fontSize: 17,
         '&:hover': {
             backgroundColor: "#1db954",
-            color: "black",
             opacity: "90%",
         },
     },
@@ -58,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     whatYouPay: {
         marginLeft: 500,
         marginTop: -245,
-        
+
     }
 }));
 
@@ -95,13 +94,17 @@ function MyTeamTuneSubscriptionComponent(props) {
 
     const classes = useStyles();
 
-    const onUpgradeSubscription = (e) => {
-    };
-
 
     const [isPremium, setIsPremium] = React.useState(false);
     const toggle = React.useCallback(() => setIsPremium(!isPremium));
     /*var isPremium = false;*/
+    
+  
+    
+    const onUpgradeSubscription = () => {
+        setIsPremium(isPremium => !isPremium);
+        console.log(isPremium);
+    };
 
     return (
         <div className={classes.subscriptionInfo}>
@@ -126,7 +129,8 @@ function MyTeamTuneSubscriptionComponent(props) {
                     <div className={classes.upgradeSubscriptionButtons}>
                         <Button
                             className={classes.upgradeSubscriptionButton}
-                            onClick={toggle}
+                            isPremium={isPremium}
+                            onClick={onUpgradeSubscription}
                         /*onClick={onUpgradeSubscription}*/
                         >
                             Upgrade to Premium

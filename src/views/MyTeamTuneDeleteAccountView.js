@@ -13,18 +13,18 @@ function MyTeamTuneDeleteAccountView(props) {
   const user = useSelector((state) => state.user);
   useEffect(() => {
     if (user.user) {
-        props.history.push("/");
+        console.log(props.user);
     }
 }, [user, props.history]);
 
-  const onDelete = (username, password) => {
-    props.dispatch(deleteAccount(username, password));
+  const onDeleteAccount = (username) => {
+    props.dispatch(deleteAccount(username));
   };
 
   return (
     <MyTeamTuneDeleteAccountComponent
       user={user}
-      onDelete={onDelete}
+      onDeleteAccount={onDeleteAccount}
     />
   );
 
