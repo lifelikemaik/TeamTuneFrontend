@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
+import React, {useEffect} from "react";
+import {Route, Switch} from "react-router-dom";
+import {Provider} from "react-redux";
+import {createStore, applyMiddleware, compose} from "redux";
 import thunkMiddleware from "redux-thunk";
 import {
     MuiThemeProvider,
@@ -16,6 +16,7 @@ import routes from "./routes";
 import Header from "./components/Header";
 import AppTheme from "./theming/themetypes";
 import AppThemeOptions from "./theming/themes";
+import Background from "./components/Background";
 
 const useStyles = makeStyles((theme) => ({
     appRoot: {
@@ -49,11 +50,12 @@ function App() {
         <div className={classes.appRoot}>
             <MuiThemeProvider theme={createMuiTheme(AppThemeOptions[theme])}>
                 <Provider store={store}>
-                    <CssBaseline />
+                    <CssBaseline/>
                     <React.Fragment>
                         <Header
                             darkmode={theme === AppTheme.DARK}
                         />
+                        <Background/>
                         <ScrollContainer>
                             <Switch>
                                 {routes.map((route, i) => (
