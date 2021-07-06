@@ -28,7 +28,6 @@ function BrowsePlaylistsView(props) {
 
   const loadPlaylists = async () => {
     // trigger the redux action getPlaylists
-    // TODO getPublicPlaylists
     props.dispatch(getPublicPlaylists());
   };
 
@@ -49,7 +48,7 @@ function BrowsePlaylistsView(props) {
       // everything is fine an the playlist list can be displayed
       <PlaylistListComponent
           playlists={playlists}
-          onClickDisplayMovie={onClickDisplayPlaylist}
+          onClickDisplayPlaylist={onClickDisplayPlaylist}
           isLoggedIn={!!user.user}
           isAdmin={!!user.user ? user.user.role === "admin" : false}
           isBrowse={true}

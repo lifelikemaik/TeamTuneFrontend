@@ -2,11 +2,8 @@ import UserLoginView from "./views/UserLoginView";
 import SignUpView from "./views/SignUpView";
 import MovieDetailsView from "./views/MovieDetailsView";
 import PlaylistListView from "./views/PlaylistListView";
-import BrowsePlaylistiew from "./views/BrowsePlaylistsView";
+import BrowsePlaylistView from "./views/BrowsePlaylistsView";
 import MyTeamTuneView from "./views/MyTeamTuneView";
-import MyTeamTuneAccountView from "./views/MyTeamTuneAccountView";
-import MyTeamTuneSubscriptionView from "./views/MyTeamTuneSubscriptionView";
-import MyTeamTuneDeleteAccountView from "./views/MyTeamTuneDeleteAccountView";
 import CallbackView from "./views/CallbackView";
 import CreatePlaylistView from "./views/CreatePlaylistView";
 import PlaylistDetailView from "./views/PlaylistDetailView";
@@ -19,7 +16,7 @@ import PlaylistDetailView from "./views/PlaylistDetailView";
 const routes = [
     {
         path: "/",
-        component: BrowsePlaylistiew,
+        component: BrowsePlaylistView,
         exact: true,
     },
     {
@@ -36,7 +33,7 @@ const routes = [
     },
     {
         path: "/browse",
-        component: BrowsePlaylistiew,
+        component: BrowsePlaylistView,
     },
     {
         path: "/playlists",
