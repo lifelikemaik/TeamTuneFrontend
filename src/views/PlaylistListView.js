@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
-import { getUserPlaylists } from "../redux/actions";
+import {getUserPlaylists, updatePlaylist} from "../redux/actions";
 import PlaylistListComponent from "../components/PlaylistListComponent";
 import Loading from "../components/Loading";
 
@@ -37,6 +37,10 @@ function PlaylistListView(props) {
         props.history.push("/playlist/new");
     };
 
+    const onMakePlaylistPublic = async (playlistId, updatedPlaylist) => {
+        props.dispatch(updatePlaylist(playlistId, updatedPlaylist));
+    }
+
     return !playlists ? (
         // if no playlists are loaded, the above useEffect should be triggered
         <Loading />
@@ -49,6 +53,7 @@ function PlaylistListView(props) {
             playlists={playlists}
             onClickDisplayPlaylist={onClickDisplayPlaylist}
             onAddPlaylist={onAddPlaylist}
+            onMakePlaylistPublic={onMakePlaylistPublic}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === "admin" : false}
             isBrowse={false}

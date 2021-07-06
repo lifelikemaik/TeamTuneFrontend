@@ -8,6 +8,8 @@ export default function entities(state = {}, action) {
             return { playlists: action.playlists };
         case 'ADDPlaylist_SUCCESS':
             return { ...state };
+        case 'UPDATEPLAYLIST_SUCCESS':
+            return { ...state };
         case 'ADDSONG_SUCCESS':
             return { ...state };
         case 'SEARCHFORSONG_SUCCESS':
