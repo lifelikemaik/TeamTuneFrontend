@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     deleteAccPaper: {
         width: "900px",
-        padding: theme.spacing(5),
+        padding: theme.spacing(2),
     },
     deleteAccRow: {
         paddingTop: theme.spacing(1),
@@ -28,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
         display: "flex"
     },
     deleteAccButton: {
+        marginLeft: theme.spacing(1),
         marginTop: 10,
-        backgroundColor: "#28DF99",
-        color: "black",
         width: "40%",
         height: "40px",
         fontSize: 17,
+        color: "white",
+        backgroundColor: "black",
         '&:hover': {
             backgroundColor: "#1db954",
-            color: "black",
             opacity: "90%",
         },
     },
@@ -57,13 +57,13 @@ function MyTeamTuneDeleteAccountComponent(props) {
     useEffect(() => {
         if (user.user) {
 
-           /* console.log(user)*/
+            /* console.log(user)*/
         }
     }, [user, props.history]);
 
     const onDeleteAccount = (e) => {
         e.preventDefault();
-       console.log(props);
+        console.log(props);
         props.onDeleteAccount(props.user.user.username);
     };
 

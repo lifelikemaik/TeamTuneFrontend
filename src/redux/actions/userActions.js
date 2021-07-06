@@ -45,17 +45,35 @@ export function register(username, password, isAdmin, code) {
     };
 }
 
-export function updateUserName(newUsername) {
+export function updateUsername(newUsername) {
     function onSuccess(user) {
-        return { type: "UPDATE_SUCCESS", user: user };
+        return { type: "UPDATE_USERNAME_SUCCESS", user: user };
     }
     function onFailure(error) {
-        return { type: "UPDATE_FAILURE", error: error };
+        return { type: "UPDATE_USERNAME_FAILURE", error: error };
     }
 
     return async (dispatch) => {
         try {
-            let resp = await UserService.updateUserName(newUsername);
+            let resp = await UserService.updateUsername(newUsername);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+}
+
+export function updatePassword(newPassword) {
+    function onSuccess(user) {
+        return { type: "UPDATE_PASSWORD_SUCCESS", user: user };
+    }
+    function onFailure(error) {
+        return { type: "UPDATE_PASSWORD_FAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.updatePassword(newPassword);
             dispatch(onSuccess(resp.user));
         } catch (e) {
             dispatch(onFailure(e));

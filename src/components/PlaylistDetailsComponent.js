@@ -1,18 +1,30 @@
-import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
-import {makeStyles} from '@material-ui/core/styles';
-import React from "react";
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect } from 'react';
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary, IconButton,
+    AccordionSummary,
+    Button,
+    IconButton,
     List,
     ListItem,
-    Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Typography
-} from "@material-ui/core";
+    ListItemText,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Typography,
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Delete} from "@material-ui/icons";
+import { Delete } from '@material-ui/icons';
+import { useSelector } from 'react-redux';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,10 +41,27 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
     },
     playlistListPaper: {
-        width: "95%",
+        width: '95%',
     },
     descriptionSpan: {
-        marginLeft: '5px'
+        marginLeft: '5px',
+    },
+    searchRow: {
+        width: '95%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    textInput: {
+        margin: '10px',
+        flex: '1 1 auto',
+    },
+    textField: {
+        width: '100%',
+    },
+    addToPlaylistButton: {
+        float: 'right',
+        marginLeft: 'auto',
     },
 }));
 
@@ -70,53 +99,177 @@ function PlaylistDetailsComponent(props) {
     const [sortedField, setSortedField] = React.useState(null);
     const [prevSortedField, setPrevSortedField] = React.useState(null);
     const [sortedDirection, setSortedDirection] = React.useState(null);
+    const [searchString, setSearchString] = React.useState('');
+    const [foundSongs, setFoundSongs] = React.useState([]);
+    const [searchOpen, setSearchOpen] = React.useState(false);
+
+    const foundSongsState = useSelector((state) => state.entities.songs);
+
+    const autoCompleteRef = React.createRef();
+
+    useEffect(() => {
+        console.log('foundSongs: ', foundSongsState);
+        if (!foundSongsState) {
+            setFoundSongs([]);
+        } else {
+            setFoundSongs(
+                foundSongsState.map((song) => validateSongWithFilters(song))
+            );
+            if (searchString !== '') setSearchOpen(true);
+        }
+    }, [foundSongsState]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
+    };
+
+    const onOpen = () => {
+        setSearchOpen(!searchOpen);
+    };
+
+    const onClose = () => {
+        setSearchOpen(!searchOpen);
+    };
+
+    const onChangeSearch = (value) => {
+        setSearchString(value.target.value);
+    };
+
+    const onSearchSong = (songName) => {
+        setFoundSongs([]);
+        props.searchForSong(songName);
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && searchString !== '') {
+            onSearchSong(searchString);
+        }
+    };
+
+    const getAllArtistsString = (artists) => {
+        const reducer = (accumulator, currentValue) =>
+            accumulator + currentValue.name + ', ';
+        return artists.reduce(reducer, '').slice(0, -2);
+    };
+
+    const getStringFromMilliseconds = (milliseconds) => {
+        const minutes = Math.floor(milliseconds / 1000 / 60);
+        const seconds = Math.round((milliseconds / 1000) % 60);
+        return (
+            minutes.toString().padStart(2, '0') +
+            ':' +
+            seconds.toString().padStart(2, '0')
+        );
+    };
+
+    // Not checked since it has weird (not normed) values: key, loudness, tempo, acousticness (not sure about that)
+    const validateSongWithFilters = (song) => {
+        let songValid = true;
+        if (playlist.music_info.danceability_min) {
+            songValid = songValid && checkSongForFeature(song, 'danceability');
+        }
+        if (playlist.music_info.energy_min) {
+            songValid = songValid && checkSongForFeature(song, 'energy');
+        }
+        if (playlist.music_info.instrumentalness_min) {
+            songValid = songValid && checkSongForFeature(song, 'instrumentalness');
+        }
+        if (playlist.music_info.liveness_min) {
+            songValid = songValid && checkSongForFeature(song, 'liveness');
+        }
+        if (playlist.music_info.speechiness_min) {
+            songValid = songValid && checkSongForFeature(song, 'speechiness');
+        }
+        if (playlist.music_info.valence_min) {
+            songValid = songValid && checkSongForFeature(song, 'valence');
+        }
+        song.valid = songValid;
+        return song;
+    };
+
+    const checkSongForFeature = (song, audio_feature) => {
+        return (
+            playlist.music_info[audio_feature + '_min'] <=
+                song.audio_features[audio_feature] &&
+            playlist.music_info[audio_feature + '_max'] >=
+                song.audio_features[audio_feature]
+        );
+    };
+
+    const onAddSongToPlaylist = (song) => {
+        const playlistId = props.playlist.spotify_id;
+        const songId = song.spotify_id;
+        if (songId && playlistId) {
+            props.addSongToPlaylist(playlistId, songId);
+        } else {
+            console.error(
+                'No songId or no spotify_id of playlist found, playlist probably has no spotify_id.'
+            );
+        }
     };
 
     const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
         let localSortedDirection = sortedDirection;
         if (fieldSet) {
-            if (prevSortedField && prevSortedField === fieldSet && localSortedDirection === 'asc') {
+            if (
+                prevSortedField &&
+                prevSortedField === fieldSet &&
+                localSortedDirection === 'asc'
+            ) {
                 localSortedDirection = 'desc';
-            } else if (prevSortedField && prevSortedField === fieldSet && localSortedDirection === 'desc') {
+            } else if (
+                prevSortedField &&
+                prevSortedField === fieldSet &&
+                localSortedDirection === 'desc'
+            ) {
                 localSortedDirection = null;
             } else {
                 localSortedDirection = 'asc';
             }
             setSortedDirection(localSortedDirection);
-            setPrevSortedField(fieldSet)
+            setPrevSortedField(fieldSet);
             if (localSortedDirection === 'asc') {
                 if (fieldSet === 'duration_ms') {
-                    playlist.music_info.songs.sort((a, b) => b[fieldSet] - a[fieldSet]);
+                    playlist.music_info.songs.sort(
+                        (a, b) => b[fieldSet] - a[fieldSet]
+                    );
                 } else {
-                    playlist.music_info.songs.sort((a, b) => a[fieldSet].localeCompare(b[fieldSet]));
+                    playlist.music_info.songs.sort((a, b) =>
+                        a[fieldSet].localeCompare(b[fieldSet])
+                    );
                 }
             } else if (localSortedDirection === 'desc') {
                 if (fieldSet === 'duration_ms') {
-                    playlist.music_info.songs.sort((a, b) => a[fieldSet] - b[fieldSet]);
+                    playlist.music_info.songs.sort(
+                        (a, b) => a[fieldSet] - b[fieldSet]
+                    );
                 } else {
-                    playlist.music_info.songs.sort((a, b) => b[fieldSet].localeCompare(a[fieldSet]));
+                    playlist.music_info.songs.sort((a, b) =>
+                        b[fieldSet].localeCompare(a[fieldSet])
+                    );
                 }
             }
         }
-    }
+    };
 
     const getProperty = (property) => {
-        if (!(property[1] === "Not set")) {
+        if (!(property[1] === 'Not set')) {
             return (
-                <span className={classes.descriptionSpan}>{property[0]}: {property[1] + "     "}</span>
-            )
+                <span className={classes.descriptionSpan}>
+                    {property[0]}: {property[1] + '     '}
+                </span>
+            );
         }
     };
 
     const getPropertyListItem = (property) => {
-        if (!(property[1] === "Not set")) {
+        if (!(property[1] === 'Not set')) {
             return (
-                <ListItem>{property[0]}: {property[1]}</ListItem>
-            )
+                <ListItem>
+                    {property[0]}: {property[1]}
+                </ListItem>
+            );
         }
     };
 
@@ -133,110 +286,272 @@ function PlaylistDetailsComponent(props) {
         } else {
             return 'Not set';
         }
-    }
+    };
 
     const properties = [
-        ["Acousticness", getStringValue(playlist.music_info.acousticness_min, playlist.music_info.acousticness_max)],
-        ["Danceability", getStringValue(playlist.music_info.danceability_min, playlist.music_info.danceability_max)],
-        ["Energy", getStringValue(playlist.music_info.energy_min, playlist.music_info.energy_max)],
-        ["Instrumentalness", getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max)],
-        ["Key", getStringValue(playlist.music_info.instrumentalness_min, playlist.music_info.instrumentalness_max)],
-        ["Liveness", getStringValue(playlist.music_info.liveness_min, playlist.music_info.liveness_max)],
-        ["Loudness", getStringValue(playlist.music_info.loudness_min, playlist.music_info.loudness_max)],
-        ["Speechiness", getStringValue(playlist.music_info.speechiness_min, playlist.music_info.speechiness_max)],
-        ["Tempo", getStringValue(playlist.music_info.tempo_min, playlist.music_info.tempo_max)],
-        ["Valence", getStringValue(playlist.music_info.valence_min, playlist.music_info.valence_max)]
+        [
+            'Acousticness',
+            getStringValue(
+                playlist.music_info.acousticness_min,
+                playlist.music_info.acousticness_max
+            ),
+        ],
+        [
+            'Danceability',
+            getStringValue(
+                playlist.music_info.danceability_min,
+                playlist.music_info.danceability_max
+            ),
+        ],
+        [
+            'Energy',
+            getStringValue(
+                playlist.music_info.energy_min,
+                playlist.music_info.energy_max
+            ),
+        ],
+        [
+            'Instrumentalness',
+            getStringValue(
+                playlist.music_info.instrumentalness_min,
+                playlist.music_info.instrumentalness_max
+            ),
+        ],
+        [
+            'Key',
+            getStringValue(
+                playlist.music_info.instrumentalness_min,
+                playlist.music_info.instrumentalness_max
+            ),
+        ],
+        [
+            'Liveness',
+            getStringValue(
+                playlist.music_info.liveness_min,
+                playlist.music_info.liveness_max
+            ),
+        ],
+        [
+            'Loudness',
+            getStringValue(
+                playlist.music_info.loudness_min,
+                playlist.music_info.loudness_max
+            ),
+        ],
+        [
+            'Speechiness',
+            getStringValue(
+                playlist.music_info.speechiness_min,
+                playlist.music_info.speechiness_max
+            ),
+        ],
+        [
+            'Tempo',
+            getStringValue(
+                playlist.music_info.tempo_min,
+                playlist.music_info.tempo_max
+            ),
+        ],
+        [
+            'Valence',
+            getStringValue(
+                playlist.music_info.valence_min,
+                playlist.music_info.valence_max
+            ),
+        ],
     ];
 
-    return (<div className={classes.root}>
-        <h1>Playlist Overview</h1>
+    return (
+        <div className={classes.root}>
+            <h1>Playlist Overview</h1>
 
-        {(!playlist.is_teamtune_playlist ? <div></div> :
+            {!playlist.is_teamtune_playlist ? (
+                <div></div>
+            ) : (
                 <div>
-                    <hr/>
-                    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                    <hr />
+                    <Accordion
+                        expanded={expanded === 'panel1'}
+                        onChange={handleChange('panel1')}
+                    >
                         <AccordionSummary
-                            expandIcon={<ExpandMoreIcon/>}
+                            expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography className={classes.heading}>Playlist Properties</Typography>
+                            <Typography className={classes.heading}>
+                                Playlist Properties
+                            </Typography>
                             <Typography className={classes.secondaryHeading}>
-                                {expanded ? (<div></div>) : (<div>
-                                    {properties.map(getProperty)}
-                                </div>)}
-
+                                {expanded ? (
+                                    <div></div>
+                                ) : (
+                                    <div>{properties.map(getProperty)}</div>
+                                )}
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                <List component="nav" aria-label="secondary mailbox folders">
+                                <List
+                                    component="nav"
+                                    aria-label="secondary mailbox folders"
+                                >
                                     {properties.map(getPropertyListItem)}
                                 </List>
                             </Typography>
                         </AccordionDetails>
                     </Accordion>
-                    <hr/>
+                    <hr />
                 </div>
-        )}
+            )}
 
-
-        <div>
-            <h2>{playlist.title} - {durationHours}:{durationMinutesModulo}</h2>
-        </div>
-        <div>
-            <Paper className={classes.playlistListPaper}>
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="right" onClick={() => sortHeaders('number')}>
-                                    #
-                                </TableCell>
-                                <TableCell align="right" onClick={() => sortHeaders('title')}>
-                                    Title
-                                </TableCell>
-                                <TableCell align="right" onClick={() => sortHeaders('interpret')}>
-                                    Interpret
-                                </TableCell>
-                                <TableCell align="right" onClick={() => sortHeaders('added_by')}>
-                                    Added by
-                                </TableCell>
-                                <TableCell align="right" onClick={() => sortHeaders('duration_ms')}>
-                                    Duration
-                                </TableCell>
-                                <TableCell align="right">
-                                    Delete
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {playlist.music_info.songs.map((song, index) => (
-                                <TableRow key={song.interpret}>
-                                    <TableCell align="right" component="th" scope="row">{index}</TableCell>
-                                    <TableCell align="right">{song.title}</TableCell>
-                                    <TableCell align="right">{song.interpret}</TableCell>
-                                    <TableCell align="right">{song.added_by}</TableCell>
-                                    <TableCell align="right">{song.duration_ms}</TableCell>
-                                    <TableCell align="right"><IconButton><Delete/></IconButton></TableCell>
+            <div>
+                <h2>
+                    {playlist.title} - {durationHours}:{durationMinutesModulo}
+                </h2>
+            </div>
+            <div className={classes.searchRow}>
+                <div className={classes.textInput}>
+                    <Autocomplete
+                        className={classes.textField}
+                        options={foundSongs}
+                        getOptionLabel={(option) => option.name}
+                        open={searchOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
+                        renderOption={(option) => (
+                            <React.Fragment>
+                                <div className={classes.searchRow}>
+                                    <span>
+                                        {option.name} -{' '}
+                                        {getAllArtistsString(option.artists)} -{' '}
+                                        {getStringFromMilliseconds(
+                                            option.duration_ms
+                                        )}
+                                    </span>
+                                    <Button
+                                        className={classes.addToPlaylistButton}
+                                        onClick={() =>
+                                            onAddSongToPlaylist(option)
+                                        }
+                                    >
+                                        Add to Playlist
+                                    </Button>
+                                </div>
+                            </React.Fragment>
+                        )}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                ref={autoCompleteRef}
+                                onChange={(event, value) =>
+                                    onChangeSearch(event)
+                                }
+                                label="Search for songs"
+                                variant="outlined"
+                                fullWidth
+                                onKeyDown={handleKeyDown}
+                            />
+                        )}
+                    />
+                </div>
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => onSearchSong(searchString)}
+                    >
+                        Search
+                    </Button>
+                </div>
+            </div>
+            <div>
+                <Paper className={classes.playlistListPaper}>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell
+                                        align="right"
+                                        onClick={() => sortHeaders('number')}
+                                    >
+                                        #
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        onClick={() => sortHeaders('title')}
+                                    >
+                                        Title
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        onClick={() => sortHeaders('interpret')}
+                                    >
+                                        Interpret
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        onClick={() => sortHeaders('added_by')}
+                                    >
+                                        Added by
+                                    </TableCell>
+                                    <TableCell
+                                        align="right"
+                                        onClick={() =>
+                                            sortHeaders('duration_ms')
+                                        }
+                                    >
+                                        Duration
+                                    </TableCell>
+                                    <TableCell align="right">Delete</TableCell>
                                 </TableRow>
-
-                            ))}
-                        </TableBody>
-
-                    </Table>
-                </TableContainer>
-            </Paper>
+                            </TableHead>
+                            <TableBody>
+                                {playlist.music_info.songs.map(
+                                    (song, index) => (
+                                        <TableRow key={song.interpret}>
+                                            <TableCell
+                                                align="right"
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {index}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.title}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.interpret}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.added_by}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.duration_ms}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <IconButton>
+                                                    <Delete />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
+            </div>
         </div>
-    </div>);
+    );
 }
 
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {
-    movie: PropTypes.object,
-    new: PropTypes.bool,
-    onCreate: PropTypes.func,
-    onSave: PropTypes.func,
+    playlist: PropTypes.object,
+    searchForSong: PropTypes.func,
+    addSongToPlaylist: PropTypes.func,
 };
 
 // withRouter() allows accessing the necessary functionality to navigate from this component

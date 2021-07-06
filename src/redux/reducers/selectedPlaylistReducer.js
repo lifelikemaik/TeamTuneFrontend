@@ -12,6 +12,6 @@ export default function selectedPlaylist(state = {}, action) {
                 },
             };
         default:
-            return { playlist: action.playlist };
+            return state;
     }
 }

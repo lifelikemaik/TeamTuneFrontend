@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import { updateUserName } from "../redux/actions";
+import { updateUsername } from "../redux/actions";
 import MyTeamTuneAccountComponent from "../components/MyTeamTuneAccountComponent";
 
 
@@ -15,21 +15,24 @@ function MyTeamTuneAccountView(props) {
 
     useEffect(() => {
         if (user.user) {
-            /*
-            console.log("TEST")
-            */
+            console.log(props.user);
         }
     }, [user, props.history]);
 
-    const onUpdateUserName = (newUsername) => {
-        props.dispatch(updateUserName(newUsername));
+    const onUpdateUsername = (newUsername) => {
+        props.dispatch(updateUsername(newUsername));
+    };
+
+    const onUpdatePassword = (newPassword) => {
+        props.dispatch(updatePassword(newPassword));
     };
 
 
     return (
         <MyTeamTuneAccountComponent
             user={user}
-            onUpdateUserName={onUpdateUserName}
+            onUpdateUsername={onUpdateUsername}
+            onUpdatePassword={onUpdatePassword}
         />
 
     );

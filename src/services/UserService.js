@@ -64,10 +64,10 @@ export default class UserService {
         });
     }
 
-    static updateUserName(user) {
+    static updateUsername(user) {
         return new Promise((resolve, reject) => {
             HttpService.put(
-                `${UserService.baseURL()}/updateUserName`,
+                `${UserService.baseURL()}/updateUsername`,
                 {
                     username: user,
                 },

@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
         '&:hover': {
             backgroundColor: "#1db954",
-            color: "black",
             opacity: "90%",
         },
     },
@@ -72,7 +71,7 @@ function MyTeamTuneAccountComponent(props) {
             setChangeUsernameError(props.user.error);
             setChangePasswordError(props.user.error);
         } else {
-            console.log(props.user);
+            /*console.log(user);*/
             console.log(newUsername)
             setChangeUsernameError("");
             setChangePasswordError("");
@@ -99,14 +98,15 @@ function MyTeamTuneAccountComponent(props) {
         setChangePasswordError("");
     };
 
-    const onUpdateUserName = (e) => { console.log(newUsername)
+    const onUpdateUsername = (e) => {
         e.preventDefault();
-        props.onUpdateUserName(newUsername);
+        console.log(props);
+        props.onUpdateUsername(newUsername);
     };
 
     const onUpdatePassword = (e) => {
         e.preventDefault();
-        props.onUpdatePassword(props.user.user.username, newPassword);
+        props.onUpdatePassword(newPassword);
     };
 
     const onBlurPassword = (e) => {
@@ -145,7 +145,7 @@ function MyTeamTuneAccountComponent(props) {
                             className={classes.changeCredentialsButton}
                             variant="contained"
                             color="primary"
-                            onClick={onUpdateUserName}
+                            onClick={onUpdateUsername}
                             disabled={newUsername === "" || changeUsernameError !== ""}
                             type="submit"
                         >
