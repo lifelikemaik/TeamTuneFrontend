@@ -146,3 +146,21 @@ export function addPlaylist(playlist) {
         }
     };
 }
+
+export function followPlaylist(playlistId) {
+    function onSuccess() {
+        return { type: 'FOLLOW_PLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('follow playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            await PlaylistService.followPlaylist(playlistId);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}

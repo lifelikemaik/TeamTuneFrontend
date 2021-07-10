@@ -118,4 +118,23 @@ export default class PlaylistService {
             );
         });
     }
+
+    static followPlaylist(playlistId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId + '/follow';
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving playlist");
+                    }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

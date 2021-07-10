@@ -12,6 +12,8 @@ export default function entities(state = {}, action) {
             return { movies: action.movies };
         case 'ADDMOVIE_SUCCESS':
             return { ...state };
+        case 'FOLLOW_Playlist_SUCCESS':
+            return { ...state };
         case 'ADDPlaylist_SUCCESS':
             return { ...state };
         case 'ADDSONG_SUCCESS':

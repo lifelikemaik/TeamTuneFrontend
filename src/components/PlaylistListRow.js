@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[2],
         maxWidth: 140,
     },
+    row: {
+        zIndex: 1,
+    }
 }));
 
 /**
@@ -23,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
  */
 function PlaylistListRow(props) {
     // with this you can access the above defined style classes
-    const {image} = useStyles();
+    const {image, row} = useStyles();
 
     const playlistId = (props.isBrowse ? props.playlist.public_id : props.playlist._id);
     return (
         <TableRow
+            className={row}
             key={playlistId}
             onClick={() => props.onClickDisplayPlaylist(playlistId)}
             height="118px"
@@ -49,6 +53,7 @@ function PlaylistListRow(props) {
                 <PlaylistListRowButtons
                     playlist={props.playlist}
                     isBrowse={props.isBrowse}
+                    onClickFollowPlaylist={props.onClickFollowPlaylist}
                 />
             </TableCell>
         </TableRow>
@@ -60,6 +65,7 @@ PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
     onClickDisplayPlaylist: PropTypes.func,
     onClickDeleteMovie: PropTypes.func,
+    onClickFollowMovie: PropTypes.func,
     isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,
 };
