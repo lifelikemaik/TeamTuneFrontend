@@ -25,10 +25,11 @@ function PlaylistListRow(props) {
     // with this you can access the above defined style classes
     const {image} = useStyles();
 
+    const playlistId = (props.isBrowse ? props.playlist.public_id : props.playlist._id);
     return (
         <TableRow
-            key={props.playlist._id}
-            onClick={() => props.onClickDisplayPlaylist(props.playlist._id)}
+            key={playlistId}
+            onClick={() => props.onClickDisplayPlaylist(playlistId)}
             height="118px"
         >
             <TableCell>
