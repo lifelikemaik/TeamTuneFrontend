@@ -38,6 +38,7 @@ function InviteComponent(props) {
 
     const onRegister = (e) => {
         e.preventDefault();
+        props.history.push("/playlist/" + props.match.params.id);
         props.onRegister(username, props.match.params.id);
     };
 
