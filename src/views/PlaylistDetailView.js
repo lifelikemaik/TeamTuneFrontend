@@ -7,6 +7,7 @@ import {
     addSongToPlaylist,
     getPlaylist,
     searchForSong,
+    getPlaylistLength,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
@@ -41,12 +42,13 @@ function PlaylistDetailsView(props) {
             isAdmin={!!user.user ? user.user.role === 'admin' : false}
             searchForSong={props.searchForSong}
             addSongToPlaylist={props.addSongToPlaylist}
+            getPlaylistLength={props.getPlaylistLength}
         />
     ) : null;
 }
 
 // connect() establishes allows the usage of redux functionality
-// here the function getPlaylist, changePlaylist and addPlaylist are mentionend
+// here the function getPlaylist, changePlaylist and addPlaylist are mentioned
 // this is an alternative way of calling connecting them with redux
 // another way is shown in PlaylistListView.js
 export default connect(null, {
@@ -54,4 +56,5 @@ export default connect(null, {
     addPlaylist,
     searchForSong,
     addSongToPlaylist,
+    getPlaylistLength,
 })(PlaylistDetailsView);

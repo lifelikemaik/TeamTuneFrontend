@@ -164,3 +164,21 @@ export function followPlaylist(playlistId) {
         }
     };
 }
+
+export function getPlaylistLength(playlistId) {
+    function onSuccess() {
+        return { type: 'PLAYLIST_LENGTH_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('get playlist length failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            await PlaylistService.getPlaylistLength(playlistId);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
