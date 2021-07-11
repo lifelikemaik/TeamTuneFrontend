@@ -25,6 +25,24 @@ export default class UserService {
         });
     }
 
+    static registerInvite(user, playlistId) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${UserService.baseURL()}/register_invite`,
+                {
+                    username: user,
+                    playlist_id: playlistId,
+                },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static login(user, pass) {
         return new Promise((resolve, reject) => {
             HttpService.post(

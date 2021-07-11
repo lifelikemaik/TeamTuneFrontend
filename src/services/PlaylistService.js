@@ -137,4 +137,23 @@ export default class PlaylistService {
             );
         });
     }
+
+    static getPlaylistLength(playlistId) {
+        const url = PlaylistService.baseURL() + '/length/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving playlist length");
+                    }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

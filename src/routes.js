@@ -50,7 +50,7 @@ const routes = [
       component: PlaylistDetailView,
     },
     {
-        path: "/playlist/:id/invite",
+        path: "/invite/:id",
         component: InviteView,
     },
     {

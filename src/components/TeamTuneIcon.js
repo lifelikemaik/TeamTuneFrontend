@@ -3,7 +3,7 @@ import React from "react";
 const TeamTuneIcon = (props) => (
     <svg viewBox="0 0 71.31 83.1" {...props}>
         <defs>
-            <style>{".cls-1{fill:#fafafa;}.cls-2{fill:#191414;}"}</style>
+            <style>{".cls-1{fill:#000000;}.cls-2{fill:#62D2A2;}"}</style>
         </defs>
         <g id="Layer_2" data-name="Layer 2">
             <g id="Layer_1-2" data-name="Layer 1">

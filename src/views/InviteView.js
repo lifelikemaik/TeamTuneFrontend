@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import LandingPageComponent from "../components/LandingPageComponent";
+
+import InviteComponent from "../components/InviteComponent";
+import {registerInvite} from "../redux/actions";
 
 
 /**
@@ -10,9 +12,14 @@ import LandingPageComponent from "../components/LandingPageComponent";
  */
 function InviteView(props) {
 
+    const onRegister = (username, playlist_id) => {
+        props.dispatch(registerInvite(username, playlist_id));
+    };
 
     return (
-        <LandingPageComponent />
+        <InviteComponent
+            onRegister={onRegister}
+        />
     );
 }
 
