@@ -148,8 +148,6 @@ export function addPlaylist(playlist) {
 };
 
 export function updatePlaylist(playlistId, updatedPlaylist) {
-    console.log('in action');
-
     function onSuccess() {
         return { type: 'UPDATEPLAYLIST_SUCCESS' };
     }
