@@ -9,10 +9,6 @@ function PlaylistListRowButtons(props) {
     const [open, setOpen] = React.useState(false);
     const [messsage, setMessage] = React.useState(false);
 
-    useEffect(() => {
-        console.log('props: ', props);
-    }, []);
-
     const handleClick = (message) => {
         setMessage(message);
         setOpen(true);
