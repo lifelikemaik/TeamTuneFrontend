@@ -1,6 +1,6 @@
 import { Button, Snackbar, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert } from '@material-ui/lab';
 
 function PlaylistListRowButtons(props) {
@@ -8,6 +8,10 @@ function PlaylistListRowButtons(props) {
 
     const [open, setOpen] = React.useState(false);
     const [messsage, setMessage] = React.useState(false);
+
+    useEffect(() => {
+        console.log('props: ', props);
+    }, []);
 
     const handleClick = (message) => {
         setMessage(message);
@@ -42,7 +46,9 @@ function PlaylistListRowButtons(props) {
 
     return (
         <div>
-            {props.isBrowse ? (
+            {!props.isLoggedIn ? (
+                <div/>
+            ) : props.isBrowse ? (
                 <div>
                     <Button variant="contained">Follow</Button>
                     <Button variant="contained">Copy to my Playlist</Button>

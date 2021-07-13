@@ -232,6 +232,7 @@ function PlaylistListComponent(props) {
                                             onCopyPlaylist={props.onCopyPlaylist}
                                             isAdmin={props.isAdmin}
                                             isBrowse={props.isBrowse}
+                                            isLoggedIn={props.isLoggedIn}
                                         />
                                     );
                                 })}
