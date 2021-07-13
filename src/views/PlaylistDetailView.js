@@ -8,12 +8,13 @@ import {
     addSongToPlaylistInvite,
     getPlaylist,
     searchForSong,
-    getPlaylistLength, searchForSongInvite,
+    getPlaylistLength,
+    searchForSongInvite,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
     // props can be deconstructed into single variables, so you do not need to write "props." all the time
-    let { match, getPlaylist } = props;
+    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite} = props;
 
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
@@ -68,10 +69,13 @@ function PlaylistDetailsView(props) {
 // here the function getPlaylist, changePlaylist and addPlaylist are mentioned
 // this is an alternative way of calling connecting them with redux
 // another way is shown in PlaylistListView.js
+
 export default connect(null, {
     getPlaylist,
     addPlaylist,
     searchForSong,
+    searchForSongInvite,
     addSongToPlaylist,
+    addSongToPlaylistInvite,
     getPlaylistLength,
 })(PlaylistDetailsView);
