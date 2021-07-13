@@ -103,8 +103,44 @@ export default class PlaylistService {
         });
     }
 
+    static searchForSongInvite(songName, playlistId) {
+        const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songName
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined) {
+                        resolve(data);
+                    } else {
+                        reject('Error while searching for song');
+                    }
+                },
+                function (textStatus) {
+                    console.log('error');
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static addSongToPlaylist(playlistId, songId) {
         const url = PlaylistService.baseURL() + '/' + playlistId + '/songs/' + songId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                {},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static addSongToPlaylistInvite(playlistId, songId) {
+        const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songId;
         return new Promise((resolve, reject) => {
             HttpService.put(
                 url,

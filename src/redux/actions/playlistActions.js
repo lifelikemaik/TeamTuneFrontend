@@ -89,6 +89,28 @@ export function searchForSong(songName, currentPlaylist) {
     };
 }
 
+export function searchForSongInvite(songName, currentPlaylist) {
+    function onSuccess(songs) {
+        return {
+            type: 'SEARCHFORSONG_SUCCESS',
+            songs: songs,
+            currentPlaylist: currentPlaylist,
+        };
+    }
+    function onFailure(error) {
+        console.log('failed to search for song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const songs = await PlaylistService.searchForSongInvite(songName, currentPlaylist);
+            dispatch(onSuccess(songs));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export function addSongToPlaylist(playlistId, songId) {
     function onSuccess() {
         return { type: 'ADDSONG_SUCCESS' };
@@ -100,6 +122,28 @@ export function addSongToPlaylist(playlistId, songId) {
     return async (dispatch) => {
         try {
             const result = await PlaylistService.addSongToPlaylist(
+                playlistId,
+                songId
+            );
+            console.log('result: ', result);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function addSongToPlaylistInvite(playlistId, songId) {
+    function onSuccess() {
+        return { type: 'ADDSONG_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('failed to add song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.addSongToPlaylistInvite(
                 playlistId,
                 songId
             );

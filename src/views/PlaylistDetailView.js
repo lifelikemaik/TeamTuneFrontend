@@ -5,9 +5,10 @@ import PlaylistDetailsComponent from '../components/PlaylistDetailsComponent';
 import {
     addPlaylist,
     addSongToPlaylist,
+    addSongToPlaylistInvite,
     getPlaylist,
     searchForSong,
-    getPlaylistLength,
+    getPlaylistLength, searchForSongInvite,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
@@ -28,6 +29,22 @@ function PlaylistDetailsView(props) {
         getPlaylist(playlistId);
     }, [match.params]);
 
+    const addSongToPlaylistHelper = (playlistId, songId) => {
+        if(!(user.user)){
+            addSongToPlaylistInvite(playlistId, songId);
+        } else {
+            addSongToPlaylist(playlistId, songId);
+        }
+    }
+
+    const searchForSongHelper = (songName) => {
+        if(!(user.user)){
+            searchForSongInvite(songName, match.params.id);
+        } else {
+            searchForSong(songName, match.params.id);
+        }
+    }
+
     return !selectedPlaylist ||
         (!selectedPlaylist?.playlist &&
             !selectedPlaylist?.error &&
@@ -40,8 +57,8 @@ function PlaylistDetailsView(props) {
             playlist={selectedPlaylist.playlist}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === 'admin' : false}
-            searchForSong={props.searchForSong}
-            addSongToPlaylist={props.addSongToPlaylist}
+            searchForSong={searchForSongHelper}
+            addSongToPlaylist={addSongToPlaylistHelper}
             getPlaylistLength={props.getPlaylistLength}
         />
     ) : null;
