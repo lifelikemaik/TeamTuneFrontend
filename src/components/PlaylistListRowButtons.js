@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 function PlaylistListRowButtons(props) {
+    const [publicity, setPublicity] = React.useState(props.playlist.publicity);
+
     return (
         <div>
             {props.isBrowse ? (
@@ -15,15 +17,17 @@ function PlaylistListRowButtons(props) {
                     {props.playlist.is_own_playlist ? (
                         <div>
                             <Button variant="contained">Share Link</Button>
-                            {!props.playlist.publicity && (
+                            {!publicity && (
                                 <Button
                                     variant="contained"
-                                    onClick={() =>
+                                    onClick={(e) => {
                                         props.onMakePlaylistPublic(
+                                            e,
                                             props.playlist._id,
                                             { publicity: true }
-                                        )
-                                    }
+                                        );
+                                        setPublicity(true);
+                                    }}
                                 >
                                     Make Public
                                 </Button>
@@ -31,15 +35,22 @@ function PlaylistListRowButtons(props) {
 
                             <Button
                                 variant="contained"
-                                onClick={() =>
-                                    props.onCopyPlaylist(props.playlist._id)
+                                onClick={(e) =>
+                                    props.onCopyPlaylist(e, props.playlist._id)
                                 }
                             >
                                 Create Copy
                             </Button>
                         </div>
                     ) : (
-                        <Button variant="contained">Create Copy</Button>
+                        <Button
+                            variant="contained"
+                            onClick={(e) =>
+                                props.onCopyPlaylist(e, props.playlist._id)
+                            }
+                        >
+                            Create Copy
+                        </Button>
                     )}
                 </div>
             )}

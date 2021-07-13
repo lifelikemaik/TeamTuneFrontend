@@ -37,11 +37,19 @@ function PlaylistListView(props) {
         props.history.push("/playlist/new");
     };
 
-    const onMakePlaylistPublic = async (playlistId, updatedPlaylist) => {
+    const onMakePlaylistPublic = async (e, playlistId, updatedPlaylist) => {
+        e.preventDefault();
+        e.stopPropagation();
         props.dispatch(updatePlaylist(playlistId, updatedPlaylist));
     }
 
-    const onCopyPlaylist = async (playlistId) => {
+    const findPlaylistIndexById = (playlists, playlistId) => {
+        return playlists.findIndex((playlist) => playlist._id == playlistId);
+    }
+
+    const onCopyPlaylist = async (e, playlistId) => {
+        e.preventDefault();
+        e.stopPropagation();
         props.dispatch(copyPlaylist(playlistId));
     }
 
