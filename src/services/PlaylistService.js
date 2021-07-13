@@ -104,7 +104,7 @@ export default class PlaylistService {
     }
 
     static searchForSongInvite(songName, playlistId) {
-        const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songName
+        const url = PlaylistService.baseURL() + '/songs/' + songName + '/invited/' + playlistId
         return new Promise((resolve, reject) => {
             HttpService.get(
                 url,
