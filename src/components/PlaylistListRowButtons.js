@@ -1,9 +1,44 @@
-import { Button, TableCell } from '@material-ui/core';
+import { Button, Snackbar, TableCell } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Alert } from '@material-ui/lab';
 
 function PlaylistListRowButtons(props) {
     const [publicity, setPublicity] = React.useState(props.playlist.publicity);
+
+    const [open, setOpen] = React.useState(false);
+    const [messsage, setMessage] = React.useState(false);
+
+    const handleClick = (message) => {
+        setMessage(message);
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        if (event != null) preventBackgroundClick(event);
+        setOpen(false);
+    };
+
+    const preventBackgroundClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const snackBar = () => {
+        return (
+            <Snackbar
+                open={open}
+                autoHideDuration={2500}
+                onClose={handleClose}
+                onClick={preventBackgroundClick}
+            >
+                <Alert onClose={handleClose} severity="success">
+                    {messsage}
+                </Alert>
+            </Snackbar>
+        );
+    };
 
     return (
         <div>
@@ -14,6 +49,7 @@ function PlaylistListRowButtons(props) {
                 </div>
             ) : (
                 <div>
+                    {snackBar()}
                     {props.playlist.is_own_playlist ? (
                         <div>
                             <Button variant="contained">Share Link</Button>
@@ -27,6 +63,7 @@ function PlaylistListRowButtons(props) {
                                             { publicity: true }
                                         );
                                         setPublicity(true);
+                                        handleClick('Playlist made public!');
                                     }}
                                 >
                                     Make Public
@@ -35,9 +72,10 @@ function PlaylistListRowButtons(props) {
 
                             <Button
                                 variant="contained"
-                                onClick={(e) =>
-                                    props.onCopyPlaylist(e, props.playlist._id)
-                                }
+                                onClick={(e) => {
+                                    props.onCopyPlaylist(e, props.playlist._id);
+                                    handleClick('Playlist copied!');
+                                }}
                             >
                                 Create Copy
                             </Button>
@@ -45,9 +83,10 @@ function PlaylistListRowButtons(props) {
                     ) : (
                         <Button
                             variant="contained"
-                            onClick={(e) =>
-                                props.onCopyPlaylist(e, props.playlist._id)
-                            }
+                            onClick={(e) => {
+                                props.onCopyPlaylist(e, props.playlist._id);
+                                handleClick('Playlist copied!');
+                            }}
                         >
                             Create Copy
                         </Button>
