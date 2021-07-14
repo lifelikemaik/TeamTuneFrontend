@@ -72,7 +72,7 @@ function PlaylistListRowButtons(props) {
                         <div>
                             <Button variant="contained" onClick={(e) => {
                                 preventBackgroundClick(e)
-                                handleClick()
+                                handleClick('Link was copied to the clipboard!')
                                 navigator.clipboard.writeText("http://localhost:3000/invite/" + props.playlist._id)
                             }}>
                                 Share Link

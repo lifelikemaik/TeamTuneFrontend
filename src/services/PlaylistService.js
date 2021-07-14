@@ -47,10 +47,11 @@ export default class PlaylistService {
         });
     }
 
-    static getPlaylist(id) {
+    static getPlaylist(id, loggedIn) {
+        const url = loggedIn ? `${PlaylistService.baseURL()}/${id}` : `${PlaylistService.baseURL()}/invited/${id}`;
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                `${PlaylistService.baseURL()}/${id}`,
+                url,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);

@@ -27,7 +27,7 @@ function PlaylistDetailsView(props) {
         // get id of playlist from URL
         let playlistId = match.params.id;
 
-        getPlaylist(playlistId);
+        getPlaylist(playlistId, !!user.user);
     }, [match.params]);
 
     const addSongToPlaylistHelper = (playlistId, songId) => {
