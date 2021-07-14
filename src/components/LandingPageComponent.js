@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
-import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent } from "@material-ui/core";
+import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent, Paper, Grid } from "@material-ui/core";
 import TeamTuneIcon from "./TeamTuneIcon";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
@@ -15,9 +15,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     cardRoot: {
-        width: 400,
+        width: 600,
+        height: 400,
         alignItems: 'center',
         justifyContent: "center",
+    },
+    gridRoot: {
+        flexGrow: 1,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     cardHeader: {
         display: "flex",
@@ -97,8 +103,9 @@ const useStyles = makeStyles((theme) => ({
             opacity: "90%",
         },
     },
-    goFreeButton: {
-        marginLeft: theme.spacing(1),
+    cardButton: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
         marginTop: -10,
         width: "50%",
         height: "40px",
@@ -136,7 +143,7 @@ function SubscriptionCardFree() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.goFreeButton}>Go Free</Button>
+                <Button className={classes.cardButton}>Go Free</Button>
             </CardActions>
         </Card>
     );
@@ -149,11 +156,11 @@ function SubscriptionCardPremium() {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-                <Typography className={classes.cardHeader} color="textSecondary"  component="h2" gutterBottom>
+                <Typography className={classes.cardHeader} color="textSecondary" component="h2" gutterBottom>
                     TeamTune Premium
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull}feature 1
+                    {bull} Feature 1
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
                     {bull} feature 2
@@ -166,7 +173,7 @@ function SubscriptionCardPremium() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.goFreeButton}>Go Premium</Button>
+                <Button className={classes.cardButton}>Go Premium</Button>
             </CardActions>
         </Card>
     );
@@ -216,11 +223,20 @@ function LandingPageComponent(props) {
                     What you get
                 </h1>
                 <h3 className={classes.subscriptionModelHeader}>
-                    You can choose between the Free and the TeamTune Premium model:
+                    You can choose between a Free and a Premium model:
                 </h3>
-                <SubscriptionCardFree/>
-                <SubscriptionCardPremium/>
+                <div className={classes.gridRoot}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={4}>
+                            <SubscriptionCardFree />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <SubscriptionCardPremium />
+                        </Grid>
+                    </Grid>
+                </div>
             </section>
+
         </div>
 
     );
