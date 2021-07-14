@@ -185,6 +185,7 @@ function PlaylistDetailsComponent(props) {
         allSongsTemp.unshift(packSong(song));
         setAllSongs([]);
         setAllSongs(allSongsTemp);
+        setTotalDuration(totalDuration + song.duration_ms);
     };
 
     const getStringFromMilliseconds = (milliseconds, includeHours) => {
