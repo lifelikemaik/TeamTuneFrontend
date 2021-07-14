@@ -3,11 +3,11 @@ import {NavLink, withRouter} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {AppBar, Button, IconButton, Toolbar, Divider, Typography, Drawer, MenuItem, Link} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import TeamTuneIcon from "./TeamTuneIcon";
 import { motion } from "framer-motion";
 
 import {useSelector} from "react-redux";
 import {logout} from "../redux/actions";
+import TeamTuneIconWhite from "./TeamTuneIconWhite";
 
 const useStyles = makeStyles((theme) => ({
     main_options: {
@@ -156,7 +156,7 @@ function Header(props) {
         <div>
             <IconButton disableRipple  onClick={() => props.history.push("/")} color="inherit">
                 <div style={{width: 50}}>
-                    <TeamTuneIcon/>
+                    <TeamTuneIconWhite/>
                 </div>
                 {logoType}
             </IconButton>

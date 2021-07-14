@@ -292,71 +292,71 @@ function PlaylistDetailsComponent(props) {
         [
             'Acousticness',
             getStringValue(
-                playlist.music_info.acousticness_min,
-                playlist.music_info.acousticness_max
+                playlist.music_info.min_acousticness,
+                playlist.music_info.max_acousticness
             ),
         ],
         [
             'Danceability',
             getStringValue(
-                playlist.music_info.danceability_min,
-                playlist.music_info.danceability_max
+                playlist.music_info.min_danceability,
+                playlist.music_info.max_danceability
             ),
         ],
         [
             'Energy',
             getStringValue(
-                playlist.music_info.energy_min,
-                playlist.music_info.energy_max
+                playlist.music_info.min_energy,
+                playlist.music_info.max_energy
             ),
         ],
         [
             'Instrumentalness',
             getStringValue(
-                playlist.music_info.instrumentalness_min,
-                playlist.music_info.instrumentalness_max
+                playlist.music_info.min_instrumentalness,
+                playlist.music_info.max_instrumentalness
             ),
         ],
         [
             'Key',
             getStringValue(
-                playlist.music_info.instrumentalness_min,
-                playlist.music_info.instrumentalness_max
+                playlist.music_info.min_instrumentalness,
+                playlist.music_info.max_instrumentalness
             ),
         ],
         [
             'Liveness',
             getStringValue(
-                playlist.music_info.liveness_min,
-                playlist.music_info.liveness_max
+                playlist.music_info.min_liveness,
+                playlist.music_info.max_liveness
             ),
         ],
         [
             'Loudness',
             getStringValue(
-                playlist.music_info.loudness_min,
-                playlist.music_info.loudness_max
+                playlist.music_info.min_loudness,
+                playlist.music_info.max_loudness
             ),
         ],
         [
             'Speechiness',
             getStringValue(
-                playlist.music_info.speechiness_min,
-                playlist.music_info.speechiness_max
+                playlist.music_info.min_speechiness,
+                playlist.music_info.max_speechiness
             ),
         ],
         [
             'Tempo',
             getStringValue(
-                playlist.music_info.tempo_min,
-                playlist.music_info.tempo_max
+                playlist.music_info.min_tempo_min,
+                playlist.music_info.max_tempo
             ),
         ],
         [
             'Valence',
             getStringValue(
-                playlist.music_info.valence_min,
-                playlist.music_info.valence_max
+                playlist.music_info.min_valence,
+                playlist.music_info.max_valence
             ),
         ],
     ];

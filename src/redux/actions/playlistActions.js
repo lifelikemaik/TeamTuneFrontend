@@ -89,6 +89,28 @@ export function searchForSong(songName, currentPlaylist) {
     };
 }
 
+export function searchForSongInvite(songName, currentPlaylist) {
+    function onSuccess(songs) {
+        return {
+            type: 'SEARCHFORSONG_SUCCESS',
+            songs: songs,
+            currentPlaylist: currentPlaylist,
+        };
+    }
+    function onFailure(error) {
+        console.log('failed to search for song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const songs = await PlaylistService.searchForSongInvite(songName, currentPlaylist);
+            dispatch(onSuccess(songs));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export function addSongToPlaylist(playlistId, songId) {
     function onSuccess() {
         return { type: 'ADDSONG_SUCCESS' };
@@ -100,6 +122,28 @@ export function addSongToPlaylist(playlistId, songId) {
     return async (dispatch) => {
         try {
             const result = await PlaylistService.addSongToPlaylist(
+                playlistId,
+                songId
+            );
+            console.log('result: ', result);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function addSongToPlaylistInvite(playlistId, songId) {
+    function onSuccess() {
+        return { type: 'ADDSONG_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('failed to add song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.addSongToPlaylistInvite(
                 playlistId,
                 songId
             );
@@ -140,6 +184,79 @@ export function addPlaylist(playlist) {
     return async (dispatch) => {
         try {
             await PlaylistService.createPlaylist(playlist);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+};
+
+export function updatePlaylist(playlistId, updatedPlaylist) {
+    function onSuccess() {
+        return { type: 'UPDATEPLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('update playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.updatePlaylist(playlistId, updatedPlaylist);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function copyPlaylist(playlistId) {
+
+    function onSuccess(playlist) {
+        return { type: 'COPYPLAYLIST_SUCCESS', playlist: playlist };
+    }
+    function onFailure(error) {
+        console.log('copy playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.copyPlaylist(playlistId);
+            dispatch(onSuccess(result));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function followPlaylist(playlistId) {
+    function onSuccess() {
+        return { type: 'FOLLOW_PLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('follow playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            await PlaylistService.followPlaylist(playlistId);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function getPlaylistLength(playlistId) {
+    function onSuccess() {
+        return { type: 'PLAYLIST_LENGTH_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('get playlist length failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            await PlaylistService.getPlaylistLength(playlistId);
             dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
