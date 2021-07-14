@@ -6,6 +6,9 @@ export default function entities(state = {}, action) {
             return { playlists: action.playlists };
         case 'GETPUBLICPLAYLISTS_SUCCESS':
             return { playlists: action.playlists };
+        case 'COPYPLAYLIST_SUCCESS':
+            state.playlists.push(action.playlist);
+            return { ...state };
         case 'ADDPlaylist_SUCCESS':
             return { ...state };
         case 'UPDATEPLAYLIST_SUCCESS':

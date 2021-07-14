@@ -167,8 +167,8 @@ export function updatePlaylist(playlistId, updatedPlaylist) {
 
 export function copyPlaylist(playlistId) {
 
-    function onSuccess() {
-        return { type: 'COPYPLAYLIST_SUCCESS' };
+    function onSuccess(playlist) {
+        return { type: 'COPYPLAYLIST_SUCCESS', playlist: playlist };
     }
     function onFailure(error) {
         console.log('copy playlist failure', error);
@@ -177,7 +177,7 @@ export function copyPlaylist(playlistId) {
     return async (dispatch) => {
         try {
             const result = await PlaylistService.copyPlaylist(playlistId);
-            dispatch(onSuccess());
+            dispatch(onSuccess(result));
         } catch (e) {
             onFailure(e);
         }
