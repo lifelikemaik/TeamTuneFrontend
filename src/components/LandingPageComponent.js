@@ -119,7 +119,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function SubscriptionCardFree() {
+
+/**
+ * Landing page and "home" screen of the web app
+ * @param {props} props
+ */
+function SubscriptionCardFree(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
 
@@ -143,13 +148,21 @@ function SubscriptionCardFree() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.cardButton}>Go Free</Button>
+                <Button
+                    className={classes.cardButton}
+                    onClick={() => props.history.push('/register')}>
+                    Go Free</Button>
             </CardActions>
         </Card>
     );
 }
 
-function SubscriptionCardPremium() {
+
+/**
+ * Landing page and "home" screen of the web app
+ * @param {props} props
+ */
+function SubscriptionCardPremium(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
 
