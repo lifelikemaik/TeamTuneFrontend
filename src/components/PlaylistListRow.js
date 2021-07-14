@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * For presenting and changing movies
+ * For presenting and changing playlists
  * @param {props} props
  */
 function PlaylistListRow(props) {
@@ -58,7 +58,6 @@ function PlaylistListRow(props) {
 PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
     onClickDisplayPlaylist: PropTypes.func,
-    onClickDeleteMovie: PropTypes.func,
     isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,
 };
