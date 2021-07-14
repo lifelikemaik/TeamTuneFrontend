@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * For presenting and changing movie details
+ * For creating a new playlist
  * @param {props} props
  */
 function CreatePlaylistComponent(props) {
@@ -153,7 +153,7 @@ function CreatePlaylistComponent(props) {
     }
     
 
-    // creating a object with all relevant data to update or create a changed movie
+    // creating a object with all relevant data to update or create a changed playlist
     const packPlaylist = () => {
         return {
             title: playlistTitle,
@@ -228,13 +228,13 @@ function CreatePlaylistComponent(props) {
     // ----------------------------------------------------------------------------------------------------
 
 
-    // cancel is called, functionality differs whether it is a new movie or not
+    // cancel is called, functionality differs whether it is a new playlist or not
     const onCancel = () => {
         props.history.push("/");
 
     };
 
-    // save is called, functionality differs whether it is a new movie or not
+    // save is called, functionality differs whether it is a new playlist or not
     const onSave = () => {
         props.onCreate(packPlaylist());
     };
@@ -354,7 +354,6 @@ function CreatePlaylistComponent(props) {
 
 // attributes of props and their type
 CreatePlaylistComponent.propTypes = {
-    movie: PropTypes.object,
     new: PropTypes.bool,
     onCreate: PropTypes.func,
     onSave: PropTypes.func,
