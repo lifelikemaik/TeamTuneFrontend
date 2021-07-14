@@ -228,8 +228,11 @@ function PlaylistListComponent(props) {
                                             onClickDeletePlaylist={
                                                 props.onClickDeletePlaylist
                                             }
+                                            onMakePlaylistPublic={props.onMakePlaylistPublic}
+                                            onCopyPlaylist={props.onCopyPlaylist}
                                             isAdmin={props.isAdmin}
                                             isBrowse={props.isBrowse}
+                                            isLoggedIn={props.isLoggedIn}
                                         />
                                     );
                                 })}
@@ -257,6 +260,7 @@ PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func,
     onClickDeletePlaylist: PropTypes.func.isRequired,
     onClickDisplayPlaylist: PropTypes.func.isRequired,
+    onMakePlaylistPublic: PropTypes.func,
     isLoggedIn: PropTypes.bool,
     playlists: PropTypes.array,
     isBrowse: PropTypes.bool.isRequired,

@@ -48,6 +48,9 @@ function PlaylistListRow(props) {
                 <PlaylistListRowButtons
                     playlist={props.playlist}
                     isBrowse={props.isBrowse}
+                    onMakePlaylistPublic={props.onMakePlaylistPublic}
+                    onCopyPlaylist={props.onCopyPlaylist}
+                    isLoggedIn={props.isLoggedIn}
                 />
             </TableCell>
         </TableRow>
@@ -58,6 +61,7 @@ function PlaylistListRow(props) {
 PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
     onClickDisplayPlaylist: PropTypes.func,
+    onMakePlaylistPublic: PropTypes.func,
     isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,
 };

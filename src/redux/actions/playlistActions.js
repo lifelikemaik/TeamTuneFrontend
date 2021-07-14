@@ -145,4 +145,41 @@ export function addPlaylist(playlist) {
             onFailure(e);
         }
     };
+};
+
+export function updatePlaylist(playlistId, updatedPlaylist) {
+    function onSuccess() {
+        return { type: 'UPDATEPLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('update playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.updatePlaylist(playlistId, updatedPlaylist);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function copyPlaylist(playlistId) {
+
+    function onSuccess(playlist) {
+        return { type: 'COPYPLAYLIST_SUCCESS', playlist: playlist };
+    }
+    function onFailure(error) {
+        console.log('copy playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.copyPlaylist(playlistId);
+            dispatch(onSuccess(result));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
 }
