@@ -1,21 +1,16 @@
-import {Button, Snackbar, TableCell} from "@material-ui/core";
-import PropTypes from "prop-types";
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Alert} from "@material-ui/lab";
-
-const useStyles = makeStyles((theme) => ({
-    button: {
-        zIndex: 5,
-    },
-}));
+import { Button, Snackbar } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Alert } from '@material-ui/lab';
 
 function PlaylistListRowButtons(props) {
-    const {button} = useStyles();
+    const [publicity, setPublicity] = React.useState(props.playlist.publicity);
 
     const [open, setOpen] = React.useState(false);
+    const [messsage, setMessage] = React.useState(false);
 
-    const handleClick = () => {
+    const handleClick = (message) => {
+        setMessage(message);
         setOpen(true);
     };
 
@@ -32,24 +27,31 @@ function PlaylistListRowButtons(props) {
 
     const snackBar = () => {
         return (
-            <Snackbar open={open} autoHideDuration={2500} onClose={handleClose} onClick={preventBackgroundClick}>
+            <Snackbar
+                open={open}
+                autoHideDuration={2500}
+                onClose={handleClose}
+                onClick={preventBackgroundClick}
+            >
                 <Alert onClose={handleClose} severity="success">
-                    Share link copied to clipboard
+                    {messsage}
                 </Alert>
             </Snackbar>
-        )
-    }
+        );
+    };
 
     return (
         <div>
-            {props.isBrowse ? (
+            {!props.isLoggedIn ? (
+                <div/>
+            ) : props.isBrowse ? (
                 <div>
                     {props.playlist.is_own_playlist ? (
                         <div>
                         </div>
                     ) : (
                         <div>
-                            <Button className={button} variant="contained" onClick={(e) => {
+                            <Button variant="contained" onClick={(e) => {
                                 preventBackgroundClick(e)
                                 props.onClickFollowPlaylist(props.playlist.public_id)
                             }}>
@@ -60,9 +62,12 @@ function PlaylistListRowButtons(props) {
                             </Button>
                         </div>
                     )}
+                    <Button variant="contained">Follow</Button>
+                    <Button variant="contained">Copy to my Playlist</Button>
                 </div>
             ) : (
                 <div>
+                    {snackBar()}
                     {props.playlist.is_own_playlist ? (
                         <div>
                             <Button variant="contained" onClick={(e) => {
@@ -72,16 +77,42 @@ function PlaylistListRowButtons(props) {
                             }}>
                                 Share Link
                             </Button>
-                            {snackBar()}
-                            <Button variant="contained">
-                                Share Playlist
-                            </Button>
-                            <Button variant="contained" >
+
+                            {!publicity && (
+                                <Button
+                                    variant="contained"
+                                    onClick={(e) => {
+                                        props.onMakePlaylistPublic(
+                                            e,
+                                            props.playlist._id,
+                                            { publicity: true }
+                                        );
+                                        setPublicity(true);
+                                        handleClick('Playlist made public!');
+                                    }}
+                                >
+                                    Make Public
+                                </Button>
+                            )}
+
+                            <Button
+                                variant="contained"
+                                onClick={(e) => {
+                                    props.onCopyPlaylist(e, props.playlist._id);
+                                    handleClick('Playlist copied!');
+                                }}
+                            >
                                 Create Copy
                             </Button>
                         </div>
                     ) : (
-                        <Button variant="contained" >
+                        <Button
+                            variant="contained"
+                            onClick={(e) => {
+                                props.onCopyPlaylist(e, props.playlist._id);
+                                handleClick('Playlist copied!');
+                            }}
+                        >
                             Create Copy
                         </Button>
                     )}
@@ -95,6 +126,7 @@ PlaylistListRowButtons.propTypes = {
     playlist: PropTypes.object,
     isBrowse: PropTypes.bool.isRequired,
     onClickFollowPlaylist: PropTypes.func,
+    onMakePlaylistPublic: PropTypes.func,
 };
 
 export default PlaylistListRowButtons;

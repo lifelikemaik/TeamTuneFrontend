@@ -2,8 +2,8 @@ import PlaylistService from '../../services/PlaylistService';
 import UserService from '../../services/UserService';
 
 export function getPlaylists() {
-    // when the backend call was successfull and the movies are retrieved
-    // in the dispatcher the movies will be added to the global state
+    // when the backend call was successfull and the playlists are retrieved
+    // in the dispatcher the playlists will be added to the global state
     function onSuccess(playlists) {
         return { type: 'GETPLAYLISTS_SUCCESS', playlists: playlists };
     }
@@ -15,7 +15,7 @@ export function getPlaylists() {
 
     return async (dispatch) => {
         try {
-            // ask for the movies in the backend
+            // ask for the playlists in the backend
             let playlists = await PlaylistService.getPlaylists();
             // call onSuccess in context of redux
             dispatch(onSuccess(playlists));
@@ -185,6 +185,43 @@ export function addPlaylist(playlist) {
         try {
             await PlaylistService.createPlaylist(playlist);
             dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+};
+
+export function updatePlaylist(playlistId, updatedPlaylist) {
+    function onSuccess() {
+        return { type: 'UPDATEPLAYLIST_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('update playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.updatePlaylist(playlistId, updatedPlaylist);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function copyPlaylist(playlistId) {
+
+    function onSuccess(playlist) {
+        return { type: 'COPYPLAYLIST_SUCCESS', playlist: playlist };
+    }
+    function onFailure(error) {
+        console.log('copy playlist failure', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.copyPlaylist(playlistId);
+            dispatch(onSuccess(result));
         } catch (e) {
             onFailure(e);
         }

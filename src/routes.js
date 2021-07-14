@@ -1,6 +1,5 @@
 import UserLoginView from "./views/UserLoginView";
 import SignUpView from "./views/SignUpView";
-import MovieDetailsView from "./views/MovieDetailsView";
 import PlaylistListView from "./views/PlaylistListView";
 import BrowsePlaylistView from "./views/BrowsePlaylistsView";
 import MyTeamTuneView from "./views/MyTeamTuneView";
@@ -28,10 +27,6 @@ const routes = [
     {
         path: "/register",
         component: SignUpView,
-    },
-    {
-        path: "/movie/:id",
-        component: MovieDetailsView,
     },
     {
         path: "/browse",

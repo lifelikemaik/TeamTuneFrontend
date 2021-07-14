@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     headerDivider: {
         margin: theme.spacing(2),
     },
-    addMovieButton: {
+    addPlaylistButton: {
         margin: theme.spacing(2),
     },
     playlistListPaper: {
@@ -139,7 +139,7 @@ function stableSort(array, comparator) {
 }
 
 /**
- * For presenting and changing movies
+ * For presenting and changing playlists
  * @param {props} props
  */
 function PlaylistListComponent(props) {
@@ -181,7 +181,7 @@ function PlaylistListComponent(props) {
                         onClick={props.onAddPlaylist}
                         variant="contained"
                         color="secondary"
-                        className={classes.addMovieButton}
+                        className={classes.addPlaylistButton}
                     >
                         Create Playlist
                     </Button>
@@ -228,11 +228,14 @@ function PlaylistListComponent(props) {
                                             onClickFollowPlaylist={
                                                 props.onClickFollowPlaylist
                                             }
-                                            onClickDeleteMovie={
-                                                props.onClickDeleteMovie
+                                            onClickDeletePlaylist={
+                                                props.onClickDeletePlaylist
                                             }
+                                            onMakePlaylistPublic={props.onMakePlaylistPublic}
+                                            onCopyPlaylist={props.onCopyPlaylist}
                                             isAdmin={props.isAdmin}
                                             isBrowse={props.isBrowse}
+                                            isLoggedIn={props.isLoggedIn}
                                         />
                                     );
                                 })}
@@ -258,9 +261,10 @@ function PlaylistListComponent(props) {
 // attributes of props and their type
 PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func,
-    onClickDeleteMovie: PropTypes.func.isRequired,
+    onClickDeletePlaylist: PropTypes.func.isRequired,
     onClickDisplayPlaylist: PropTypes.func.isRequired,
     onClickFollowPlaylist: PropTypes.func,
+    onMakePlaylistPublic: PropTypes.func,
     isLoggedIn: PropTypes.bool,
     playlists: PropTypes.array,
     isBrowse: PropTypes.bool.isRequired,

@@ -22,7 +22,7 @@ export default class PlaylistService {
     static getPublicPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL()+"/public",
+                this.baseURL() + "/public",
                 function (data) {
                     resolve(data);
                 },
@@ -36,7 +36,7 @@ export default class PlaylistService {
     static getUserPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL()+"/my_playlists",
+                this.baseURL() + "/my_playlists",
                 function (data) {
                     resolve(data);
                 },
@@ -155,6 +155,23 @@ export default class PlaylistService {
         });
     }
 
+    static updatePlaylist(playlistId, updatedPlaylist) {
+        const url = PlaylistService.baseURL() + '/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                updatedPlaylist,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            )
+            ;
+        });
+    }
+
     static followPlaylist(playlistId) {
         const url = PlaylistService.baseURL() + '/' + playlistId + '/follow';
         return new Promise((resolve, reject) => {
@@ -185,6 +202,22 @@ export default class PlaylistService {
                     } else {
                         reject("Error while retrieving playlist length");
                     }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static copyPlaylist(playlistId) {
+        const url = PlaylistService.baseURL() + '/copy/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                {},
+                function (data) {
+                    resolve(data);
                 },
                 function (textStatus) {
                     reject(textStatus);

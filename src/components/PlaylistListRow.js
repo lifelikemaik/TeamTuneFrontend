@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * For presenting and changing movies
+ * For presenting and changing playlists
  * @param {props} props
  */
 function PlaylistListRow(props) {
@@ -54,6 +54,9 @@ function PlaylistListRow(props) {
                     playlist={props.playlist}
                     isBrowse={props.isBrowse}
                     onClickFollowPlaylist={props.onClickFollowPlaylist}
+                    onMakePlaylistPublic={props.onMakePlaylistPublic}
+                    onCopyPlaylist={props.onCopyPlaylist}
+                    isLoggedIn={props.isLoggedIn}
                 />
             </TableCell>
         </TableRow>
@@ -64,8 +67,7 @@ function PlaylistListRow(props) {
 PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
     onClickDisplayPlaylist: PropTypes.func,
-    onClickDeleteMovie: PropTypes.func,
-    onClickFollowMovie: PropTypes.func,
+    onMakePlaylistPublic: PropTypes.func,
     isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,
 };
