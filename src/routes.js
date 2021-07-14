@@ -7,6 +7,7 @@ import CallbackView from "./views/CallbackView";
 import CreatePlaylistView from "./views/CreatePlaylistView";
 import PlaylistDetailView from "./views/PlaylistDetailView";
 import LandingPageView from "./views/LandingPageView";
+import InviteView from "./views/InviteView";
 
 
 
@@ -42,6 +43,10 @@ const routes = [
     {
       path: "/playlist/:id",
       component: PlaylistDetailView,
+    },
+    {
+        path: "/invite/:id",
+        component: InviteView,
     },
     {
         path: "/myteamtune",

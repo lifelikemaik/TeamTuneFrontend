@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import BrowseComponent from "../components/BrowseComponent";
-import {getPublicPlaylists} from "../redux/actions";
+import {getPublicPlaylists, followPlaylist} from "../redux/actions";
 import PlaylistListComponent from "../components/PlaylistListComponent";
 
 /**
@@ -36,6 +36,10 @@ function BrowsePlaylistsView(props) {
     props.history.push("/playlist/" + id);
   };
 
+  const onClickFollowPlaylist = async (id) => {
+    // trigger the redux action followPlaylist
+    props.dispatch(followPlaylist(id));
+  };
 
 
   return !playlists ? (
@@ -52,6 +56,7 @@ function BrowsePlaylistsView(props) {
           isLoggedIn={!!user.user}
           isAdmin={!!user.user ? user.user.role === "admin" : false}
           isBrowse={true}
+          onClickFollowPlaylist={onClickFollowPlaylist}
       />
   );
 

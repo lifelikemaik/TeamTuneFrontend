@@ -225,6 +225,9 @@ function PlaylistListComponent(props) {
                                             onClickDisplayPlaylist={
                                                 props.onClickDisplayPlaylist
                                             }
+                                            onClickFollowPlaylist={
+                                                props.onClickFollowPlaylist
+                                            }
                                             onClickDeletePlaylist={
                                                 props.onClickDeletePlaylist
                                             }
@@ -260,6 +263,7 @@ PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func,
     onClickDeletePlaylist: PropTypes.func.isRequired,
     onClickDisplayPlaylist: PropTypes.func.isRequired,
+    onClickFollowPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
     isLoggedIn: PropTypes.bool,
     playlists: PropTypes.array,

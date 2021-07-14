@@ -45,6 +45,24 @@ export function register(username, password, isAdmin, code) {
     };
 }
 
+export function registerInvite(username, playlistId) {
+    function onSuccess(user) {
+        return { type: "INVITE_SUCCESS", user: user };
+    }
+    function onFailure(error) {
+        return { type: "INVITE_FAILURE", error: error };
+    }
+
+    return async (dispatch) => {
+        try {
+            let resp = await UserService.registerInvite(username, playlistId);
+            dispatch(onSuccess(resp.user));
+        } catch (e) {
+            dispatch(onFailure(e));
+        }
+    };
+}
+
 export function updateUsername(newUsername) {
     function onSuccess(user) {
         return { type: "UPDATE_USERNAME_SUCCESS", user: user };

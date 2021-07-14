@@ -16,14 +16,14 @@ function PlaylistListRowButtons(props) {
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
-        if (event != null) preventBackgroundClick(event);
+        if(event != null) preventBackgroundClick(event)
         setOpen(false);
     };
 
     const preventBackgroundClick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
+        e.preventDefault()
+        e.stopPropagation()
+    }
 
     const snackBar = () => {
         return (
@@ -46,6 +46,22 @@ function PlaylistListRowButtons(props) {
                 <div/>
             ) : props.isBrowse ? (
                 <div>
+                    {props.playlist.is_own_playlist ? (
+                        <div>
+                        </div>
+                    ) : (
+                        <div>
+                            <Button variant="contained" onClick={(e) => {
+                                preventBackgroundClick(e)
+                                props.onClickFollowPlaylist(props.playlist.public_id)
+                            }}>
+                                Follow
+                            </Button>
+                            <Button variant="contained">
+                                Copy to my Playlist
+                            </Button>
+                        </div>
+                    )}
                     <Button variant="contained">Follow</Button>
                     <Button variant="contained">Copy to my Playlist</Button>
                 </div>
@@ -54,7 +70,14 @@ function PlaylistListRowButtons(props) {
                     {snackBar()}
                     {props.playlist.is_own_playlist ? (
                         <div>
-                            <Button variant="contained">Share Link</Button>
+                            <Button variant="contained" onClick={(e) => {
+                                preventBackgroundClick(e)
+                                handleClick()
+                                navigator.clipboard.writeText("http://localhost:3000/invite/" + props.playlist._id)
+                            }}>
+                                Share Link
+                            </Button>
+
                             {!publicity && (
                                 <Button
                                     variant="contained"
@@ -102,6 +125,7 @@ function PlaylistListRowButtons(props) {
 PlaylistListRowButtons.propTypes = {
     playlist: PropTypes.object,
     isBrowse: PropTypes.bool.isRequired,
+    onClickFollowPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
 };
 

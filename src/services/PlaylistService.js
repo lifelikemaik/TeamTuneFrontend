@@ -22,7 +22,7 @@ export default class PlaylistService {
     static getPublicPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL()+"/public",
+                this.baseURL() + "/public",
                 function (data) {
                     resolve(data);
                 },
@@ -36,7 +36,7 @@ export default class PlaylistService {
     static getUserPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL()+"/my_playlists",
+                this.baseURL() + "/my_playlists",
                 function (data) {
                     resolve(data);
                 },
@@ -103,8 +103,44 @@ export default class PlaylistService {
         });
     }
 
+    static searchForSongInvite(songName, playlistId) {
+        const url = PlaylistService.baseURL() + '/songs/' + songName + '/invited/' + playlistId
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined) {
+                        resolve(data);
+                    } else {
+                        reject('Error while searching for song');
+                    }
+                },
+                function (textStatus) {
+                    console.log('error');
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static addSongToPlaylist(playlistId, songId) {
         const url = PlaylistService.baseURL() + '/' + playlistId + '/songs/' + songId;
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                url,
+                {},
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static addSongToPlaylistInvite(playlistId, songId) {
+        const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songId;
         return new Promise((resolve, reject) => {
             HttpService.put(
                 url,
@@ -127,6 +163,45 @@ export default class PlaylistService {
                 updatedPlaylist,
                 function (data) {
                     resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            )
+            ;
+        });
+    }
+
+    static followPlaylist(playlistId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId + '/follow';
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving playlist");
+                    }
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static getPlaylistLength(playlistId) {
+        const url = PlaylistService.baseURL() + '/length/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                url,
+                function (data) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
+                        resolve(data);
+                    } else {
+                        reject("Error while retrieving playlist length");
+                    }
                 },
                 function (textStatus) {
                     reject(textStatus);
