@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { duration, makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import {
     Accordion,
@@ -96,12 +96,14 @@ function PlaylistDetailsComponent(props) {
     const playlist = props.playlist;
 
     const [expanded, setExpanded] = React.useState(false);
+    const [totalDuration, setTotalDuration] = React.useState(0);
     const [sortedField, setSortedField] = React.useState(null);
     const [prevSortedField, setPrevSortedField] = React.useState(null);
     const [sortedDirection, setSortedDirection] = React.useState(null);
     const [searchString, setSearchString] = React.useState('');
     const [foundSongs, setFoundSongs] = React.useState([]);
     const [searchOpen, setSearchOpen] = React.useState(false);
+    const [allSongs, setAllSongs] = React.useState([]);
 
     const foundSongsState = useSelector((state) => state.entities.songs);
 
@@ -118,6 +120,21 @@ function PlaylistDetailsComponent(props) {
             if (searchString !== '') setSearchOpen(true);
         }
     }, [foundSongsState]);
+
+    useEffect(() => {
+        if (playlist.music_info.songs.length > 0) {
+            const reducer = (accumulator, currentValue) =>
+                accumulator + currentValue;
+            setTotalDuration(
+                playlist.music_info.songs
+                    .map((song) => song.duration_ms)
+                    .reduce(reducer)
+            );
+            if (Array.isArray(playlist.music_info.songs)) {
+                setAllSongs(playlist.music_info.songs);
+            }
+        }
+    }, [playlist.music_info.songs]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -152,10 +169,35 @@ function PlaylistDetailsComponent(props) {
         return artists.reduce(reducer, '').slice(0, -2);
     };
 
-    const getStringFromMilliseconds = (milliseconds) => {
-        const minutes = Math.floor(milliseconds / 1000 / 60);
+    const packSong = (song) => {
+        console.log('prop: ', props);
+        return {
+            interpret: song.artists.map((artist) => artist.name).join(', '),
+            album: '',
+            title: song.name,
+            added_by: props.user?.username ? props.user.username : '',
+            duration_ms: song.duration_ms,
+        };
+    };
+
+    const addSongLocal = (song) => {
+        const allSongsTemp = allSongs.slice(0);
+        allSongsTemp.unshift(packSong(song));
+        setAllSongs([]);
+        setAllSongs(allSongsTemp);
+    };
+
+    const getStringFromMilliseconds = (milliseconds, includeHours) => {
+        const hours = Math.floor(milliseconds / 1000 / 60 / 60);
+        const minutes = includeHours
+            ? Math.floor(milliseconds / 1000 / 60) % 60
+            : Math.floor(milliseconds / 1000 / 60);
         const seconds = Math.round((milliseconds / 1000) % 60);
+        const hoursString = includeHours
+            ? hours.toString().padStart(2, '0') + ':'
+            : '';
         return (
+            hoursString +
             minutes.toString().padStart(2, '0') +
             ':' +
             seconds.toString().padStart(2, '0')
@@ -172,7 +214,8 @@ function PlaylistDetailsComponent(props) {
             songValid = songValid && checkSongForFeature(song, 'energy');
         }
         if (playlist.music_info.instrumentalness_min) {
-            songValid = songValid && checkSongForFeature(song, 'instrumentalness');
+            songValid =
+                songValid && checkSongForFeature(song, 'instrumentalness');
         }
         if (playlist.music_info.liveness_min) {
             songValid = songValid && checkSongForFeature(song, 'liveness');
@@ -201,6 +244,7 @@ function PlaylistDetailsComponent(props) {
         const songId = song.spotify_id;
         if (songId && playlistId) {
             props.addSongToPlaylist(playlistId, songId);
+            addSongLocal(song);
         } else {
             console.error(
                 'No songId or no spotify_id of playlist found, playlist probably has no spotify_id.'
@@ -407,7 +451,8 @@ function PlaylistDetailsComponent(props) {
 
             <div>
                 <h2>
-                    {playlist.title} - {durationHours}:{durationMinutesModulo}
+                    {playlist.title} -{' '}
+                    {getStringFromMilliseconds(totalDuration, true)}
                 </h2>
             </div>
             <div className={classes.searchRow}>
@@ -427,7 +472,8 @@ function PlaylistDetailsComponent(props) {
                                         {option.name} -{' '}
                                         {getAllArtistsString(option.artists)} -{' '}
                                         {getStringFromMilliseconds(
-                                            option.duration_ms
+                                            option.duration_ms,
+                                            false
                                         )}
                                     </span>
                                     <Button
@@ -508,36 +554,42 @@ function PlaylistDetailsComponent(props) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {playlist.music_info.songs.map(
-                                    (song, index) => (
-                                        <TableRow key={song.interpret}>
-                                            <TableCell
-                                                align="right"
-                                                component="th"
-                                                scope="row"
+                                {allSongs.map((song, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell
+                                            align="right"
+                                            component="th"
+                                            scope="row"
+                                        >
+                                            {index}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {song.title}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {song.interpret}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {song.added_by}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {getStringFromMilliseconds(
+                                                song.duration_ms,
+                                                false
+                                            )}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <IconButton
+                                                disabled={
+                                                    !props.playlist
+                                                        .is_own_playlist
+                                                }
                                             >
-                                                {index}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.title}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.interpret}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.added_by}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.duration_ms}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <IconButton>
-                                                    <Delete />
-                                                </IconButton>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                )}
+                                                <Delete />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>

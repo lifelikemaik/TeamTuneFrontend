@@ -61,6 +61,7 @@ function PlaylistDetailsView(props) {
             searchForSong={searchForSongHelper}
             addSongToPlaylist={addSongToPlaylistHelper}
             getPlaylistLength={props.getPlaylistLength}
+            user={user.user}
         />
     ) : null;
 }
