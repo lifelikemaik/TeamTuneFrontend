@@ -234,10 +234,6 @@ function PlaylistDetailsComponent(props) {
     const checkSongForFeature = (song, audio_feature) => {
         const minValue = playlist.music_info['min_' + audio_feature];
         const maxValue = playlist.music_info['max_' + audio_feature];
-        console.log('audio_feature: ', audio_feature);
-        console.log('minValue: ', minValue);
-        console.log('maxValue: ', maxValue);
-        console.log('song.audio_features[audio_feature]: ', song.audio_features[audio_feature]);
         return (
             minValue <= song.audio_features[audio_feature] &&
             maxValue >= song.audio_features[audio_feature]
