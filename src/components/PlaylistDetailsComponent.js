@@ -208,23 +208,23 @@ function PlaylistDetailsComponent(props) {
     // Not checked since it has weird (not normed) values: key, loudness, tempo, acousticness (not sure about that)
     const validateSongWithFilters = (song) => {
         let songValid = true;
-        if (playlist.music_info.danceability_min) {
+        if (playlist.music_info.min_danceability) {
             songValid = songValid && checkSongForFeature(song, 'danceability');
         }
-        if (playlist.music_info.energy_min) {
+        if (playlist.music_info.min_energy) {
             songValid = songValid && checkSongForFeature(song, 'energy');
         }
-        if (playlist.music_info.instrumentalness_min) {
+        if (playlist.music_info.min_instrumentalness) {
             songValid =
                 songValid && checkSongForFeature(song, 'instrumentalness');
         }
-        if (playlist.music_info.liveness_min) {
+        if (playlist.music_info.min_liveness) {
             songValid = songValid && checkSongForFeature(song, 'liveness');
         }
-        if (playlist.music_info.speechiness_min) {
+        if (playlist.music_info.min_speechiness) {
             songValid = songValid && checkSongForFeature(song, 'speechiness');
         }
-        if (playlist.music_info.valence_min) {
+        if (playlist.music_info.min_valence) {
             songValid = songValid && checkSongForFeature(song, 'valence');
         }
         song.valid = songValid;
@@ -232,11 +232,11 @@ function PlaylistDetailsComponent(props) {
     };
 
     const checkSongForFeature = (song, audio_feature) => {
+        const minValue = playlist.music_info['min_' + audio_feature];
+        const maxValue = playlist.music_info['max_' + audio_feature];
         return (
-            playlist.music_info[audio_feature + '_min'] <=
-                song.audio_features[audio_feature] &&
-            playlist.music_info[audio_feature + '_max'] >=
-                song.audio_features[audio_feature]
+            minValue <= song.audio_features[audio_feature] &&
+            maxValue >= song.audio_features[audio_feature]
         );
     };
 
