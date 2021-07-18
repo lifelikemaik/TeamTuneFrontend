@@ -25,10 +25,32 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Delete } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import SpotifyLogoWithText from './SpotifyLogoWithText';
 
 const useStyles = makeStyles((theme) => ({
+    backgroundPaper: {
+        minWidth: '350px',
+        width: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    spotify: {
+        backgroundColor: '#1ED760',
+        color: '#ffffff',
+        fontWeight: 'bold',
+        letterSpacing: 1,
+        fontFamily: 'Libre Franklin, sans-serif',
+        borderRadius: 100,
+        '&:hover': {
+            backgroundColor: '#1ED760',
+        },
+    },
     root: {
-        width: '100%',
+        width: '95%',
         margin: '10px',
     },
     heading: {
@@ -39,9 +61,6 @@ const useStyles = makeStyles((theme) => ({
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
-    },
-    playlistListPaper: {
-        width: '95%',
     },
     descriptionSpan: {
         marginLeft: '5px',
@@ -406,199 +425,231 @@ function PlaylistDetailsComponent(props) {
         ],
     ];
 
+    const spotifyLogoText = (
+        <Button
+            disableRipple
+            variant="contained"
+            className={classes.spotify}
+            endIcon={<SpotifyLogoWithText />}
+            onClick={() => window.open("https://open.spotify.com/playlist/" + props.playlist.spotify_id)}
+        >
+            Check out on
+        </Button>
+    );
+
     return (
-        <div className={classes.root}>
-            <h1>Playlist Overview</h1>
-
-            {!playlist.is_teamtune_playlist ? (
-                <div></div>
-            ) : (
+        <Paper className={classes.backgroundPaper}>
+            <div className={classes.root}>
                 <div>
-                    <hr />
-                    <Accordion
-                        expanded={expanded === 'panel1'}
-                        onChange={handleChange('panel1')}
-                    >
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
+                    <h1>Playlist Overview</h1>
+                    {spotifyLogoText}
+                </div>
+
+                {!playlist.is_teamtune_playlist ? (
+                    <div></div>
+                ) : (
+                    <div>
+                        <hr />
+                        <Accordion
+                            expanded={expanded === 'panel1'}
+                            onChange={handleChange('panel1')}
                         >
-                            <Typography className={classes.heading}>
-                                Playlist Properties
-                            </Typography>
-                            <Typography className={classes.secondaryHeading}>
-                                {expanded ? (
-                                    <div></div>
-                                ) : (
-                                    <div>{properties.map(getProperty)}</div>
-                                )}
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                <List
-                                    component="nav"
-                                    aria-label="secondary mailbox folders"
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography className={classes.heading}>
+                                    Playlist Properties
+                                </Typography>
+                                <Typography
+                                    className={classes.secondaryHeading}
                                 >
-                                    {properties.map(getPropertyListItem)}
-                                </List>
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <hr />
-                </div>
-            )}
+                                    {expanded ? (
+                                        <div></div>
+                                    ) : (
+                                        <div>{properties.map(getProperty)}</div>
+                                    )}
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>
+                                    <List
+                                        component="nav"
+                                        aria-label="secondary mailbox folders"
+                                    >
+                                        {properties.map(getPropertyListItem)}
+                                    </List>
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                        <hr />
+                    </div>
+                )}
 
-            <div>
-                <h2>
-                    {playlist.title} -{' '}
-                    {getStringFromMilliseconds(totalDuration, true)}
-                </h2>
-            </div>
-            <div className={classes.searchRow}>
-                <div className={classes.textInput}>
-                    <Autocomplete
-                        className={classes.textField}
-                        options={foundSongs}
-                        getOptionLabel={(option) => option.name}
-                        open={searchOpen}
-                        onOpen={onOpen}
-                        onClose={onClose}
-                        getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
-                        renderOption={(option) => (
-                            <React.Fragment>
-                                <div className={classes.searchRow}>
-                                    <span>
-                                        {option.name} -{' '}
-                                        {getAllArtistsString(option.artists)} -{' '}
-                                        {getStringFromMilliseconds(
-                                            option.duration_ms,
-                                            false
-                                        )}
-                                    </span>
-                                    <Button
-                                        className={classes.addToPlaylistButton}
-                                        onClick={() =>
-                                            onAddSongToPlaylist(option)
-                                        }
-                                    >
-                                        Add to Playlist
-                                    </Button>
-                                </div>
-                            </React.Fragment>
-                        )}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                ref={autoCompleteRef}
-                                onChange={(event, value) =>
-                                    onChangeSearch(event)
-                                }
-                                label="Search for songs"
-                                variant="outlined"
-                                fullWidth
-                                onKeyDown={handleKeyDown}
-                            />
-                        )}
-                    />
-                </div>
                 <div>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => onSearchSong(searchString)}
-                    >
-                        Search
-                    </Button>
+                    <h2>
+                        {playlist.title} -{' '}
+                        {getStringFromMilliseconds(totalDuration, true)}
+                    </h2>
                 </div>
-            </div>
-            <div>
-                <Paper className={classes.playlistListPaper}>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell
-                                        align="right"
-                                        onClick={() => sortHeaders('number')}
-                                    >
-                                        #
-                                    </TableCell>
-                                    <TableCell
-                                        align="right"
-                                        onClick={() => sortHeaders('title')}
-                                    >
-                                        Title
-                                    </TableCell>
-                                    <TableCell
-                                        align="right"
-                                        onClick={() => sortHeaders('interpret')}
-                                    >
-                                        Interpret
-                                    </TableCell>
-                                    <TableCell
-                                        align="right"
-                                        onClick={() => sortHeaders('added_by')}
-                                    >
-                                        Added by
-                                    </TableCell>
-                                    <TableCell
-                                        align="right"
-                                        onClick={() =>
-                                            sortHeaders('duration_ms')
-                                        }
-                                    >
-                                        Duration
-                                    </TableCell>
-                                    <TableCell align="right">Delete</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {allSongs.map((song, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell
-                                            align="right"
-                                            component="th"
-                                            scope="row"
-                                        >
-                                            {index}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {song.title}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {song.interpret}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {song.added_by}
-                                        </TableCell>
-                                        <TableCell align="right">
+                <div className={classes.searchRow}>
+                    <div className={classes.textInput}>
+                        <Autocomplete
+                            className={classes.textField}
+                            options={foundSongs}
+                            getOptionLabel={(option) => option.name}
+                            open={searchOpen}
+                            onOpen={onOpen}
+                            onClose={onClose}
+                            getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
+                            renderOption={(option) => (
+                                <React.Fragment>
+                                    <div className={classes.searchRow}>
+                                        <span>
+                                            {option.name} -{' '}
+                                            {getAllArtistsString(
+                                                option.artists
+                                            )}{' '}
+                                            -{' '}
                                             {getStringFromMilliseconds(
-                                                song.duration_ms,
+                                                option.duration_ms,
                                                 false
                                             )}
+                                        </span>
+                                        <Button
+                                            className={
+                                                classes.addToPlaylistButton
+                                            }
+                                            onClick={() =>
+                                                onAddSongToPlaylist(option)
+                                            }
+                                        >
+                                            Add to Playlist
+                                        </Button>
+                                    </div>
+                                </React.Fragment>
+                            )}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    ref={autoCompleteRef}
+                                    onChange={(event, value) =>
+                                        onChangeSearch(event)
+                                    }
+                                    label="Search for songs"
+                                    variant="outlined"
+                                    fullWidth
+                                    onKeyDown={handleKeyDown}
+                                />
+                            )}
+                        />
+                    </div>
+                    <div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => onSearchSong(searchString)}
+                        >
+                            Search
+                        </Button>
+                    </div>
+                </div>
+                <div>
+                    <Paper>
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell
+                                            align="right"
+                                            onClick={() =>
+                                                sortHeaders('number')
+                                            }
+                                        >
+                                            #
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            onClick={() => sortHeaders('title')}
+                                        >
+                                            Title
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            onClick={() =>
+                                                sortHeaders('interpret')
+                                            }
+                                        >
+                                            Interpret
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            onClick={() =>
+                                                sortHeaders('added_by')
+                                            }
+                                        >
+                                            Added by
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            onClick={() =>
+                                                sortHeaders('duration_ms')
+                                            }
+                                        >
+                                            Duration
                                         </TableCell>
                                         <TableCell align="right">
-                                            <IconButton
-                                                disabled={
-                                                    !props.playlist
-                                                        .is_own_playlist
-                                                }
-                                            >
-                                                <Delete />
-                                            </IconButton>
+                                            Delete
                                         </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Paper>
+                                </TableHead>
+                                <TableBody>
+                                    {allSongs.map((song, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell
+                                                align="right"
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {index}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.title}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.interpret}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {song.added_by}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {getStringFromMilliseconds(
+                                                    song.duration_ms,
+                                                    false
+                                                )}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <IconButton
+                                                    disabled={
+                                                        !props.playlist
+                                                            .is_own_playlist
+                                                    }
+                                                >
+                                                    <Delete />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+                </div>
             </div>
-        </div>
+        </Paper>
     );
-}
+};
 
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {
