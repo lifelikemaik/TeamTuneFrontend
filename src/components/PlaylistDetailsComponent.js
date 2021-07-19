@@ -42,12 +42,54 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#1ED760',
         color: '#ffffff',
         fontWeight: 'bold',
+        maxHeight: 60,
+        marginTop: 15,
+        marginRight: 20,
         letterSpacing: 1,
         fontFamily: 'Libre Franklin, sans-serif',
         borderRadius: 100,
         '&:hover': {
             backgroundColor: '#1ED760',
         },
+    },
+    headerRowA: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    headerRowB: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+    },
+    headerColumnA: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        marginLeft: 20,
+    },
+    headerColumnB: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+    },
+    sideButton: {
+        borderRadius: 100,
+        fontFamily: 'Libre Franklin, sans-serif',
+        width: "60%",
+        margin: 20,
+    },
+    image: {
+        boxShadow: theme.shadows[2],
+        display: "flex",
+        maxWidth: 180,
+        maxHeight: 180,
+    },
+    trackImage: {
+        boxShadow: theme.shadows[2],
+        maxWidth: 60,
     },
     root: {
         width: '95%',
@@ -66,13 +108,15 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '5px',
     },
     searchRow: {
-        width: '95%',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
     textInput: {
-        margin: '10px',
+        marginTop: 10,
+        marginBottom: 20,
+        marginRight: 10,
         flex: '1 1 auto',
     },
     textField: {
@@ -196,6 +240,7 @@ function PlaylistDetailsComponent(props) {
             title: song.name,
             added_by: props.user?.username ? props.user.username : '',
             duration_ms: song.duration_ms,
+            image_url: song.image_url,
         };
     };
 
@@ -437,13 +482,37 @@ function PlaylistDetailsComponent(props) {
         </Button>
     );
 
+    const playlistHeader = (
+        <div className={classes.headerRowA}>
+            <div className={classes.headerRowB}>
+                <img className={classes.image} src={props.playlist.image_url} />
+                <div className={classes.headerColumnA}>
+                    <Typography variant="h2">
+                        {playlist.title}
+                    </Typography>
+                    <Typography variant="h6">
+                        {getStringFromMilliseconds(totalDuration, true)}
+                    </Typography>
+                </div>
+
+            </div>
+            <div className={classes.headerColumnB}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    {spotifyLogoText}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button variant="contained" color="primary" className={classes.sideButton}>
+                        Fill up to target
+                    </Button>
+                </div>
+            </div>
+        </div>
+    )
+
     return (
         <Paper className={classes.backgroundPaper}>
             <div className={classes.root}>
-                <div>
-                    <h1>Playlist Overview</h1>
-                    {spotifyLogoText}
-                </div>
+                {playlistHeader}
 
                 {!playlist.is_teamtune_playlist ? (
                     <div></div>
@@ -486,13 +555,6 @@ function PlaylistDetailsComponent(props) {
                         <hr />
                     </div>
                 )}
-
-                <div>
-                    <h2>
-                        {playlist.title} -{' '}
-                        {getStringFromMilliseconds(totalDuration, true)}
-                    </h2>
-                </div>
                 <div className={classes.searchRow}>
                     <div className={classes.textInput}>
                         <Autocomplete
@@ -571,6 +633,11 @@ function PlaylistDetailsComponent(props) {
                                         </TableCell>
                                         <TableCell
                                             align="right"
+                                        >
+                                            Image
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
                                             onClick={() => sortHeaders('title')}
                                         >
                                             Title
@@ -612,7 +679,10 @@ function PlaylistDetailsComponent(props) {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {index}
+                                                {index+1}
+                                            </TableCell>
+                                            <TableCell>
+                                                <img className={classes.trackImage} src={song.image_url} />
                                             </TableCell>
                                             <TableCell align="right">
                                                 {song.title}
