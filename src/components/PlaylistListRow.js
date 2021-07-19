@@ -11,7 +11,6 @@ import PlaylistListRowButtons from "./PlaylistListRowButtons";
 // and you can access the global theme of the application
 const useStyles = makeStyles((theme) => ({
     image: {
-        borderRadius: theme.shape.borderRadius,
         boxShadow: theme.shadows[2],
         maxWidth: 140,
     },

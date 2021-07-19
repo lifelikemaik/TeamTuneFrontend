@@ -6,7 +6,9 @@ import TeamTuneIcon from "./TeamTuneIcon";
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
-        width: "1000px",
+        maxWidth: "1000px",
+        minWidth: "350px",
+        width: "70%",
         height: "300%",
         marginLeft: "auto",
         marginRight: "auto",
