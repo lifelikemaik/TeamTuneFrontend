@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
-import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent, Paper, Grid } from "@material-ui/core";
+import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent, Grid } from "@material-ui/core";
 import TeamTuneIcon from "./TeamTuneIcon";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
     cardRoot: {
         width: 600,
-        height: 400,
         alignItems: 'center',
         justifyContent: "center",
     },
@@ -119,12 +118,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-/**
- * Landing page and "home" screen of the web app
- * @param {props} props
- */
-function SubscriptionCardFree(props) {
+function SubscriptionCardFree() {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
 
@@ -133,6 +127,38 @@ function SubscriptionCardFree(props) {
             <CardContent >
                 <Typography className={classes.cardHeader} color="textSecondary" gutterBottom>
                     TeamTune Free
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.cardText}>
+                    {bull} Create new Spotify® playlists based on various music parameters
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.cardText}>
+                    {bull} Mirroring of all your playlists in your Spotify® account
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.cardText}>
+                    {bull} feature 3
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.cardText}>
+                    {bull} feature 4
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button className={classes.cardButton}>
+                    Go Free
+                </Button>
+            </CardActions>
+        </Card>
+    );
+}
+
+function SubscriptionCardPremium() {
+    const classes = useStyles();
+    const bull = <span className={classes.bullet}>•</span>;
+
+    return (
+        <Card className={classes.cardRoot} variant="outlined">
+            <CardContent >
+                <Typography className={classes.cardHeader} color="textSecondary" component="h2" gutterBottom>
+                    TeamTune Premium
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
                     {bull}feature 1
@@ -148,45 +174,9 @@ function SubscriptionCardFree(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button
-                    className={classes.cardButton}
-                    onClick={() => props.history.push('/register')}>
-                    Go Free</Button>
-            </CardActions>
-        </Card>
-    );
-}
-
-
-/**
- * Landing page and "home" screen of the web app
- * @param {props} props
- */
-function SubscriptionCardPremium(props) {
-    const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-
-    return (
-        <Card className={classes.cardRoot} variant="outlined">
-            <CardContent >
-                <Typography className={classes.cardHeader} color="textSecondary" component="h2" gutterBottom>
-                    TeamTune Premium
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Feature 1
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 2
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 3
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 4
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button className={classes.cardButton}>Go Premium</Button>
+                <Button className={classes.cardButton}>
+                    Go Premium
+                </Button>
             </CardActions>
         </Card>
     );
@@ -249,7 +239,6 @@ function LandingPageComponent(props) {
                     </Grid>
                 </div>
             </section>
-
         </div>
 
     );
