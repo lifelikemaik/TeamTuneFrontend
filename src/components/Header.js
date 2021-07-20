@@ -210,7 +210,7 @@ function Header(props) {
             req_login: false,
             req_logout: true,
             className: side_options,
-            onClickFun: () => props.history.push("/register")
+            onClickFun: () => props.history.push("/register")            
         },
     ];
 

@@ -3,7 +3,6 @@ import { withRouter, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
 import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent, Grid } from "@material-ui/core";
-import TeamTuneIcon from "./TeamTuneIcon";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
 
@@ -15,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     cardRoot: {
-        width: 600,
+        width: 900,
+        height: 400,
         alignItems: 'center',
         justifyContent: "center",
     },
@@ -29,9 +29,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Libre Franklin, sans-serif",
+        color: "#62D2A2",
     },
     cardText: {
         display: "flex",
+        alignItems: "flex-end",
         fontFamily: "Libre Franklin, sans-serif",
     },
     landingPageImage: {
@@ -105,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     cardButton: {
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: -10,
+        display: 'flex',
         width: "50%",
         height: "40px",
         fontSize: 17,
@@ -118,7 +120,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function SubscriptionCardFree() {
+/**
+ * Landing page and "home" screen of the web app
+ * @param {props} props
+ */
+
+function SubscriptionCardFree(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
 
@@ -132,17 +139,18 @@ function SubscriptionCardFree() {
                     {bull} Create new Spotify® playlists based on various music parameters
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Mirroring of all your playlists in your Spotify® account
+                    {bull} Mirroring of all your own playlists in your Spotify® account and those you are following
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 3
+                    {bull} Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
                     {bull} feature 4
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.cardButton}>
+                <Button className={classes.cardButton}
+                    onClick={() => props.history.push('/register')}>
                     Go Free
                 </Button>
             </CardActions>
@@ -150,21 +158,21 @@ function SubscriptionCardFree() {
     );
 }
 
-function SubscriptionCardPremium() {
+function SubscriptionCardPremium(props) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
 
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-                <Typography className={classes.cardHeader} color="textSecondary" component="h2" gutterBottom>
+                <Typography className={classes.cardHeader} color="textSecondary" gutterBottom>
                     TeamTune Premium
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull}feature 1
+                    {bull} Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 2
+                    {bull}
                 </Typography>
                 <Typography variant="h5" component="h2" className={classes.cardText}>
                     {bull} feature 3
@@ -174,7 +182,10 @@ function SubscriptionCardPremium() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button className={classes.cardButton}>
+                <Button
+                    className={classes.cardButton}
+                    onClick={() => props.history.push('/register')}>
+                    {console.log(props)}
                     Go Premium
                 </Button>
             </CardActions>
@@ -182,10 +193,7 @@ function SubscriptionCardPremium() {
     );
 }
 
-/**
- * Landing page and "home" screen of the web app
- * @param {props} props
- */
+
 
 function LandingPageComponent(props) {
 
@@ -216,6 +224,7 @@ function LandingPageComponent(props) {
                     <Button
                         className={classes.tryItButton}
                         onClick={() => props.history.push('/register')}>
+                        {console.log(props)}
                         LET´S GET STARTED
                     </Button>
                 </div>
@@ -230,11 +239,11 @@ function LandingPageComponent(props) {
                 </h3>
                 <div className={classes.gridRoot}>
                     <Grid container spacing={1}>
-                        <Grid item xs={4}>
-                            <SubscriptionCardFree />
+                        <Grid item xs={6}>
+                            <SubscriptionCardFree props={props} />
                         </Grid>
-                        <Grid item xs={4}>
-                            <SubscriptionCardPremium />
+                        <Grid item xs={1}>
+                            <SubscriptionCardPremium props={props} />
                         </Grid>
                     </Grid>
                 </div>

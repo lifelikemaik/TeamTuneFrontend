@@ -8,6 +8,7 @@ import CreatePlaylistView from "./views/CreatePlaylistView";
 import PlaylistDetailView from "./views/PlaylistDetailView";
 import LandingPageView from "./views/LandingPageView";
 import InviteView from "./views/InviteView";
+import PremiumBookingView from "./views/PremiumBookingView";
 
 
 
@@ -41,8 +42,8 @@ const routes = [
         component: CreatePlaylistView
     },
     {
-      path: "/playlist/:id",
-      component: PlaylistDetailView,
+        path: "/playlist/:id",
+        component: PlaylistDetailView,
     },
     {
         path: "/invite/:id",
@@ -55,6 +56,10 @@ const routes = [
     {
         path: "/callback",
         component: CallbackView,
+    },
+    {
+        path: "/bookpremium",
+        component: PremiumBookingView,
     },
 ];
 
