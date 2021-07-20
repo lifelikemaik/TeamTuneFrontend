@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Grid, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
@@ -90,16 +90,16 @@ function CreatePlaylistComponent(props) {
     const [playlistTitle, setPlaylistTitle] = React.useState("");
     const [duration, setDuration] = React.useState("");
     const [mode, setMode] = React.useState("medium");
-    const [acousticness, setAcousticness] = React.useState("medium");
-    const [danceability, setDanceability] = React.useState("medium");
-    const [energy, setEnergy] = React.useState("medium");
-    const [instrumentalness, setInstrumentalness] = React.useState("medium");
-    const [key, setKey] = React.useState("medium");
-    const [liveness, setLiveness] = React.useState("medium");
-    const [loudness, setLoudness] = React.useState("medium");
-    const [speechiness, setSpeechiness] = React.useState("medium");
-    const [tempo, setTempo] = React.useState("medium");
-    const [valence, setValence] = React.useState("medium");
+    const [acousticness, setAcousticness] = React.useState(null);
+    const [danceability, setDanceability] = React.useState(null);
+    const [energy, setEnergy] = React.useState(null);
+    const [instrumentalness, setInstrumentalness] = React.useState(null);
+    const [key, setKey] = React.useState(null);
+    const [liveness, setLiveness] = React.useState(null);
+    const [loudness, setLoudness] = React.useState(null);
+    const [speechiness, setSpeechiness] = React.useState(null);
+    const [tempo, setTempo] = React.useState(null);
+    const [valence, setValence] = React.useState(null);
 
 
     let settingDescriptions = new Map();

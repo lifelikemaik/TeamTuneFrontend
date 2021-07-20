@@ -1,7 +1,11 @@
-import { Button, Snackbar } from '@material-ui/core';
+import {IconButton, Snackbar, Tooltip, withStyles} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Alert } from '@material-ui/lab';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
+import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 
 function PlaylistListRowButtons(props) {
     const [publicity, setPublicity] = React.useState(props.playlist.publicity);
@@ -16,14 +20,9 @@ function PlaylistListRowButtons(props) {
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
-        if(event != null) preventBackgroundClick(event)
+        if (event != null) preventBackgroundClick(event);
         setOpen(false);
     };
-
-    const preventBackgroundClick = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-    }
 
     const snackBar = () => {
         return (
@@ -39,83 +38,106 @@ function PlaylistListRowButtons(props) {
             </Snackbar>
         );
     };
+    const LightTooltip = withStyles((theme) => ({
+        tooltip: {
+            boxShadow: theme.shadows[1],
+            fontSize: 15,
+        },
+    }))(Tooltip);
+
+    const preventBackgroundClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const shareLinkOnClick = (e) => {
+        preventBackgroundClick(e);
+        handleClick(
+            'Link was copied to the clipboard!'
+        );
+        navigator.clipboard.writeText(
+            'http://localhost:3000/invite/' +
+            props.playlist._id
+        );
+    }
+    const followOnClick = (e) => {
+        preventBackgroundClick(e);
+        props.onClickFollowPlaylist(
+            props.playlist.public_id
+        );
+    }
+    const makePublicOnClick = (e) => {
+        props.onMakePlaylistPublic(
+            e,
+            props.playlist._id,
+            { publicity: true }
+        );
+        setPublicity(true);
+        handleClick('Playlist made public!');
+    }
+    const copyOnClick = (e) => {
+        props.onCopyPlaylist(e, props.playlist._id);
+        handleClick('Playlist copied!');
+    }
+
+    const buttons = [
+        {
+            label: "Copy Share Link",
+            icon: ShareOutlinedIcon,
+            browse: false,
+            my_playlists: true,
+            message: "Link was copied to the clipboard!",
+            on_click: shareLinkOnClick,
+        },
+        {
+            label: "Follow Playlist",
+            icon: FavoriteBorderOutlinedIcon,
+            browse: true,
+            my_playlists: false,
+            message: "Playlist was followed on Spotify!",
+            on_click: followOnClick,
+        },
+        {
+            label: "Make Public",
+            icon: PublicOutlinedIcon,
+            browse: false,
+            my_playlists: true,
+            message: "Playlist successfully made public!",
+            on_click: makePublicOnClick,
+        },
+        {
+            label: "Create Copy",
+            icon: FileCopyOutlinedIcon,
+            browse: true,
+            my_playlists: true,
+            message: "Playlist successfully copied to your playlists!",
+            on_click: copyOnClick,
+        }
+    ]
+
+    const getButtons = (
+        buttons.map(({label, icon, browse, my_playlists, on_click}) => {
+            let Icon = icon;
+            return (
+                <React.Fragment>
+                    { (props.isBrowse && browse || !(props.isBrowse) && my_playlists) ? [
+                        <IconButton onClick={on_click} aria-label={label}>
+                            <LightTooltip title={label} arrow placement="top">
+                                <Icon fontSize="large" color="primary"/>
+                            </LightTooltip>
+                        </IconButton>
+                    ] : []}
+                </React.Fragment>
+            )}
+        )
+    );
 
     return (
         <div>
-            {!props.isLoggedIn ? (
-                <div/>
-            ) : props.isBrowse ? (
+            {snackBar()}
+            {!props.isLoggedIn ? (<div/>) : (
                 <div>
-                    {props.playlist.is_own_playlist ? (
-                        <div>
-                        </div>
-                    ) : (
-                        <div>
-                            <Button variant="contained" onClick={(e) => {
-                                preventBackgroundClick(e)
-                                props.onClickFollowPlaylist(props.playlist.public_id)
-                            }}>
-                                Follow
-                            </Button>
-                            <Button variant="contained">
-                                Copy to my Playlist
-                            </Button>
-                        </div>
-                    )}
-                    <Button variant="contained">Follow</Button>
-                    <Button variant="contained">Copy to my Playlist</Button>
-                </div>
-            ) : (
-                <div>
-                    {snackBar()}
-                    {props.playlist.is_own_playlist ? (
-                        <div>
-                            <Button variant="contained" onClick={(e) => {
-                                preventBackgroundClick(e)
-                                handleClick()
-                                navigator.clipboard.writeText("http://localhost:3000/invite/" + props.playlist._id)
-                            }}>
-                                Share Link
-                            </Button>
-
-                            {!publicity && (
-                                <Button
-                                    variant="contained"
-                                    onClick={(e) => {
-                                        props.onMakePlaylistPublic(
-                                            e,
-                                            props.playlist._id,
-                                            { publicity: true }
-                                        );
-                                        setPublicity(true);
-                                        handleClick('Playlist made public!');
-                                    }}
-                                >
-                                    Make Public
-                                </Button>
-                            )}
-
-                            <Button
-                                variant="contained"
-                                onClick={(e) => {
-                                    props.onCopyPlaylist(e, props.playlist._id);
-                                    handleClick('Playlist copied!');
-                                }}
-                            >
-                                Create Copy
-                            </Button>
-                        </div>
-                    ) : (
-                        <Button
-                            variant="contained"
-                            onClick={(e) => {
-                                props.onCopyPlaylist(e, props.playlist._id);
-                                handleClick('Playlist copied!');
-                            }}
-                        >
-                            Create Copy
-                        </Button>
-                    )}
+                    {getButtons}
                 </div>
             )}
         </div>

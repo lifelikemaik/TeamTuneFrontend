@@ -12,6 +12,11 @@ function FilterSettingRow(props) {
     // Whether box is checked or not
     const [checked, setChecked] = React.useState(true);
 
+    useEffect(() => {
+        setChecked(!!props.value);
+    }, [props.value]);
+
+
     const handleChange = (event) => {
         event.persist();
         setChecked(event.target.checked);
