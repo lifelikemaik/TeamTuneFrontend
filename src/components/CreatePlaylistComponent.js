@@ -97,7 +97,6 @@ function CreatePlaylistComponent(props) {
     const classes = useStyles();
 
     const [playlistTitle, setPlaylistTitle] = React.useState("");
-    const [duration, setDuration] = React.useState("");
     const [durationHours, setDurationHours] = React.useState("");
     const [durationMinutes, setDurationMinutes] = React.useState("");
     const [mode, setMode] = React.useState("medium");
@@ -162,10 +161,13 @@ function CreatePlaylistComponent(props) {
                 return null;
         }
     }
-    
+
     const getDurationMs = (durationHours, durationMinutes) => {
-        return durationHours * 1000 * 60 * 60 + durationMinutes * 1000 * 60;
-    }
+        return (
+            Math.abs(durationHours) * 1000 * 60 * 60 +
+            Math.abs(durationMinutes) * 1000 * 60
+        );
+    };
 
     // creating a object with all relevant data to update or create a changed playlist
     const packPlaylist = () => {
@@ -233,10 +235,6 @@ function CreatePlaylistComponent(props) {
 
     const onChangeTitle = (value) => {
         setPlaylistTitle(value.target.value);
-    };
-
-    const onChangeDuration = (value) => {
-        setDuration(value.target.value);
     };
 
     const onChangeDurationHours = (value) => {
