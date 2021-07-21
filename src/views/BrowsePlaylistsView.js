@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import BrowseComponent from "../components/BrowseComponent";
-import {getPublicPlaylists, followPlaylist} from "../redux/actions";
+import {getPublicPlaylists, followPlaylist, copyPlaylist} from "../redux/actions";
 import PlaylistListComponent from "../components/PlaylistListComponent";
 
 /**
@@ -41,6 +41,12 @@ function BrowsePlaylistsView(props) {
     props.dispatch(followPlaylist(id));
   };
 
+  const onCopyPlaylist = async (e, playlistId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    props.dispatch(copyPlaylist(playlistId));
+  }
+
 
   return !playlists ? (
       // if no playlists are loaded, the above useEffect should be triggered
@@ -54,8 +60,8 @@ function BrowsePlaylistsView(props) {
           playlists={playlists}
           onClickDisplayPlaylist={onClickDisplayPlaylist}
           isLoggedIn={!!user.user}
-          isAdmin={!!user.user ? user.user.role === "admin" : false}
           isBrowse={true}
+          onCopyPlaylist={onCopyPlaylist}
           onClickFollowPlaylist={onClickFollowPlaylist}
       />
   );

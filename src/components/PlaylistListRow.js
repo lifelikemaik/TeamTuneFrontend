@@ -67,7 +67,6 @@ PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
     onClickDisplayPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
-    isAdmin: PropTypes.bool,
     isBrowse: PropTypes.bool.isRequired,
 };
 
