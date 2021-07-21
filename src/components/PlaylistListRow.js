@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     },
     row: {
         zIndex: 1,
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 }));
 
