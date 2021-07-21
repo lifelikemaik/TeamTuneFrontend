@@ -45,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
     inputs: {
         width: "300px",
     },
+    durationInput: {
+        width: "150px",
+    },
+    timeDivider: {
+        display: 'flex',
+        fontSize: '2em',
+        margin: '7px 5px 0 5px',
+        fontWeight: 'bold'
+    },
     maxWidth: {
         width: "100%",
         maxWidth: "1500px",
@@ -89,6 +98,8 @@ function CreatePlaylistComponent(props) {
 
     const [playlistTitle, setPlaylistTitle] = React.useState("");
     const [duration, setDuration] = React.useState("");
+    const [durationHours, setDurationHours] = React.useState("");
+    const [durationMinutes, setDurationMinutes] = React.useState("");
     const [mode, setMode] = React.useState("medium");
     const [acousticness, setAcousticness] = React.useState(null);
     const [danceability, setDanceability] = React.useState(null);
@@ -152,6 +163,9 @@ function CreatePlaylistComponent(props) {
         }
     }
     
+    const getDurationMs = (durationHours, durationMinutes) => {
+        return durationHours * 1000 * 60 * 60 + durationMinutes * 1000 * 60;
+    }
 
     // creating a object with all relevant data to update or create a changed playlist
     const packPlaylist = () => {
@@ -166,7 +180,7 @@ function CreatePlaylistComponent(props) {
             track_count: 0,
             music_info: {
                 durations_ms: 0,
-                duration_target: duration,
+                duration_target: getDurationMs(durationHours, durationMinutes),
                 songs: [],
                 number_songs: 0,
                 mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
@@ -205,7 +219,7 @@ function CreatePlaylistComponent(props) {
                 </Button>
                 <Button variant="contained" color="primary"
                         className={classes.cancelButton}
-                        disabled={!duration || !playlistTitle}
+                        disabled={(!durationHours || !durationMinutes) || !playlistTitle}
                         onClick={onSave}>
                     Create Playlist
                 </Button>
@@ -223,6 +237,14 @@ function CreatePlaylistComponent(props) {
 
     const onChangeDuration = (value) => {
         setDuration(value.target.value);
+    };
+
+    const onChangeDurationHours = (value) => {
+        setDurationHours(value.target.value);
+    };
+
+    const onChangeDurationMinutes = (value) => {
+        setDurationMinutes(value.target.value);
     };
 
     // ----------------------------------------------------------------------------------------------------
@@ -244,6 +266,7 @@ function CreatePlaylistComponent(props) {
             <div>
                 <h1>Create a playlist</h1>
             </div>
+            <Button onClick={() => getDurationMs(durationHours, durationMinutes)}>Test</Button>
             <hr className={classes.rounded}/>
             <div className={classes.flexRow}>
                 <div>
@@ -261,13 +284,26 @@ function CreatePlaylistComponent(props) {
                     <div>
                         <h2>Duration</h2>
                     </div>
-                    <div>
-                        <TextField label="Duration"
-                                   className={classes.inputs}
-                                   onChange={onChangeDuration}
-                                   type="number"
-                                   min="0"
-                                   variant="outlined"/>
+                    <div className={classes.flexRow}>
+                        <div>
+                            <TextField label="Hours"
+                                       className={classes.durationInput}
+                                       onChange={onChangeDurationHours}
+                                       type="number"
+                                       min="0"
+                                       variant="outlined"/>
+                        </div>
+                        <div>
+                            <span className={classes.timeDivider}> : </span>
+                        </div>
+                        <div>
+                            <TextField label="Minutes"
+                                       className={classes.durationInput}
+                                       onChange={onChangeDurationMinutes}
+                                       type="number"
+                                       min="0"
+                                       variant="outlined"/>
+                        </div>
                     </div>
                 </div>
             </div>
