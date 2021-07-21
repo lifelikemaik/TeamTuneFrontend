@@ -130,7 +130,7 @@ function MyTeamTuneSubscriptionComponent(props) {
                         <Button
                             className={classes.upgradeSubscriptionButton}
                             isPremium={isPremium}                            
-                            onClick={() => props.history.push('/')}
+                            onClick={() => props.history.push('/bookpremium')}
                             /*onClick={onUpgradeSubscription}*/
                         >
                             {console.log(props)}

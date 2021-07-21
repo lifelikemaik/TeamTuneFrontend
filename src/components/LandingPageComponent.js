@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@material-ui/core/Box';
-import { AppBar, Button, IconButton, Toolbar, Divider, Typography, Card, CardActions, CardContent, Grid } from "@material-ui/core";
+import { Button, Typography, Card, CardActions, CardContent, Grid, List, Divider, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
 
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         height: 400,
         alignItems: 'center',
         justifyContent: "center",
+        marginLeft: 20,
     },
     gridRoot: {
         flexGrow: 1,
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: -140,
         padding: theme.spacing(5),
     },
-    welcomeText: {
+    headLines: {
         marginTop: 20,
         display: "flex",
         justifyContent: "center",
@@ -65,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+    },
+    additionalFeaturesList: {
+        width: '100%',        
+        fontFamily: "Libre Franklin, sans-serif",
+        backgroundColor: theme.palette.background.paper,
     },
     section1: {
         height: 700,
@@ -120,6 +127,51 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+function FreeFunctionalitiesList(props) {
+
+    const classes = useStyles();
+    return (
+        <div className={classes.additionalFeaturesList}>
+            <List component="nav">
+                <ListItem>
+                    <ListItemText primary= "Create new Spotify® playlists based on various music parameters" />
+                </ListItem>                                
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Mirroring of all your own playlists in your Spotify® account and those you are following" />
+                </ListItem>
+                <Divider />                   
+                <ListItem>
+                    <ListItemText primary="Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits" />
+                </ListItem>
+            </List>
+        </div>
+    );
+}
+
+function PremiumFunctionalitiesList(props) {
+
+    const classes = useStyles();
+    return (
+        <div className={classes.additionalFeaturesList}>
+            <List component="nav">
+                <ListItem>
+                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link" />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Additional Feature 2" />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Additional Feature 3" />
+                </ListItem>
+            </List>
+        </div>
+    );
+}
+
 /**
  * Landing page and "home" screen of the web app
  * @param {props} props
@@ -127,26 +179,15 @@ const useStyles = makeStyles((theme) => ({
 
 function SubscriptionCardFree(props) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+    const bull = <span className={classes.bullet}>•&nbsp;</span>;
 
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-                <Typography className={classes.cardHeader} color="textSecondary" gutterBottom>
-                    TeamTune Free
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Create new Spotify® playlists based on various music parameters
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Mirroring of all your own playlists in your Spotify® account and those you are following
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 4
-                </Typography>
+            <h4 className={classes.cardHeader}>
+                TeamTune Free
+            </h4>
+            <FreeFunctionalitiesList />
             </CardContent>
             <CardActions>
                 <Button className={classes.cardButton}
@@ -160,31 +201,20 @@ function SubscriptionCardFree(props) {
 
 function SubscriptionCardPremium(props) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
+    const bull = <span className={classes.bullet}>•&nbsp;</span>;
 
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-                <Typography className={classes.cardHeader} color="textSecondary" gutterBottom>
-                    TeamTune Premium
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull}
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 3
-                </Typography>
-                <Typography variant="h5" component="h2" className={classes.cardText}>
-                    {bull} feature 4
-                </Typography>
+            <h4 className={classes.cardHeader}>
+                TeamTune Premium
+            </h4>
+            <PremiumFunctionalitiesList />
             </CardContent>
             <CardActions>
                 <Button
                     className={classes.cardButton}
-                    onClick={() => props.history.push('/register')}>
+                    onClick={() => props.history.push('/bookpremium')}>
                     {console.log(props)}
                     Go Premium
                 </Button>
@@ -202,7 +232,7 @@ function LandingPageComponent(props) {
     return (
         <div>
             <section className={classes.section1}>
-                <h1 className={classes.welcomeText}>
+                <h1 className={classes.headLines}>
                     Welcome to the TeamTune App!
                 </h1>
                 <Typography variant="h5" align="center" flexWrap="wrap" className={classes.welcomeText}>
@@ -212,11 +242,11 @@ function LandingPageComponent(props) {
             </section>
             <Divider variant="middle" />
             <section className={classes.section2}>
-                <h1 className={classes.welcomeText}>
+                <h1 className={classes.headLines}>
                     How does it work?
                 </h1>
                 <TeamTuneOverviewImage className={classes.teamTuneOverviewImage} />
-                <h2 className={classes.welcomeText}>
+                <h2 className={classes.headLines}>
                     Interested? {'\n'} Waste no time and get started!
                 </h2>
 
@@ -227,11 +257,17 @@ function LandingPageComponent(props) {
                         {console.log(props)}
                         LET´S GET STARTED
                     </Button>
+                    <Button
+                        className={classes.tryItButton}
+                        onClick={() => props.history.push('/bookpremium')}>
+                        {console.log(props)}
+                        TEST: premium
+                    </Button>
                 </div>
             </section>
             <Divider variant="middle" />
             <section className={classes.section3}>
-                <h1 className={classes.welcomeText}>
+                <h1 className={classes.headLines}>
                     What you get
                 </h1>
                 <h3 className={classes.subscriptionModelHeader}>

@@ -14,19 +14,16 @@ import {
 
 
 const useStyles = makeStyles((theme) => ({
-    changePWRoot: {
+    bookPremiumPaperRoot: {
         margin: "auto",
     },
-    changeUserNamePaper: {
+    bookPremiumPaper: {
         width: "600px",
+        height: "700px",
         marginBottom: 50,
         padding: theme.spacing(2),
     },
-    changePWPaper: {
-        width: "600px",
-        padding: theme.spacing(2),
-    },
-    changeCredentialsRow: {
+    bookPremiumRow: {
         fontFamily: "Libre Franklin, sans-serif",
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
@@ -37,12 +34,28 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(0),
         },
     },
-    changeCredentialsButtons: {
+    headLines: {
+        marginTop: 20,
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: "Libre Franklin, sans-serif",
     },
-    changeCredentialsButton: {
+    bookPremiumButtons: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex"
+    },
+    bookPremiumButton: {
         marginLeft: theme.spacing(1),
+        marginTop: 550,
+        width: "55%",
+        height: "40px",
+        
+        fontSize: 17,
+        color: "white",
+        backgroundColor: "black",
         '&:hover': {
             backgroundColor: "#1db954",
             opacity: "90%",
@@ -56,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
  */
 function PremiumBookingComponent(props) {
     const classes = useStyles();
-    
+
+    /*
     const user = useSelector((state) => {
         // return the currently logged in user from redux store
         return state.user;
@@ -67,21 +81,35 @@ function PremiumBookingComponent(props) {
         if (props.user) {
             console.log(user);
         } else {
-            /*console.log(user);*/
+            //console.log(user);
             
         }
     }, [props.user]);
 
-    
+    */
+
 
     return (
-        <div className={classes.changePWRoot}>
-            <Paper className={classes.changeUserNamePaper} component="form">
-                <div>
-                    testrow
+        <div className={classes.bookPremiumPaperRoot}>
+            <h1 className={classes.headLines}>
+                TeamTune Premium
+            </h1>
+            <Paper className={classes.bookPremiumPaper} component="form">
+                <div className={classes.bookPremiumRow}>
+                    <h2 className={classes.headLines} style={{textDecorationLine: 'underline'}}> 
+                        Enter your payment information
+                    </h2>
+                </div>
+                <div className={classes.bookPremiumButtons}>
+                    <Button
+                        className={classes.bookPremiumButton}
+                        onClick={() => props.history.push('/register')}>
+                        Book Premium {"&"} Register
+                    </Button>
                 </div>
             </Paper>
         </div>
+
     );
 
 }
