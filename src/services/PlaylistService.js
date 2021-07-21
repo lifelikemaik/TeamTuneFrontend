@@ -140,6 +140,21 @@ export default class PlaylistService {
         });
     }
 
+    static removeSongFromPlaylist(playlistId, songId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId + '/' + songId;
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                url,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static addSongToPlaylistInvite(playlistId, songId) {
         const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songId;
         return new Promise((resolve, reject) => {

@@ -10,11 +10,12 @@ import {
     searchForSong,
     getPlaylistLength,
     searchForSongInvite,
+    removeSongFromPlaylist,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
     // props can be deconstructed into single variables, so you do not need to write "props." all the time
-    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite} = props;
+    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist} = props;
 
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
@@ -46,6 +47,12 @@ function PlaylistDetailsView(props) {
         }
     }
 
+    const removeSong = (songId) => {
+        if (user.user) {
+            removeSongFromPlaylist(match.params.id, songId);
+        }
+    }
+
     return !selectedPlaylist ||
         (!selectedPlaylist?.playlist &&
             !selectedPlaylist?.error &&
@@ -60,6 +67,7 @@ function PlaylistDetailsView(props) {
             isAdmin={!!user.user ? user.user.role === 'admin' : false}
             searchForSong={searchForSongHelper}
             addSongToPlaylist={addSongToPlaylistHelper}
+            removeSong={removeSong}
             getPlaylistLength={props.getPlaylistLength}
             user={user.user}
         />
@@ -79,4 +87,5 @@ export default connect(null, {
     addSongToPlaylist,
     addSongToPlaylistInvite,
     getPlaylistLength,
+    removeSongFromPlaylist
 })(PlaylistDetailsView);

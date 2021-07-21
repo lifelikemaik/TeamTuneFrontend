@@ -17,6 +17,11 @@ export default function entities(state = {}, action) {
             return { ...state };
         case 'ADDSONG_SUCCESS':
             return { ...state };
+        case 'REMOVE_SONG_SUCCESS':
+            return {
+                ...state,
+                removedSongId: action.removedSongId
+            };
         case 'SEARCHFORSONG_SUCCESS':
             return { songs: action.songs };
         default:
