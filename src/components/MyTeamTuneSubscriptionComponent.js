@@ -98,9 +98,9 @@ function MyTeamTuneSubscriptionComponent(props) {
     const [isPremium, setIsPremium] = React.useState(false);
     const toggle = React.useCallback(() => setIsPremium(!isPremium));
     /*var isPremium = false;*/
-    
-  
-    
+
+
+
     const onUpgradeSubscription = () => {
         setIsPremium(isPremium => !isPremium);
         console.log(isPremium);
@@ -129,10 +129,11 @@ function MyTeamTuneSubscriptionComponent(props) {
                     <div className={classes.upgradeSubscriptionButtons}>
                         <Button
                             className={classes.upgradeSubscriptionButton}
-                            isPremium={isPremium}
-                            onClick={onUpgradeSubscription}
-                        /*onClick={onUpgradeSubscription}*/
+                            isPremium={isPremium}                            
+                            onClick={() => props.history.push('/bookpremium')}
+                            /*onClick={onUpgradeSubscription}*/
                         >
+                            {console.log(props)}
                             Upgrade to Premium
                         </Button>
                     </div>
