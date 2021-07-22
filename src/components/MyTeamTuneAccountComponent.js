@@ -72,7 +72,7 @@ function MyTeamTuneAccountComponent(props) {
             setChangePasswordError(props.user.error);
         } else {
             /*console.log(user);*/
-            console.log(newUsername)
+            
             setChangeUsernameError("");
             setChangePasswordError("");
         }

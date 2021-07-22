@@ -68,9 +68,12 @@ function PlaylistListRow(props) {
 // attributes of props and their type
 PlaylistListRow.propTypes = {
     playlist: PropTypes.object,
+    isBrowse: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool,
+    onClickFollowPlaylist: PropTypes.func,
     onClickDisplayPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
-    isBrowse: PropTypes.bool.isRequired,
+    onCopyPlaylist: PropTypes.func,
 };
 
 export default PlaylistListRow;

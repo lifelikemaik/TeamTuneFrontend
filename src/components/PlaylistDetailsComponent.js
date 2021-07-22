@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         justifyContent: "flex-end",
         marginLeft: 20,
+        marginBottom: 42,
     },
     headerColumnB: {
         display: "flex",
@@ -334,7 +335,7 @@ function PlaylistDetailsComponent(props) {
             );
         }
     };
-    
+
     const removeSong = (song) => {
         if (song.id) {
             props.removeSong(song.id);
@@ -528,20 +529,28 @@ function PlaylistDetailsComponent(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {spotifyLogoText}
                 </div>
-                {props.isBrowse ? (<div/>) : (
+                {props.isBrowse ? (<div />) : (
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button variant="contained" color="primary" className={classes.sideButton}>
                             Fill up to target
                         </Button>
                     </div>
                 )}
-                {props.isBrowse ? (<div/>) : (
+                {props.isBrowse ? (<div />) : (
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button onClick={shareLinkOnClick} variant="contained" color="primary" className={classes.sideButton}>
                             copy invite link
                         </Button>
                     </div>
                 )}
+                {props.isBrowse ? (<div />) : (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Button onClick={() => props.history.push('/playlists')} variant="contained" color="primary" className={classes.sideButton}>
+                            Back to Overview
+                        </Button>
+                    </div>
+                )}
+
             </div>
         </div>
     )
@@ -592,7 +601,7 @@ function PlaylistDetailsComponent(props) {
                         <hr />
                     </div>
                 )}
-                {props.isBrowse ? (<div/>) : (
+                {props.isBrowse ? (<div />) : (
                     <div className={classes.searchRow}>
                         <div className={classes.textInput}>
                             <Autocomplete
@@ -606,17 +615,17 @@ function PlaylistDetailsComponent(props) {
                                 renderOption={(option) => (
                                     <React.Fragment>
                                         <div className={classes.searchRow}>
-                                        <span>
-                                            {option.name} -{' '}
-                                            {getAllArtistsString(
-                                                option.artists
-                                            )}{' '}
-                                            -{' '}
-                                            {getStringFromMilliseconds(
-                                                option.duration_ms,
-                                                false
-                                            )}
-                                        </span>
+                                            <span>
+                                                {option.name} -{' '}
+                                                {getAllArtistsString(
+                                                    option.artists
+                                                )}{' '}
+                                                -{' '}
+                                                {getStringFromMilliseconds(
+                                                    option.duration_ms,
+                                                    false
+                                                )}
+                                            </span>
                                             <Button
                                                 className={
                                                     classes.addToPlaylistButton
@@ -705,7 +714,7 @@ function PlaylistDetailsComponent(props) {
                                         >
                                             Duration
                                         </TableCell>
-                                        {props.isBrowse ? (<div/>) : (
+                                        {props.isBrowse ? (<div />) : (
                                             <TableCell align="right">
                                                 Delete
                                             </TableCell>
@@ -720,7 +729,7 @@ function PlaylistDetailsComponent(props) {
                                                 component="th"
                                                 scope="row"
                                             >
-                                                {index+1}
+                                                {index + 1}
                                             </TableCell>
                                             <TableCell>
                                                 <img className={classes.trackImage} src={song.image_url} />
@@ -740,7 +749,7 @@ function PlaylistDetailsComponent(props) {
                                                     false
                                                 )}
                                             </TableCell>
-                                            {props.isBrowse ? (<div/>) : (
+                                            {props.isBrowse ? (<div />) : (
                                                 <TableCell align="right">
                                                     <IconButton
                                                         disabled={

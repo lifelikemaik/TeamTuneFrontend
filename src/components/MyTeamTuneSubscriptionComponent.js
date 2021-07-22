@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { withRouter, useHistory } from "react-router-dom";
 import { Paper, Button, TextField, Typography, List, Divider, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
 
@@ -89,7 +90,6 @@ function PremiumFunctionalitiesList(props) {
 }
 
 
-
 function MyTeamTuneSubscriptionComponent(props) {
 
     const classes = useStyles();
@@ -133,9 +133,10 @@ function MyTeamTuneSubscriptionComponent(props) {
                             onClick={() => props.history.push('/bookpremium')}
                             /*onClick={onUpgradeSubscription}*/
                         >
-                            {console.log(props)}
+                            
                             Upgrade to Premium
                         </Button>
+                        {console.log(props.history.location.pathname)}
                     </div>
 
                 ]
@@ -158,4 +159,4 @@ function MyTeamTuneSubscriptionComponent(props) {
 }
 
 
-export default MyTeamTuneSubscriptionComponent;
+export default withRouter(MyTeamTuneSubscriptionComponent);

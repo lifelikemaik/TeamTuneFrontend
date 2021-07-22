@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Box from '@material-ui/core/Box';
 import { Button, Typography, Card, CardActions, CardContent, Grid, List, Divider, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
 
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: "center",
         marginLeft: 20,
+        backgroundColor: "#1db954",
     },
     gridRoot: {
         flexGrow: 1,
@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Libre Franklin, sans-serif",
-        color: "#62D2A2",
     },
     cardText: {
         display: "flex",
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     additionalFeaturesList: {
         width: '100%',        
         fontFamily: "Libre Franklin, sans-serif",
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: "#1db954",
     },
     section1: {
         height: 700,
@@ -83,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     section3: {
-        height: 1000,
+        height: 800,
         fontSize: 20,
         alignItems: "center",
         justifyContent: "center",
@@ -115,13 +114,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'flex',
-        width: "50%",
+        width: "30%",
         height: "40px",
         fontSize: 17,
         color: "white",
         backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "#1db954",
+            backgroundColor: "grey",
             opacity: "90%",
         },
     },
@@ -184,14 +183,14 @@ function SubscriptionCardFree(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader}>
+            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
                 TeamTune Free
             </h4>
             <FreeFunctionalitiesList />
             </CardContent>
             <CardActions>
                 <Button className={classes.cardButton}
-                    onClick={() => props.history.push('/register')}>
+                    onClick={() => props.props.history.push('/register')}>
                     Go Free
                 </Button>
             </CardActions>
@@ -206,7 +205,7 @@ function SubscriptionCardPremium(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader}>
+            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
                 TeamTune Premium
             </h4>
             <PremiumFunctionalitiesList />
@@ -214,8 +213,8 @@ function SubscriptionCardPremium(props) {
             <CardActions>
                 <Button
                     className={classes.cardButton}
-                    onClick={() => props.history.push('/bookpremium')}>
-                    {console.log(props)}
+                    onClick={() => props.props.history.push('/bookpremium')}>
+                    {/*console.log(props)*/}
                     Go Premium
                 </Button>
             </CardActions>
@@ -254,15 +253,10 @@ function LandingPageComponent(props) {
                     <Button
                         className={classes.tryItButton}
                         onClick={() => props.history.push('/register')}>
-                        {console.log(props)}
+                        {/*console.log(props)*/}
                         LET´S GET STARTED
                     </Button>
-                    <Button
-                        className={classes.tryItButton}
-                        onClick={() => props.history.push('/bookpremium')}>
-                        {console.log(props)}
-                        TEST: premium
-                    </Button>
+                    {console.log(props.history.location.pathname)}
                 </div>
             </section>
             <Divider variant="middle" />
@@ -288,5 +282,12 @@ function LandingPageComponent(props) {
 
     );
 }
+
+LandingPageComponent.propTypes = {
+    FreeFunctionalitiesList: PropTypes.func,
+    PremiumFunctionalitiesList: PropTypes.func,
+    SubscriptionCardFree: PropTypes.func,
+    SubscriptionCardPremium: PropTypes.func,
+};
 
 export default withRouter(LandingPageComponent);

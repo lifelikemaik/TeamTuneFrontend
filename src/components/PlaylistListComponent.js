@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
     Button,
     Divider,
@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
     },
     addPlaylistButton: {
         margin: theme.spacing(2),
+        width: "110%",
+        height: "40px",
+        fontSize: 17,
+        color: "black",
+        backgroundColor: "1db954",
+        '&:hover': {
+            backgroundColor: "1db954",
+            opacity: "90%",
+        },
     },
     playlistListPaper: {
         width: "1000px",
@@ -55,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function SortableTableHeadCell(props) {
-    const {headCell, order, orderBy, onRequestSort} = props;
+    const { headCell, order, orderBy, onRequestSort } = props;
 
     return (
         <TableCell
@@ -175,7 +184,7 @@ function PlaylistListComponent(props) {
         <div className={classes.playlistListRoot}>
             <div>
                 {props.isBrowse ? (
-                    <div/>
+                    <div />
                 ) : (
                     <Button
                         onClick={props.onAddPlaylist}

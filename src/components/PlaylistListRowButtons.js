@@ -149,6 +149,7 @@ PlaylistListRowButtons.propTypes = {
     isBrowse: PropTypes.bool.isRequired,
     onClickFollowPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
+    copyOnClick: PropTypes.func,
 };
 
 export default PlaylistListRowButtons;
