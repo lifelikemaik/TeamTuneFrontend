@@ -7,10 +7,16 @@ const Background = () => {
                 <div className="wave waveTop"/>
             </div>
             <div className="waveWrapperInner bgMiddle">
-                <div className="wave waveMiddle"/>
+                <div className="wave2 waveMiddle"/>
+            </div>
+            <div className="waveWrapperInner bgMiddle">
+                <div className="wave2 waveMiddle2"/>
+            </div>
+            <div className="waveWrapperInner bgMiddle">
+                <div className="wave2 waveMiddle3"/>
             </div>
             <div className="waveWrapperInner bgBottom">
-                <div className="wave waveBottom"/>
+                <div className="wave3 waveBottom"/>
             </div>
         </div>
     )
