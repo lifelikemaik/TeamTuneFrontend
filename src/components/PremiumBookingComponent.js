@@ -11,6 +11,7 @@ import {
     Checkbox,
     Divider,
 } from "@material-ui/core";
+import PaymentForm from "./PaymentForm";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
     },
     bookPremiumPaper: {
-        width: "600px",
+        width: "900px",
         height: "700px",
         marginBottom: 50,
         padding: theme.spacing(2),
@@ -49,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
     bookPremiumButton: {
         marginLeft: theme.spacing(1),
-        marginTop: 550,
-        width: "55%",
+        marginTop: 110,
+        width: "50%",
         height: "40px",
         
         fontSize: 17,
@@ -102,6 +103,7 @@ function PremiumBookingComponent(props) {
                         Enter your payment information
                     </h2>
                 </div>
+                <PaymentForm/>
                 <div className={classes.bookPremiumButtons}>
                     <Button
                         className={classes.bookPremiumButton}

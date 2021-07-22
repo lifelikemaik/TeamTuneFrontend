@@ -114,13 +114,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'flex',
-        width: "50%",
+        width: "30%",
         height: "40px",
         fontSize: 17,
         color: "white",
         backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "#1db954",
+            backgroundColor: "grey",
             opacity: "90%",
         },
     },
@@ -183,7 +183,7 @@ function SubscriptionCardFree(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader}>
+            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
                 TeamTune Free
             </h4>
             <FreeFunctionalitiesList />
@@ -205,7 +205,7 @@ function SubscriptionCardPremium(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader}>
+            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
                 TeamTune Premium
             </h4>
             <PremiumFunctionalitiesList />
