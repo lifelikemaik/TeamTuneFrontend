@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import {
     Paper,
     Button,
@@ -247,5 +248,15 @@ function SignUpComponent(props) {
         </div>
     );
 }
+
+// attributes of props and their type
+SignUpComponent.propTypes = {
+    onRegister: PropTypes.func,
+    onChangeUsername: PropTypes.func,
+    onChangePassword: PropTypes.func,
+    onChangePassword2: PropTypes.func,
+    onOpenSpotify: PropTypes.func,
+    onBlurPassword: PropTypes.func,
+};
 
 export default SignUpComponent;

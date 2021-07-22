@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Button, TextField, Typography } from "@material-ui/core";
 
@@ -123,5 +124,12 @@ function LoginComponent(props) {
         </div>
     );
 }
+
+// attributes of props and their type
+LoginComponent.propTypes = {
+    onLogin: PropTypes.func,
+    onChangeUsername: PropTypes.func,
+    onChangePassword: PropTypes.func,
+};
 
 export default LoginComponent;

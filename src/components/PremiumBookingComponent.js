@@ -88,6 +88,8 @@ function PremiumBookingComponent(props) {
 
     */
 
+    var previousURL = props.history.location.pathname;
+    {console.log(previousURL)}
 
     return (
         <div className={classes.bookPremiumPaperRoot}>
@@ -103,6 +105,7 @@ function PremiumBookingComponent(props) {
                 <div className={classes.bookPremiumButtons}>
                     <Button
                         className={classes.bookPremiumButton}
+
                         onClick={() => props.history.push('/register')}>
                         Book Premium {"&"} Register
                     </Button>
