@@ -79,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 100,
         fontFamily: 'Libre Franklin, sans-serif',
         width: "60%",
-        margin: 20,
+        marginTop: 18,
+        marginRight: 20,
     },
     image: {
         boxShadow: theme.shadows[2],
@@ -258,6 +259,13 @@ function PlaylistDetailsComponent(props) {
         setAllSongs(allSongsTemp);
         setTotalDuration(totalDuration + song.duration_ms);
     };
+
+    const shareLinkOnClick = () => {
+        navigator.clipboard.writeText(
+            'http://localhost:3000/invite/' +
+            props.playlist._id
+        );
+    }
 
     const getStringFromMilliseconds = (milliseconds, includeHours) => {
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
@@ -524,6 +532,13 @@ function PlaylistDetailsComponent(props) {
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button variant="contained" color="primary" className={classes.sideButton}>
                             Fill up to target
+                        </Button>
+                    </div>
+                )}
+                {props.isBrowse ? (<div/>) : (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Button onClick={shareLinkOnClick} variant="contained" color="primary" className={classes.sideButton}>
+                            copy invite link
                         </Button>
                     </div>
                 )}
