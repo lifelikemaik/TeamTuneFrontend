@@ -1,6 +1,6 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Grid, TextField} from "@material-ui/core";
+import {Button, Checkbox, Grid, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import FilterSettingRow from "./FilterSettingRow"
@@ -99,6 +99,7 @@ function CreatePlaylistComponent(props) {
     const [playlistTitle, setPlaylistTitle] = React.useState("");
     const [durationHours, setDurationHours] = React.useState("");
     const [durationMinutes, setDurationMinutes] = React.useState("");
+    const [explicit, setExplicit] = React.useState(true);
     const [mode, setMode] = React.useState("medium");
     const [acousticness, setAcousticness] = React.useState(null);
     const [danceability, setDanceability] = React.useState(null);
@@ -162,6 +163,13 @@ function CreatePlaylistComponent(props) {
         }
     }
 
+
+    /**
+     * Returns the milliseconds from hours and minutes, both can be null
+     * @param durationHours
+     * @param durationMinutes
+     * @returns {number}
+     */
     const getDurationMs = (durationHours, durationMinutes) => {
         return (
             Math.abs(durationHours) * 1000 * 60 * 60 +
@@ -185,6 +193,7 @@ function CreatePlaylistComponent(props) {
                 duration_target: getDurationMs(durationHours, durationMinutes),
                 songs: [],
                 number_songs: 0,
+                allow_explicit: explicit,
                 mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
                 min_acousticness: convertRadioValueToNumberMin(acousticness),
                 max_acousticness: convertRadioValueToNumberMax(acousticness),
@@ -221,7 +230,7 @@ function CreatePlaylistComponent(props) {
                 </Button>
                 <Button variant="contained" color="primary"
                         className={classes.cancelButton}
-                        disabled={(!durationHours || !durationMinutes) || !playlistTitle}
+                        disabled={(!durationHours && !durationMinutes) || !playlistTitle}
                         onClick={onSave}>
                     Create Playlist
                 </Button>
@@ -244,6 +253,10 @@ function CreatePlaylistComponent(props) {
     const onChangeDurationMinutes = (value) => {
         setDurationMinutes(value.target.value);
     };
+
+    const onChangeExplicit = (event) => {
+        setExplicit(event.target.checked);
+    }
 
     // ----------------------------------------------------------------------------------------------------
 
@@ -302,6 +315,19 @@ function CreatePlaylistComponent(props) {
                                        min="0"
                                        variant="outlined"/>
                         </div>
+                    </div>
+                </div>
+                <div className={classes.marginInputs}>
+                    <div>
+                        <h2 style={{paddingLeft: '9px'}}>Maturity</h2>
+                    </div>
+                    <div>
+                        <Checkbox
+                            checked={explicit}
+                            onChange={onChangeExplicit}
+
+                        />
+                        <label>Allow explicit songs</label>
                     </div>
                 </div>
             </div>
