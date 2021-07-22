@@ -53,6 +53,13 @@ function PlaylistDetailsView(props) {
         }
     }
 
+    function checkBrowse(){
+        if(match.params.id.length == 64){
+            return true;
+        }
+        return false;
+    }
+
     return !selectedPlaylist ||
         (!selectedPlaylist?.playlist &&
             !selectedPlaylist?.error &&
@@ -70,6 +77,7 @@ function PlaylistDetailsView(props) {
             removeSong={removeSong}
             getPlaylistLength={props.getPlaylistLength}
             user={user.user}
+            isBrowse={checkBrowse()}
         />
     ) : null;
 }

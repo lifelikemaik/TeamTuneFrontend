@@ -520,11 +520,13 @@ function PlaylistDetailsComponent(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {spotifyLogoText}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button variant="contained" color="primary" className={classes.sideButton}>
-                        Fill up to target
-                    </Button>
-                </div>
+                {props.isBrowse ? (<div/>) : (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Button variant="contained" color="primary" className={classes.sideButton}>
+                            Fill up to target
+                        </Button>
+                    </div>
+                )}
             </div>
         </div>
     )
@@ -575,19 +577,20 @@ function PlaylistDetailsComponent(props) {
                         <hr />
                     </div>
                 )}
-                <div className={classes.searchRow}>
-                    <div className={classes.textInput}>
-                        <Autocomplete
-                            className={classes.textField}
-                            options={foundSongs}
-                            getOptionLabel={(option) => option.name}
-                            open={searchOpen}
-                            onOpen={onOpen}
-                            onClose={onClose}
-                            getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
-                            renderOption={(option) => (
-                                <React.Fragment>
-                                    <div className={classes.searchRow}>
+                {props.isBrowse ? (<div/>) : (
+                    <div className={classes.searchRow}>
+                        <div className={classes.textInput}>
+                            <Autocomplete
+                                className={classes.textField}
+                                options={foundSongs}
+                                getOptionLabel={(option) => option.name}
+                                open={searchOpen}
+                                onOpen={onOpen}
+                                onClose={onClose}
+                                getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
+                                renderOption={(option) => (
+                                    <React.Fragment>
+                                        <div className={classes.searchRow}>
                                         <span>
                                             {option.name} -{' '}
                                             {getAllArtistsString(
@@ -599,44 +602,45 @@ function PlaylistDetailsComponent(props) {
                                                 false
                                             )}
                                         </span>
-                                        <Button
-                                            className={
-                                                classes.addToPlaylistButton
-                                            }
-                                            onClick={() =>
-                                                onAddSongToPlaylist(option)
-                                            }
-                                        >
-                                            Add to Playlist
-                                        </Button>
-                                    </div>
-                                </React.Fragment>
-                            )}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    ref={autoCompleteRef}
-                                    onChange={(event, value) =>
-                                        onChangeSearch(event)
-                                    }
-                                    label="Search for songs"
-                                    variant="outlined"
-                                    fullWidth
-                                    onKeyDown={handleKeyDown}
-                                />
-                            )}
-                        />
+                                            <Button
+                                                className={
+                                                    classes.addToPlaylistButton
+                                                }
+                                                onClick={() =>
+                                                    onAddSongToPlaylist(option)
+                                                }
+                                            >
+                                                Add to Playlist
+                                            </Button>
+                                        </div>
+                                    </React.Fragment>
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        ref={autoCompleteRef}
+                                        onChange={(event, value) =>
+                                            onChangeSearch(event)
+                                        }
+                                        label="Search for songs"
+                                        variant="outlined"
+                                        fullWidth
+                                        onKeyDown={handleKeyDown}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => onSearchSong(searchString)}
+                            >
+                                Search
+                            </Button>
+                        </div>
                     </div>
-                    <div>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() => onSearchSong(searchString)}
-                        >
-                            Search
-                        </Button>
-                    </div>
-                </div>
+                )}
                 <div>
                     <Paper>
                         <TableContainer>
@@ -686,9 +690,11 @@ function PlaylistDetailsComponent(props) {
                                         >
                                             Duration
                                         </TableCell>
-                                        <TableCell align="right">
-                                            Delete
-                                        </TableCell>
+                                        {props.isBrowse ? (<div/>) : (
+                                            <TableCell align="right">
+                                                Delete
+                                            </TableCell>
+                                        )}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -719,17 +725,19 @@ function PlaylistDetailsComponent(props) {
                                                     false
                                                 )}
                                             </TableCell>
-                                            <TableCell align="right">
-                                                <IconButton
-                                                    disabled={
-                                                        !props.playlist
-                                                            .is_own_playlist
-                                                    }
-                                                    onClick={() => removeSong(song)}
-                                                >
-                                                    <Delete />
-                                                </IconButton>
-                                            </TableCell>
+                                            {props.isBrowse ? (<div/>) : (
+                                                <TableCell align="right">
+                                                    <IconButton
+                                                        disabled={
+                                                            !props.playlist
+                                                                .is_own_playlist
+                                                        }
+                                                        onClick={() => removeSong(song)}
+                                                    >
+                                                        <Delete />
+                                                    </IconButton>
+                                                </TableCell>
+                                            )}
                                         </TableRow>
                                     ))}
                                 </TableBody>
