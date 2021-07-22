@@ -174,7 +174,6 @@ function PlaylistDetailsComponent(props) {
     const autoCompleteRef = React.createRef();
 
     useEffect(() => {
-        console.log('foundSongs: ', foundSongsState);
         if (!foundSongsState) {
             setFoundSongs([]);
         } else {
@@ -299,6 +298,9 @@ function PlaylistDetailsComponent(props) {
         if (playlist.music_info.min_valence) {
             songValid = songValid && checkSongForFeature(song, 'valence');
         }
+        if (playlist.music_info.allow_explicit === false) {
+            songValid = songValid && !song.explicit;
+        }
         song.valid = songValid;
         return song;
     };
@@ -377,7 +379,7 @@ function PlaylistDetailsComponent(props) {
     };
 
     const getProperty = (property) => {
-        if (!(property[1] === 'Not set')) {
+        if (!(property[1] === 'Not set') && property[1] !== undefined) {
             return (
                 <span className={classes.descriptionSpan}>
                     {property[0]}: {property[1] + '     '}
@@ -387,10 +389,10 @@ function PlaylistDetailsComponent(props) {
     };
 
     const getPropertyListItem = (property) => {
-        if (!(property[1] === 'Not set')) {
+        if (!(property[1] === 'Not set') && property[1] !== undefined) {
             return (
                 <ListItem>
-                    {property[0]}: {property[1]}
+                    {property[0]}: {property[1] + ''}
                 </ListItem>
             );
         }
@@ -412,6 +414,10 @@ function PlaylistDetailsComponent(props) {
     };
 
     const properties = [
+        [
+            'Allow Explicit Songs',
+            playlist.music_info.allow_explicit
+        ],
         [
             'Acousticness',
             getStringValue(
