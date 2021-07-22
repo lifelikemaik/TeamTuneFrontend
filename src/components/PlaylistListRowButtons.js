@@ -82,7 +82,7 @@ function PlaylistListRowButtons(props) {
 
     const buttons = [
         {
-            label: "Copy Share Link",
+            label: "Copy Invite Link",
             icon: ShareOutlinedIcon,
             browse: false,
             my_playlists: true,
