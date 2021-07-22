@@ -12,7 +12,7 @@ import {
     TableRow,
     Typography,
     TableSortLabel,
-    TablePagination,
+    TablePagination, Checkbox,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import PlaylistListRow from "./PlaylistListRow";
@@ -48,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         boxShadow: theme.shadows[2],
     },
+    filterBarRow: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 10,
+    },
 }));
 
 /**
@@ -79,7 +85,7 @@ function SortableTableHeadCell(props) {
 const sortableHeadCells = [
     {
         id: "title",
-        label: "Titel",
+        label: "Playlist Name",
         width: "30%",
     },
     {
@@ -118,13 +124,23 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+function filterPlaylists(array, onlyTeamTune) {
+    if(onlyTeamTune){
+        return array.filter(playlist => playlist.is_teamtune_playlist);
+    }
+    return array;
+}
+
 /**
  * Sort array with respect to the initial order of the objects
- * @param {to sort array} array
+ * @param {to sort array} inputArray
  * @param {comparator for sorting} comparator
+ * @param {property to filter} onlyTeamTune
  * @returns sorted array
  */
-function stableSort(array, comparator) {
+function stableSort(inputArray, comparator, onlyTeamTune) {
+    const array = filterPlaylists(inputArray, onlyTeamTune);
+    filterPlaylists(array, true);
     // include index into the to sortable array objects
     const stabilizedThis = array.map((el, index) => [el, index]);
     // sort the array
@@ -148,9 +164,14 @@ function PlaylistListComponent(props) {
 
     const [orderBy, setOrderBy] = React.useState();
     const [order, setOrder] = React.useState();
+    const [onlyTeamTune, setTeamTune] = React.useState(false);
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const onChangeTeamTune = (event) => {
+        setTeamTune(event.target.checked);
+    }
 
     const onRequestSort = (cellId, event) => {
         // if the current orderBy is also the clicked property then the direction of the sorting should be changed
@@ -171,6 +192,25 @@ function PlaylistListComponent(props) {
         setPage(0);
     };
 
+    const filterBar = (
+        <div>
+            {props.isBrowse ? (<div/>) : (
+                <div className={classes.filterBarRow}>
+                    <div>
+                        <Checkbox
+                            checked={onlyTeamTune}
+                            onChange={onChangeTeamTune}
+                            style={{
+                                transform: "scale(1.2)",
+                            }}
+                        />
+                        <label>Only TeamTune Playlists</label>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+
     return (
         <div className={classes.playlistListRoot}>
             <div>
@@ -188,6 +228,8 @@ function PlaylistListComponent(props) {
                 )}
             </div>
             <Paper className={classes.playlistListPaper}>
+                {filterBar}
+                <Divider/>
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -211,7 +253,8 @@ function PlaylistListComponent(props) {
                         <TableBody>
                             {stableSort(
                                 props.playlists,
-                                getComparator(order, orderBy)
+                                getComparator(order, orderBy),
+                                onlyTeamTune
                             )
                                 .slice(
                                     page * rowsPerPage,
@@ -248,7 +291,7 @@ function PlaylistListComponent(props) {
                     count={props.playlists.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
-                    onChangePage={onChangePage}
+                    onPageChange={onChangePage}
                     onChangeRowsPerPage={onChangeRowsPerPage}
                 />
             </Paper>
