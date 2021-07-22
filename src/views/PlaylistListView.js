@@ -69,7 +69,6 @@ function PlaylistListView(props) {
             onMakePlaylistPublic={onMakePlaylistPublic}
             onCopyPlaylist={onCopyPlaylist}
             isLoggedIn={!!user.user}
-            isAdmin={!!user.user ? user.user.role === "admin" : false}
             isBrowse={false}
         />
     );

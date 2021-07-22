@@ -76,7 +76,7 @@ function PlaylistListRowButtons(props) {
         handleClick('Playlist made public!');
     }
     const copyOnClick = (e) => {
-        props.onCopyPlaylist(e, props.playlist._id);
+        props.onCopyPlaylist(e, props.playlist._id || props.playlist.public_id); // Use public_id on browse where _id doesn't exist, will be converted in the backend
         handleClick('Playlist copied!');
     }
 

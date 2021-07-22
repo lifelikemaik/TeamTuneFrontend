@@ -1,5 +1,4 @@
 import PlaylistService from '../../services/PlaylistService';
-import UserService from '../../services/UserService';
 
 export function getPlaylists() {
     // when the backend call was successfull and the playlists are retrieved
@@ -125,7 +124,6 @@ export function addSongToPlaylist(playlistId, songId) {
                 playlistId,
                 songId
             );
-            console.log('result: ', result);
             dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
@@ -147,8 +145,28 @@ export function addSongToPlaylistInvite(playlistId, songId) {
                 playlistId,
                 songId
             );
-            console.log('result: ', result);
             dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function removeSongFromPlaylist(playlistId, songId) {
+    function onSuccess(removedSongId) {
+        return { type: 'REMOVE_SONG_SUCCESS', removedSongId: removedSongId };
+    }
+    function onFailure(error) {
+        console.log('failed to remove song: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.removeSongFromPlaylist(
+                playlistId,
+                songId
+            );
+            dispatch(onSuccess(result.removedSongId));
         } catch (e) {
             onFailure(e);
         }

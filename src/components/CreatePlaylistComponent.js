@@ -1,6 +1,6 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Grid, TextField} from "@material-ui/core";
+import {Button, Checkbox, Grid, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import FilterSettingRow from "./FilterSettingRow"
@@ -45,6 +45,15 @@ const useStyles = makeStyles((theme) => ({
     inputs: {
         width: "300px",
     },
+    durationInput: {
+        width: "150px",
+    },
+    timeDivider: {
+        display: 'flex',
+        fontSize: '2em',
+        margin: '7px 5px 0 5px',
+        fontWeight: 'bold'
+    },
     maxWidth: {
         width: "100%",
         maxWidth: "1500px",
@@ -88,7 +97,9 @@ function CreatePlaylistComponent(props) {
     const classes = useStyles();
 
     const [playlistTitle, setPlaylistTitle] = React.useState("");
-    const [duration, setDuration] = React.useState("");
+    const [durationHours, setDurationHours] = React.useState("");
+    const [durationMinutes, setDurationMinutes] = React.useState("");
+    const [explicit, setExplicit] = React.useState(true);
     const [mode, setMode] = React.useState("medium");
     const [acousticness, setAcousticness] = React.useState(null);
     const [danceability, setDanceability] = React.useState(null);
@@ -151,7 +162,20 @@ function CreatePlaylistComponent(props) {
                 return null;
         }
     }
-    
+
+
+    /**
+     * Returns the milliseconds from hours and minutes, both can be null
+     * @param durationHours
+     * @param durationMinutes
+     * @returns {number}
+     */
+    const getDurationMs = (durationHours, durationMinutes) => {
+        return (
+            Math.abs(durationHours) * 1000 * 60 * 60 +
+            Math.abs(durationMinutes) * 1000 * 60
+        );
+    };
 
     // creating a object with all relevant data to update or create a changed playlist
     const packPlaylist = () => {
@@ -166,9 +190,10 @@ function CreatePlaylistComponent(props) {
             track_count: 0,
             music_info: {
                 durations_ms: 0,
-                duration_target: duration,
+                duration_target: getDurationMs(durationHours, durationMinutes),
                 songs: [],
                 number_songs: 0,
+                allow_explicit: explicit,
                 mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
                 min_acousticness: convertRadioValueToNumberMin(acousticness),
                 max_acousticness: convertRadioValueToNumberMax(acousticness),
@@ -205,7 +230,7 @@ function CreatePlaylistComponent(props) {
                 </Button>
                 <Button variant="contained" color="primary"
                         className={classes.cancelButton}
-                        disabled={!duration || !playlistTitle}
+                        disabled={(!durationHours && !durationMinutes) || !playlistTitle}
                         onClick={onSave}>
                     Create Playlist
                 </Button>
@@ -221,9 +246,17 @@ function CreatePlaylistComponent(props) {
         setPlaylistTitle(value.target.value);
     };
 
-    const onChangeDuration = (value) => {
-        setDuration(value.target.value);
+    const onChangeDurationHours = (value) => {
+        setDurationHours(value.target.value);
     };
+
+    const onChangeDurationMinutes = (value) => {
+        setDurationMinutes(value.target.value);
+    };
+
+    const onChangeExplicit = (event) => {
+        setExplicit(event.target.checked);
+    }
 
     // ----------------------------------------------------------------------------------------------------
 
@@ -244,6 +277,7 @@ function CreatePlaylistComponent(props) {
             <div>
                 <h1>Create a playlist</h1>
             </div>
+            <Button onClick={() => getDurationMs(durationHours, durationMinutes)}>Test</Button>
             <hr className={classes.rounded}/>
             <div className={classes.flexRow}>
                 <div>
@@ -261,13 +295,39 @@ function CreatePlaylistComponent(props) {
                     <div>
                         <h2>Duration</h2>
                     </div>
+                    <div className={classes.flexRow}>
+                        <div>
+                            <TextField label="Hours"
+                                       className={classes.durationInput}
+                                       onChange={onChangeDurationHours}
+                                       type="number"
+                                       min="0"
+                                       variant="outlined"/>
+                        </div>
+                        <div>
+                            <span className={classes.timeDivider}> : </span>
+                        </div>
+                        <div>
+                            <TextField label="Minutes"
+                                       className={classes.durationInput}
+                                       onChange={onChangeDurationMinutes}
+                                       type="number"
+                                       min="0"
+                                       variant="outlined"/>
+                        </div>
+                    </div>
+                </div>
+                <div className={classes.marginInputs}>
                     <div>
-                        <TextField label="Duration"
-                                   className={classes.inputs}
-                                   onChange={onChangeDuration}
-                                   type="number"
-                                   min="0"
-                                   variant="outlined"/>
+                        <h2 style={{paddingLeft: '9px'}}>Maturity</h2>
+                    </div>
+                    <div>
+                        <Checkbox
+                            checked={explicit}
+                            onChange={onChangeExplicit}
+
+                        />
+                        <label>Allow explicit songs</label>
                     </div>
                 </div>
             </div>

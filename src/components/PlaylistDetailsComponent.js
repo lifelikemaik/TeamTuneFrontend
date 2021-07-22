@@ -169,11 +169,11 @@ function PlaylistDetailsComponent(props) {
     const [allSongs, setAllSongs] = React.useState([]);
 
     const foundSongsState = useSelector((state) => state.entities.songs);
+    const removedSongIdState = useSelector((state) => state.entities.removedSongId);
 
     const autoCompleteRef = React.createRef();
 
     useEffect(() => {
-        console.log('foundSongs: ', foundSongsState);
         if (!foundSongsState) {
             setFoundSongs([]);
         } else {
@@ -183,6 +183,13 @@ function PlaylistDetailsComponent(props) {
             if (searchString !== '') setSearchOpen(true);
         }
     }, [foundSongsState]);
+
+    useEffect(() => {
+        if (removedSongIdState) {
+            const newSongs = allSongs.filter(song => song.id !== removedSongIdState);
+            setAllSongs(newSongs);
+        }
+    }, [removedSongIdState]);
 
     useEffect(() => {
         if (playlist.music_info.songs.length > 0) {
@@ -233,7 +240,6 @@ function PlaylistDetailsComponent(props) {
     };
 
     const packSong = (song) => {
-        console.log('prop: ', props);
         return {
             interpret: song.artists.map((artist) => artist.name).join(', '),
             album: '',
@@ -241,6 +247,7 @@ function PlaylistDetailsComponent(props) {
             added_by: props.user?.username ? props.user.username : '',
             duration_ms: song.duration_ms,
             image_url: song.image_url,
+            id: song.spotify_id //Check if correct, might just be id in some edge cases
         };
     };
 
@@ -291,6 +298,9 @@ function PlaylistDetailsComponent(props) {
         if (playlist.music_info.min_valence) {
             songValid = songValid && checkSongForFeature(song, 'valence');
         }
+        if (playlist.music_info.allow_explicit === false) {
+            songValid = songValid && !song.explicit;
+        }
         song.valid = songValid;
         return song;
     };
@@ -316,6 +326,12 @@ function PlaylistDetailsComponent(props) {
             );
         }
     };
+    
+    const removeSong = (song) => {
+        if (song.id) {
+            props.removeSong(song.id);
+        }
+    }
 
     const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
@@ -363,7 +379,7 @@ function PlaylistDetailsComponent(props) {
     };
 
     const getProperty = (property) => {
-        if (!(property[1] === 'Not set')) {
+        if (!(property[1] === 'Not set') && property[1] !== undefined) {
             return (
                 <span className={classes.descriptionSpan}>
                     {property[0]}: {property[1] + '     '}
@@ -373,10 +389,10 @@ function PlaylistDetailsComponent(props) {
     };
 
     const getPropertyListItem = (property) => {
-        if (!(property[1] === 'Not set')) {
+        if (!(property[1] === 'Not set') && property[1] !== undefined) {
             return (
                 <ListItem>
-                    {property[0]}: {property[1]}
+                    {property[0]}: {property[1] + ''}
                 </ListItem>
             );
         }
@@ -398,6 +414,10 @@ function PlaylistDetailsComponent(props) {
     };
 
     const properties = [
+        [
+            'Allow Explicit Songs',
+            playlist.music_info.allow_explicit
+        ],
         [
             'Acousticness',
             getStringValue(
@@ -705,6 +725,7 @@ function PlaylistDetailsComponent(props) {
                                                         !props.playlist
                                                             .is_own_playlist
                                                     }
+                                                    onClick={() => removeSong(song)}
                                                 >
                                                     <Delete />
                                                 </IconButton>
