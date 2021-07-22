@@ -170,7 +170,7 @@ function PlaylistListComponent(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const onChangeTeamTune = (event) => {
-        setTeamTune(event.target.checked);
+        setTeamTune(!onlyTeamTune);
     }
 
     const onRequestSort = (cellId, event) => {
@@ -204,7 +204,11 @@ function PlaylistListComponent(props) {
                                 transform: "scale(1.2)",
                             }}
                         />
-                        <label>Only TeamTune Playlists</label>
+                        <label
+                            onClick={onChangeTeamTune}
+                            style={{ cursor: "pointer"}}>
+                            Only TeamTune Playlists
+                        </label>
                     </div>
                 </div>
             )}
