@@ -200,18 +200,6 @@ function SignUpComponent(props) {
                         type="password"
                     />
                 </div>
-                <div className={classes.signUpRow}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={isAdmin}
-                                onChange={(e) => setIsAdmin(e.target.checked)}
-                                color="primary"
-                            />
-                        }
-                        label="Is Admin"
-                    />
-                </div>
                 {registerError !== "" ? (
                     <div className={classes.signUpRow}>
                         <Typography color="error">{registerError}</Typography>
