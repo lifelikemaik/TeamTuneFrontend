@@ -277,7 +277,6 @@ function CreatePlaylistComponent(props) {
             <div>
                 <h1>Create a playlist</h1>
             </div>
-            <Button onClick={() => getDurationMs(durationHours, durationMinutes)}>Test</Button>
             <hr className={classes.rounded}/>
             <div className={classes.flexRow}>
                 <div>
