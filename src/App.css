@@ -1,2 +1,110 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap');
+
+
+
+@keyframes move_wave {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(1)
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.8)
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(1)
+    }
+}
+.waveWrapper {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    z-index: 0;
+    background-image: linear-gradient(to bottom, #f2f2f0 80%, #c2c2c2 20%);
+}
+.waveWrapperInner {
+    position: absolute;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    bottom: -1px;
+}
+.bgTop {
+    z-index: 15;
+    opacity: 0.90;
+}
+.bgMiddle {
+    z-index: 10;
+    opacity: 0.40;
+}
+.bgBottom {
+    z-index: 5;
+    opacity: 0.90;
+}
+.wave {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    opacity: 1;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+    background-image: url('./images/BackgroundWave1.png');
+}
+.wave2 {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+    background-image: url('./images/BackgroundWave2.png');
+}
+.wave3 {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+    background-image: url('./images/BackgroundWave3.png');
+}
+.waveTop {
+    background-size: 50% 100px;
+}
+.waveAnimation .waveTop {
+    animation: move_wave 30s linear infinite;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+.waveMiddle {
+    background-size: 50% 150px;
+}
+.waveAnimation .waveMiddle {
+    animation: move_wave 40s linear infinite;
+}
+.waveMiddle2 {
+    background-size: 50% 250px;
+}
+.waveAnimation .waveMiddle2 {
+    animation: move_wave 30s linear infinite;
+    animation-delay: 1s;
+}
+.waveMiddle3 {
+    background-size: 50% 310px;
+}
+.waveAnimation .waveMiddle3 {
+    animation: move_wave 60s linear infinite;
+}
+.waveBottom {
+    background-size: 50% 400px;
+}
+.waveAnimation .waveBottom {
+    animation: move_wave 50s linear infinite;
+}
