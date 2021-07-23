@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect, useSelector} from "react-redux";
 
 import {addPlaylist} from "../redux/actions";
-import CreatePlaylistComponent from "../components/CreatePlaylistComponent";
+import CreatePlaylistComponent from "../components/createPlaylist/CreatePlaylistComponent";
 
 /**
  * Manages the process of getting movie details data

@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
 import {copyPlaylist, getUserPlaylists, updatePlaylist} from "../redux/actions";
-import PlaylistListComponent from "../components/PlaylistListComponent";
-import Loading from "../components/Loading";
+import PlaylistListComponent from "../components/playlistLists/PlaylistListComponent";
+import Loading from "../components/layout/Loading";
 
 /**
  * Manages the process of getting movie list data

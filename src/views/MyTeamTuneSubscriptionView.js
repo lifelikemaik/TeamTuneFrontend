@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import Loading from "../components/Loading";
-import MyTeamTuneSubscriptionComponent from "../components/MyTeamTuneSubscriptionComponent";
+import Loading from "../components/layout/Loading";
+import MyTeamTuneSubscriptionComponent from "../components/myTeamTune/MyTeamTuneSubscriptionComponent";
 
 /**
  * Manages process of changing user settings

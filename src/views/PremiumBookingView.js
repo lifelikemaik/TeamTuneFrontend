@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import PremiumBookingComponent from "../components/PremiumBookingComponent";
+import PremiumBookingComponent from "../components/premium/PremiumBookingComponent";
 
 
 /**

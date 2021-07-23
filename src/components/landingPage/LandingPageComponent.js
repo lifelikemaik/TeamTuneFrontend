@@ -16,9 +16,9 @@ import {
     ListItemText,
     Paper
 } from "@material-ui/core";
-import LandingPageImage from "./LandingPageImage";
-import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
-import LandingPageTopImage from "../images/LandingPageTopImage.png";
+import LandingPageImage from "../../images/LandingPageImage";
+import TeamTuneOverviewImage from "../../images/TeamTuneOverviewImage";
+import LandingPageTopImage from "../../images/LandingPageTopImage.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {

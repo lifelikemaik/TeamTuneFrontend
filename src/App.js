@@ -9,14 +9,14 @@ import {
     makeStyles,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ScrollContainer from "./components/ScrollContainer";
+import ScrollContainer from "./components/layout/ScrollContainer";
 
 import reducers from "./redux/reducers";
 import routes from "./routes";
-import Header from "./components/Header";
+import Header from "./components/layout/Header";
 import AppTheme from "./theming/themetypes";
 import AppThemeOptions from "./theming/themes";
-import Background from "./components/Background";
+import Background from "./components/layout/Background";
 
 const useStyles = makeStyles((theme) => ({
     appRoot: {

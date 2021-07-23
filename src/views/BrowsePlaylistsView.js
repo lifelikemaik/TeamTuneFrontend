@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import Loading from "../components/Loading";
-import BrowseComponent from "../components/BrowseComponent";
+import Loading from "../components/layout/Loading";
 import {getPublicPlaylists, followPlaylist, copyPlaylist} from "../redux/actions";
-import PlaylistListComponent from "../components/PlaylistListComponent";
+import PlaylistListComponent from "../components/playlistLists/PlaylistListComponent";
 
 /**
  * Manages process of:
  * browsing playlists
  * Creating copy of public playlists
  * following public playlists
- * 
+ *
  * @param {props} props
  */
 

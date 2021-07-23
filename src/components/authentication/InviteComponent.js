@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Paper, TextField, Typography} from "@material-ui/core";
-import TeamTuneIcon from "./TeamTuneIcon";
+import TeamTuneIcon from "../../images/TeamTuneIcon";
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
