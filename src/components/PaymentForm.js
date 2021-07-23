@@ -91,18 +91,18 @@ function PaymentForm(props) {
                         <FormLabel component="legend">Choose your payment option:</FormLabel>
                         <FormGroup aria-label="position" row>
                             <FormControlLabel
-                                control={<Checkbox color="primary" isChecked={isCheckedPayPal} onChange={handleChangePaypal} />}
+                                control={<Checkbox color="secondary" isChecked={isCheckedPayPal} onChange={handleChangePaypal} />}
 
                                 label="PayPal"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
-                                control={<Checkbox color="primary" isChecked={isCheckedCreditCard} onChange={handleChangeCreditCard} />}
+                                control={<Checkbox color="secondary" isChecked={isCheckedCreditCard} onChange={handleChangeCreditCard} />}
                                 label="Credit Card"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
-                                control={<Checkbox color="primary" isChecked={isCheckedSEPA} onChange={handleChangeSEPA} />}
+                                control={<Checkbox color="secondary" isChecked={isCheckedSEPA} onChange={handleChangeSEPA} />}
                                 label="SEPA"
                                 labelPlacement="end"
                             />

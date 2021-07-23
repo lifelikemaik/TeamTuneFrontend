@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
+import LandingPageTopImage from "../images/LandingPageTopImage.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     additionalFeaturesList: {
-        width: '100%',        
+        width: '100%',
         fontFamily: "Libre Franklin, sans-serif",
         backgroundColor: "#cccccc",
     },
@@ -154,15 +155,15 @@ function FreeFunctionalitiesList(props) {
         <div className={classes.additionalFeaturesList}>
             <List component="nav">
                 <ListItem>
-                    <ListItemText primary= "Create new Spotify® playlists based on various music parameters" />
-                </ListItem>                                
+                    <ListItemText primary="Create new Spotify® playlists based on various music parameters." />
+                </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Mirroring of all your own playlists in your Spotify® account and those you are following" />
+                    <ListItemText primary="Mirroring of all your own playlists in your Spotify® account and those you are following." />
                 </ListItem>
-                <Divider />                   
+                <Divider />
                 <ListItem>
-                    <ListItemText primary="Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits" />
+                    <ListItemText primary="Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits." />
                 </ListItem>
             </List>
         </div>
@@ -176,15 +177,15 @@ function PremiumFunctionalitiesList(props) {
         <div className={classes.additionalFeaturesList}>
             <List component="nav">
                 <ListItem>
-                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link" />
+                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Additional Feature 2" />
+                    <ListItemText primary="Possibility to make playlists public." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Additional Feature 3" />
+                    <ListItemText primary="Control your Spotify® playback directly from TeamTune." />
                 </ListItem>
             </List>
         </div>
@@ -203,10 +204,10 @@ function SubscriptionCardFree(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
-                TeamTune Free
-            </h4>
-            <FreeFunctionalitiesList />
+                <h4 className={classes.cardHeader} style={{ textDecorationLine: 'underline' }}>
+                    TeamTune Free
+                </h4>
+                <FreeFunctionalitiesList />
             </CardContent>
             <CardActions>
                 <Button className={classes.cardButton}
@@ -225,10 +226,10 @@ function SubscriptionCardPremium(props) {
     return (
         <Card className={classes.cardRoot} variant="outlined">
             <CardContent >
-            <h4 className={classes.cardHeader} style={{textDecorationLine: 'underline'}}>
-                TeamTune Premium
-            </h4>
-            <PremiumFunctionalitiesList />
+                <h4 className={classes.cardHeader} style={{ textDecorationLine: 'underline' }}>
+                    TeamTune Premium
+                </h4>
+                <PremiumFunctionalitiesList />
             </CardContent>
             <CardActions>
                 <Button
