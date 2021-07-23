@@ -17,12 +17,16 @@ import PaymentForm from "./PaymentForm";
 const useStyles = makeStyles((theme) => ({
     bookPremiumPaperRoot: {
         margin: "auto",
+
     },
     bookPremiumPaper: {
         width: "900px",
         height: "700px",
         marginBottom: 50,
         padding: theme.spacing(2),
+        marginLeft: "auto",
+        marginRight: "auto",
+
     },
     bookPremiumRow: {
         fontFamily: "Libre Franklin, sans-serif",
@@ -42,26 +46,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         fontFamily: "Libre Franklin, sans-serif",
     },
-    bookPremiumButtons: {
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex"
-    },
-    bookPremiumButton: {
-        marginLeft: theme.spacing(1),
-        marginTop: 110,
-        width: "50%",
-        height: "40px",
-        
-        fontSize: 17,
-        color: "white",
-        backgroundColor: "black",
-        '&:hover': {
-            backgroundColor: "#1db954",
-            opacity: "90%",
-        },
-    },
+
 }));
 
 /**
@@ -70,28 +55,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function PremiumBookingComponent(props) {
     const classes = useStyles();
-
-    /*
-    const user = useSelector((state) => {
-        // return the currently logged in user from redux store
-        return state.user;
-    });
-
-
-    useEffect(() => {
-        if (props.user) {
-            console.log(user);
-        } else {
-            //console.log(user);
-            
-        }
-    }, [props.user]);
-
-    */
-
-    var previousURL = props.history.location.pathname;
-    {console.log(previousURL)}
-
+    
     return (
         <div className={classes.bookPremiumPaperRoot}>
             <h1 className={classes.headLines}>
@@ -99,24 +63,18 @@ function PremiumBookingComponent(props) {
             </h1>
             <Paper className={classes.bookPremiumPaper} component="form">
                 <div className={classes.bookPremiumRow}>
-                    <h2 className={classes.headLines} style={{textDecorationLine: 'underline'}}> 
+                    <h2 className={classes.headLines} style={{ textDecorationLine: 'underline' }}>
                         Enter your payment information
                     </h2>
                 </div>
-                <PaymentForm/>
-                <div className={classes.bookPremiumButtons}>
-                    <Button
-                        className={classes.bookPremiumButton}
+                <PaymentForm className={classes.paymentForm} props={props}/>
 
-                        onClick={() => props.history.push('/register')}>
-                        Book Premium {"&"} Register
-                    </Button>
-                </div>
             </Paper>
         </div>
 
     );
 
 }
+
 
 export default withRouter(PremiumBookingComponent);
