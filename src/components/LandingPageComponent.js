@@ -256,7 +256,7 @@ function LandingPageComponent(props) {
                         {/*console.log(props)*/}
                         LET´S GET STARTED
                     </Button>
-                    {console.log(props.history.location.pathname)}
+                    {/*console.log(props.history.location.pathname)*/}
                 </div>
             </section>
             <Divider variant="middle" />
