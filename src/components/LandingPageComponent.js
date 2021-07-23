@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: "center",
         marginLeft: 20,
-        backgroundColor: "#1db954",
+        backgroundColor: "#cccccc",
     },
     gridRoot: {
         flexGrow: 1,
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     additionalFeaturesList: {
         width: '100%',        
         fontFamily: "Libre Franklin, sans-serif",
-        backgroundColor: "#1db954",
+        backgroundColor: "#cccccc",
     },
     section1: {
         height: 700,
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "grey",
+            backgroundColor: "#1db954",
             opacity: "90%",
         },
     },

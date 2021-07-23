@@ -46,25 +46,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         fontFamily: "Libre Franklin, sans-serif",
     },
-    bookPremiumButtons: {
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-    },
-    bookPremiumButton: {
-        marginLeft: theme.spacing(1),
-        marginTop: 280,
-        width: "50%",
-        height: "40px",
-        fontSize: 17,
-        color: "white",
-        backgroundColor: "black",
-        '&:hover': {
-            backgroundColor: "#1db954",
-            opacity: "90%",
-        },
-    },
+
 }));
 
 /**
@@ -73,9 +55,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function PremiumBookingComponent(props) {
     const classes = useStyles();
-
-    console.log(props.isChecked);
-
+    
     return (
         <div className={classes.bookPremiumPaperRoot}>
             <h1 className={classes.headLines}>
@@ -88,14 +68,7 @@ function PremiumBookingComponent(props) {
                     </h2>
                 </div>
                 <PaymentForm className={classes.paymentForm}/>
-                <div className={classes.bookPremiumButtons}>
-                    <Button
-                        className={classes.bookPremiumButton}
 
-                        onClick={() => props.history.push('/register')}>
-                        Book Premium {"&"} Register
-                    </Button>
-                </div>
             </Paper>
         </div>
 
