@@ -1,11 +1,17 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Button, Checkbox, Grid, TextField} from "@material-ui/core";
+import {Button, Checkbox, Divider, Grid, Paper, TextField} from "@material-ui/core";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import FilterSettingRow from "./FilterSettingRow"
 
 const useStyles = makeStyles((theme) => ({
+    backgroundPaper: {
+        minWidth: '850px',
+        width: '70%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
     flexCol: {
         display: "flex",
         flexDirection: "column",
@@ -73,8 +79,10 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(1),
         right: theme.spacing(2),
     },
-    saveButtonDiv: {
-        float: "right"
+    footerButton: {
+        float: "right",
+        marginRight: 25,
+        marginBottom: 10,
     },
     cancelButton: {
         marginRight: "15px"
@@ -85,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
         position: "fixed",
         bottom: "0",
         left: "0",
-        width: "100%",
+        width: "85%",
     }
 }));
 
@@ -222,19 +230,18 @@ function CreatePlaylistComponent(props) {
 
     const Footer = () => (
         <div className={classes.footer}>
-            <div className={classes.saveButtonDiv}>
-                <Button className={classes.cancelButton}
-                        variant="contained"
-                        onClick={onCancel}>
-                    Cancel
-                </Button>
-                <Button variant="contained" color="primary"
-                        className={classes.cancelButton}
-                        disabled={(!durationHours && !durationMinutes) || !playlistTitle}
-                        onClick={onSave}>
-                    Create Playlist
-                </Button>
-            </div>
+            <Button
+                className={classes.footerButton}
+                variant="contained"
+                onClick={onCancel}>
+                Cancel
+            </Button>
+            <Button variant="contained" color="secondary"
+                    className={classes.footerButton}
+                    disabled={(!durationHours && !durationMinutes) || !playlistTitle}
+                    onClick={onSave}>
+                Create Playlist
+            </Button>
         </div>
     );
 
@@ -273,140 +280,141 @@ function CreatePlaylistComponent(props) {
     };
 
     return (
-        <div className={classes.margin20}>
-            <div>
-                <h1>Create a playlist</h1>
-            </div>
-            <hr className={classes.rounded}/>
-            <div className={classes.flexRow}>
+        <Paper className={classes.backgroundPaper}>
+            <div className={classes.margin20}>
                 <div>
+                    <h1>Create your new Playlist</h1>
+                </div>
+                <Divider/>
+                <div className={classes.flexRow}>
                     <div>
-                        <h2>Playlist name</h2>
+                        <div>
+                            <h2>Playlist name</h2>
+                        </div>
+                        <div>
+                            <TextField label="Name"
+                                       className={classes.inputs}
+                                       onChange={onChangeTitle}
+                                       variant="outlined"/>
+                        </div>
                     </div>
-                    <div>
-                        <TextField label="Name"
-                                   className={classes.inputs}
-                                   onChange={onChangeTitle}
-                                   variant="outlined"/>
+                    <div className={classes.marginInputs}>
+                        <div>
+                            <h2>Duration</h2>
+                        </div>
+                        <div className={classes.flexRow}>
+                            <div>
+                                <TextField label="Hours"
+                                           className={classes.durationInput}
+                                           onChange={onChangeDurationHours}
+                                           type="number"
+                                           min="0"
+                                           variant="outlined"/>
+                            </div>
+                            <div>
+                                <span className={classes.timeDivider}> : </span>
+                            </div>
+                            <div>
+                                <TextField label="Minutes"
+                                           className={classes.durationInput}
+                                           onChange={onChangeDurationMinutes}
+                                           type="number"
+                                           min="0"
+                                           variant="outlined"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.marginInputs}>
+                        <div>
+                            <h2 style={{paddingLeft: '9px'}}>Maturity</h2>
+                        </div>
+                        <div>
+                            <Checkbox
+                                checked={explicit}
+                                onChange={onChangeExplicit}
+
+                            />
+                            <label>Allow explicit songs</label>
+                        </div>
                     </div>
                 </div>
-                <div className={classes.marginInputs}>
-                    <div>
-                        <h2>Duration</h2>
+                <Divider className={classes.marginTop}/>
+                <div>
+                    <h1>Filters</h1>
+                    <div className={classes.flexRow}>
+                        <FilterSettingRow
+                            title={"Danceability"}
+                            value={danceability}
+                            description={settingDescriptions.get("danceability")}
+                            onChange={setDanceability}/>
+                        <div className={classes.marginInputs}>
+                            <FilterSettingRow
+                                title={"Energy"}
+                                value={energy}
+                                description={settingDescriptions.get("energy")}
+                                onChange={setEnergy}/>
+                        </div>
                     </div>
                     <div className={classes.flexRow}>
-                        <div>
-                            <TextField label="Hours"
-                                       className={classes.durationInput}
-                                       onChange={onChangeDurationHours}
-                                       type="number"
-                                       min="0"
-                                       variant="outlined"/>
+                        <FilterSettingRow
+                            title={"Acousticness"}
+                            value={acousticness}
+                            description={settingDescriptions.get("acousticness")}
+                            onChange={setAcousticness}/>
+                        <div className={classes.marginInputs}>
+                            <FilterSettingRow
+                                title={"Instrumentality"}
+                                value={instrumentalness}
+                                description={settingDescriptions.get("instrumentalness")}
+                                onChange={setInstrumentalness}/>
                         </div>
-                        <div>
-                            <span className={classes.timeDivider}> : </span>
+                    </div>
+                    <div className={classes.flexRow}>
+                        <FilterSettingRow
+                            title={"Liveness"}
+                            value={liveness}
+                            description={settingDescriptions.get("liveness")}
+                            onChange={setLiveness}/>
+                        <div className={classes.marginInputs}>
+                            <FilterSettingRow
+                                title={"Loudness"}
+                                value={loudness}
+                                description={settingDescriptions.get("loudness")}
+                                onChange={setLoudness}/>
                         </div>
-                        <div>
-                            <TextField label="Minutes"
-                                       className={classes.durationInput}
-                                       onChange={onChangeDurationMinutes}
-                                       type="number"
-                                       min="0"
-                                       variant="outlined"/>
+                    </div>
+                    <div className={classes.flexRow}>
+                        <FilterSettingRow
+                            title={"Speechiness"}
+                            value={speechiness}
+                            description={settingDescriptions.get("speechiness")}
+                            onChange={setSpeechiness}/>
+                        <div className={classes.marginInputs}>
+                            <FilterSettingRow
+                                title={"Tempo"}
+                                value={tempo}
+                                description={settingDescriptions.get("tempo")}
+                                onChange={setTempo}/>
+                        </div>
+                    </div>
+                    <div className={classes.flexRow}>
+                        <FilterSettingRow
+                            title={"Key"}
+                            value={key}
+                            description={settingDescriptions.get("key")}
+                            onChange={setKey}/>
+                        <div className={classes.marginInputs}>
+                            <FilterSettingRow
+                                title={"Valence"}
+                                value={valence}
+                                description={settingDescriptions.get("valence")}
+                                onChange={setValence}/>
                         </div>
                     </div>
                 </div>
-                <div className={classes.marginInputs}>
-                    <div>
-                        <h2 style={{paddingLeft: '9px'}}>Maturity</h2>
-                    </div>
-                    <div>
-                        <Checkbox
-                            checked={explicit}
-                            onChange={onChangeExplicit}
-
-                        />
-                        <label>Allow explicit songs</label>
-                    </div>
-                </div>
+                <Footer/>
             </div>
-            <hr className={classes.rounded + " " + classes.marginTop}/>
-            <div>
-                <h1>Filters</h1>
-                <div>
-                    <FilterSettingRow
-                        title={"Danceability"}
-                        value={danceability}
-                        description={settingDescriptions.get("danceability")}
-                        onChange={setDanceability}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Energy"}
-                        value={energy}
-                        description={settingDescriptions.get("energy")}
-                        onChange={setEnergy}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Acousticness"}
-                        value={acousticness}
-                        description={settingDescriptions.get("acousticness")}
-                        onChange={setAcousticness}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Instrumentality"}
-                        value={instrumentalness}
-                        description={settingDescriptions.get("instrumentalness")}
-                        onChange={setInstrumentalness}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Liveness"}
-                        value={liveness}
-                        description={settingDescriptions.get("liveness")}
-                        onChange={setLiveness}/>
-                </div>
-
-                <div>
-                    <FilterSettingRow
-                        title={"Loudness"}
-                        value={loudness}
-                        description={settingDescriptions.get("loudness")}
-                        onChange={setLoudness}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Speechiness"}
-                        value={speechiness}
-                        description={settingDescriptions.get("speechiness")}
-                        onChange={setSpeechiness}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Tempo"}
-                        value={tempo}
-                        description={settingDescriptions.get("tempo")}
-                        onChange={setTempo}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Key"}
-                        value={key}
-                        description={settingDescriptions.get("key")}
-                        onChange={setKey}/>
-                </div>
-                <div>
-                    <FilterSettingRow
-                        title={"Valence"}
-                        value={valence}
-                        description={settingDescriptions.get("valence")}
-                        onChange={setValence}/>
-                </div>
-            </div>
-            <Footer/>
-        </div>
+        </Paper>
 
     );
 }
