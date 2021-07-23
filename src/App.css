@@ -34,10 +34,11 @@
 }
 .bgTop {
     z-index: 15;
+    opacity: 0.90;
 }
 .bgMiddle {
     z-index: 10;
-    opacity: 0.50;
+    opacity: 0.40;
 }
 .bgBottom {
     z-index: 5;
@@ -75,10 +76,12 @@
     background-image: url('./images/BackgroundWave3.png');
 }
 .waveTop {
-    background-size: 50% 120px;
+    background-size: 50% 100px;
 }
 .waveAnimation .waveTop {
     animation: move_wave 30s linear infinite;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
 }
 .waveMiddle {
     background-size: 50% 150px;
@@ -91,9 +94,10 @@
 }
 .waveAnimation .waveMiddle2 {
     animation: move_wave 30s linear infinite;
+    animation-delay: 1s;
 }
 .waveMiddle3 {
-    background-size: 50% 290px;
+    background-size: 50% 310px;
 }
 .waveAnimation .waveMiddle3 {
     animation: move_wave 60s linear infinite;
