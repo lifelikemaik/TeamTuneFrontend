@@ -6,8 +6,6 @@ import { Button, Typography, Card, CardActions, CardContent, Grid, List, Divider
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
 
-import { useSelector } from "react-redux";
-
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: "center",
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: "center",
         marginLeft: 20,
-        backgroundColor: "#1db954",
+        backgroundColor: "#cccccc",
     },
     gridRoot: {
         flexGrow: 1,
@@ -70,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     additionalFeaturesList: {
         width: '100%',        
         fontFamily: "Libre Franklin, sans-serif",
-        backgroundColor: "#1db954",
+        backgroundColor: "#cccccc",
     },
     section1: {
         height: 700,
@@ -115,12 +113,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
         display: 'flex',
         width: "30%",
-        height: "40px",
+        height: "50px",
         fontSize: 17,
         color: "white",
         backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "grey",
+            backgroundColor: "#1db954",
             opacity: "90%",
         },
     },
