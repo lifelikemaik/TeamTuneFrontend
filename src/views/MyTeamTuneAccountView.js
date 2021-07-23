@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { updateUsername } from "../redux/actions";
-import MyTeamTuneAccountComponent from "../components/MyTeamTuneAccountComponent";
+import MyTeamTuneAccountComponent from "../components/myTeamTune/MyTeamTuneAccountComponent";
 
 
 /**

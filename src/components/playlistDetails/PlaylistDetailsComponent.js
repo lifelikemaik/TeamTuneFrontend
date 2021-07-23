@@ -25,7 +25,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Delete } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import SpotifyLogoWithText from './SpotifyLogoWithText';
+import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {

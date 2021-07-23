@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import MyTeamTuneDeleteAccountComponent from "../components/MyTeamTuneDeleteAccountComponent";
+import MyTeamTuneDeleteAccountComponent from "../components/myTeamTune/MyTeamTuneDeleteAccountComponent";
 import { deleteAccount } from "../redux/actions";
 
 /**

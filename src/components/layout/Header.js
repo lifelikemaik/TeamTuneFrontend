@@ -6,8 +6,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { motion } from "framer-motion";
 
 import {useSelector} from "react-redux";
-import {logout} from "../redux/actions";
-import TeamTuneIconWhite from "./TeamTuneIconWhite";
+import {logout} from "../../redux/actions";
+import TeamTuneIconWhite from "../../images/TeamTuneIconWhite";
 
 const useStyles = makeStyles((theme) => ({
     main_options: {
