@@ -67,7 +67,7 @@ function PremiumBookingComponent(props) {
                         Enter your payment information
                     </h2>
                 </div>
-                <PaymentForm className={classes.paymentForm}/>
+                <PaymentForm className={classes.paymentForm} props={props}/>
 
             </Paper>
         </div>

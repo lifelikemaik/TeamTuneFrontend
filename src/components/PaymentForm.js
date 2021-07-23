@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
 function PaymentForm(props) {
 
     const classes = useStyles();
-
     const [isCheckedPayPal, setIsCheckedPayPal] = React.useState(false);
     const [isCheckedCreditCard, setIsCheckedCreditCard] = React.useState(false);
     const [isCheckedSEPA, setIsCheckedSEPA] = React.useState(false);
@@ -83,9 +82,6 @@ function PaymentForm(props) {
     const handleChangeCreditCard = () => {
         setIsCheckedCreditCard(!isCheckedCreditCard);
     };
-
-
-
 
     return (
         <div className={classes.paymentForm}>
@@ -211,27 +207,27 @@ function PaymentForm(props) {
                             InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
-                    <div className={classes.bookPremiumButtons}>
-                        <Button
-                            className={classes.bookPremiumButton}
-                            onClick={() => props.history.push('/register')}
-                            disabled={
-                                isCheckedPayPal === false
-                            }
-                            >
-
-                            Book Premium {"&"} Register
-                        </Button>
-                    </div>
                 </div>
             )}
+            <div className={classes.bookPremiumButtons}>
+                <Button
+                    className={classes.bookPremiumButton}
+                    variant="contained"
+                    
+                    onClick={() => props.props.history.push('/register')}
+                    disabled={!isCheckedPayPal && !isCheckedCreditCard && !isCheckedSEPA}>
+                    Book Premium {"&"} Register
+                </Button>
+            </div>
         </div>
     );
 }
 
 PaymentForm.propTypes = {
     Checkboxes: PropTypes.func,
-    isChecked: PropTypes.object,
+    isCheckedPayPal: PropTypes.object,
+    isCheckedCreditCard: PropTypes.object,
+    isCheckedSEPA: PropTypes.object,
 };
 
 export default PaymentForm;

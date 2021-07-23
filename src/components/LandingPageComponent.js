@@ -6,8 +6,6 @@ import { Button, Typography, Card, CardActions, CardContent, Grid, List, Divider
 import LandingPageImage from "./LandingPageImage";
 import TeamTuneOverviewImage from "./TeamTuneOverviewImage";
 
-import { useSelector } from "react-redux";
-
 const useStyles = makeStyles((theme) => ({
     root: {
         justifyContent: "center",
@@ -115,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
         display: 'flex',
         width: "30%",
-        height: "40px",
+        height: "50px",
         fontSize: 17,
         color: "white",
         backgroundColor: "black",
