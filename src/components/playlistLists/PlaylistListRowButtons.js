@@ -104,7 +104,7 @@ function PlaylistListRowButtons(props) {
         {
             label: "Make Public",
             icon: PublicOutlinedIcon,
-            display: publicity,
+            display: !publicity && (props.playlist.is_own_playlist) && props.playlist.is_teamtune_playlist,
             message: "Playlist successfully made public!",
             on_click: makePublicOnClick,
         },
