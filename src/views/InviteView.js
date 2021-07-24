@@ -23,4 +23,4 @@ function InviteView(props) {
     );
 }
 
-export default connect()(withRouter(InviteView));
+export default (withRouter(InviteView));

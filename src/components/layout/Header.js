@@ -1,7 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {NavLink, withRouter} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
-import {AppBar, Button, IconButton, Toolbar, Divider, Typography, Drawer, MenuItem, Link} from "@material-ui/core";
+import {
+    AppBar,
+    Button,
+    IconButton,
+    Toolbar,
+    Divider,
+    Typography,
+    Drawer,
+    MenuItem,
+    Link,
+    Popper, ClickAwayListener, MenuList, Grow, Paper
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { motion } from "framer-motion";
 
@@ -187,6 +198,14 @@ function Header(props) {
             className: main_options,
             onClickFun: () => props.history.push("/myteamtune"),
             to: "/myteamtune",
+        },
+        {
+            label: "Legal",
+            req_login: false,
+            req_logout: false,
+            className: main_options,
+            onClickFun: () => props.history.push("/legal"),
+            to: "/legal",
         },
     ];
 

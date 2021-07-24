@@ -8,6 +8,7 @@ import PlaylistDetailView from "./views/PlaylistDetailView";
 import LandingPageView from "./views/LandingPageView";
 import InviteView from "./views/InviteView";
 import PremiumBookingView from "./views/PremiumBookingView";
+import LegalView from "./views/LegalView";
 
 
 
@@ -55,6 +56,10 @@ const routes = [
     {
         path: "/bookpremium",
         component: PremiumBookingView,
+    },
+    {
+        path: "/legal",
+        component: LegalView,
     },
 ];
 
