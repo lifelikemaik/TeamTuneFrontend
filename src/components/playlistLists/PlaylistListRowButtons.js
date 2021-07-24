@@ -113,7 +113,7 @@ function PlaylistListRowButtons(props) {
         {
             label: "Copy Invite Link",
             icon: ShareOutlinedIcon,
-            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
+            display: !props.isBrowse && props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
             message: "Link was copied to the clipboard!",
             on_click: shareLinkOnClick,
         },
