@@ -282,7 +282,7 @@ function LandingPageComponent(props) {
 
                     <Button
                         className={classes.cardButton}
-                        onClick={() => props.props.history.push('/register')}>
+                        onClick={() => props.history.push('/register')}>
                         Go Free
                     </Button>
 
