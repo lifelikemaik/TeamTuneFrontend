@@ -100,7 +100,7 @@ export function updatePassword(newPassword) {
 }
 
 
-export function deleteAccount(username) {
+export function deleteAccount(userId) {
     function onSuccess(user) {
         return { type: "DELETE_SUCCESS", user: user };
     }
@@ -109,7 +109,7 @@ export function deleteAccount(username) {
     }
     return async (dispatch) => {
         try {
-            let resp = await UserService.deleteAccount(username);
+            let resp = await UserService.deleteAccount(userId);
             dispatch(onSuccess(resp.user));
             UserService.logout();
         } catch (e) {

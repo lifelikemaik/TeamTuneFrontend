@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Button, TextField, Typography } from "@material-ui/core";
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     deleteAccRoot: {
@@ -57,17 +58,12 @@ function MyTeamTuneDeleteAccountComponent(props) {
     const classes = useStyles();
 
     const user = useSelector((state) => state.user);
-    useEffect(() => {
-        if (user.user) {
-
-            /* console.log(user)*/
-        }
-    }, [user, props.history]);
 
     const onDeleteAccount = (e) => {
         e.preventDefault();
-        console.log(props);
-        props.onDeleteAccount(props.user.user.username);
+        props.onDeleteAccount(props.user.user._id);
+        props.history.push("/");
+        localStorage.clear();
     };
 
     return (
@@ -90,4 +86,4 @@ function MyTeamTuneDeleteAccountComponent(props) {
     );
 }
 
-export default MyTeamTuneDeleteAccountComponent;
+export default withRouter(MyTeamTuneDeleteAccountComponent);

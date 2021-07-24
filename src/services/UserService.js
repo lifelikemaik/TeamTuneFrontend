@@ -65,13 +65,10 @@ export default class UserService {
         window.localStorage.removeItem("jwtToken");
     }
 
-    static deleteAccount(user) {
+    static deleteAccount(userId) {
         return new Promise((resolve, reject) => {
-            HttpService.delete(
-                `${UserService.baseURL()}/deleteAccount`,
-                {
-                    username: user,
-                },
+            HttpService.remove(
+                `${UserService.baseURL()}/delete_account/${userId}`,
                 function (data) {
                     resolve(data);
                 },
