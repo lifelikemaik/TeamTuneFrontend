@@ -8,7 +8,8 @@ import {Paper} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
-        minWidth: '850px',
+        minWidth: '500px',
+        maxWidth: '950px',
         width: '65%',
         marginLeft: 'auto',
         marginRight: 'auto',
