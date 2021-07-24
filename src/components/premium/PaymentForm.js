@@ -90,9 +90,46 @@ function useRadioButtons(name) {
 function PaymentForm(props) {
 
     const classes = useStyles();
-    const [isCheckedPayPal, setIsCheckedPayPal] = React.useState(false);
-    const [isCheckedCreditCard, setIsCheckedCreditCard] = React.useState(false);
-    const [isCheckedSEPA, setIsCheckedSEPA] = React.useState(false);
+    const [email, setEmail] = React.useState("");
+    const [birthday, setBirthday] = React.useState("");
+    const [creditCardNumber, setCreditCardNumber] = React.useState("");
+    const [expDate, setExpDate] = React.useState("");
+    const [CVC, setCVC] = React.useState("");
+    const [debitCardNumber, setDebitCardNumber] = React.useState("");
+    const [BIC, setBIC] = React.useState("");
+    const [bankName, setBankName] = React.useState("");
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handleBirthdayChange = (event) => {
+        setBirthday(event.target.value);
+    };
+
+    const handleCreditCardChange = (event) => {
+        setCreditCardNumber(event.target.value);
+    };
+
+    const handleExpDateChange = (event) => {
+        setExpDate(event.target.value);
+    };
+
+    const handleCVCChange = (event) => {
+        setCVC(event.target.value);
+    };
+
+    const handleDebitCardChange = (event) => {
+        setDebitCardNumber(event.target.value);
+    };
+
+    const handleBICChange = (event) => {
+        setBIC(event.target.value);
+    };
+
+    const handleBankNameChange = (event) => {
+        setBankName(event.target.value);
+    };
 
     const [paymentOption, paymentOptionInputProps] = useRadioButtons("paymentOption");
 
@@ -130,7 +167,7 @@ function PaymentForm(props) {
                 </Grid>
             </Grid>
             {paymentOption === 'paypal' ? (
-                <div className={classes.paymentRoot}> 
+                <div className={classes.paymentRoot}>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
                             label="E-Mail address"
@@ -139,6 +176,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleEmailChange}
+                            value={email}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6} className={classes.paymentRow}>
@@ -153,6 +192,8 @@ function PaymentForm(props) {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                onChange={handleBirthdayChange}
+                                value={birthday}
                             />
                         </form>
                     </Grid>
@@ -168,6 +209,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleDebitCardChange}
+                            value={debitCardNumber}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6} className={classes.paymentRow}>
@@ -178,6 +221,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleBICChange}
+                            value={BIC}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6} className={classes.paymentRow}>
@@ -188,6 +233,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleBankNameChange}
+                            value={bankName}
                         />
                     </Grid>
                 </div>
@@ -202,6 +249,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleCreditCardChange}
+                            value={creditCardNumber}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6} className={classes.paymentRow}>
@@ -212,6 +261,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleExpDateChange}
+                            value={expDate}
                         />
                     </Grid>
                     <Grid item xs={6} sm={6} className={classes.paymentRow}>
@@ -222,6 +273,8 @@ function PaymentForm(props) {
                             required
                             fullWidth
                             InputLabelProps={{ shrink: true }}
+                            onChange={handleCVCChange}
+                            value={CVC}
                         />
                     </Grid>
                 </div>
@@ -233,7 +286,16 @@ function PaymentForm(props) {
                     variant="contained"
 
                     onClick={() => props.props.history.push('/register')}
-                    disabled={paymentOption === null}>
+                    disabled={
+                        paymentOption === "paypal" && email === "" ||
+                        paymentOption === "paypal" && birthday === "" ||
+                        paymentOption === "credit" && creditCardNumber === "" ||
+                        paymentOption === "credit" && expDate === "" ||
+                        paymentOption === "credit" && CVC === "" ||
+                        paymentOption === "sepa" && debitCardNumber === "" ||
+                        paymentOption === "sepa" && BIC === "" ||
+                        paymentOption === "sepa" && bankName === ""
+                        }>
                     Book Premium {"&"} Register
                 </Button>
             </div>
