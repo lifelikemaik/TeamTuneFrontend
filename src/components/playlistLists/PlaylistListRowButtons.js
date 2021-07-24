@@ -91,19 +91,23 @@ function PlaylistListRowButtons(props) {
         preventBackgroundClick(e);
         props.onClickDeletePlaylist(e, props.playlist._id);
         handleClick('Playlist deleted!');
-    }
+    };
 
     const playOnClick = (e) => {
         preventBackgroundClick(e);
-        props.onClickPlayPlaylist(props.playlist._id)
-    }
+        const id = props.isBrowse
+            ? props.playlist.public_id
+            : props.playlist._id;
+        props.onClickPlayPlaylist(id);
+        handleClick('Playback started!');
+    };
 
     const buttons = [
         {
             label: "Play Playlist",
             icon: PlayCircleOutlineIcon,
             display: props.isLoggedIn,
-            message: "Playback was started!",
+            message: "Playback started!",
             on_click: playOnClick,
         },
         {
