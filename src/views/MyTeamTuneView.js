@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { connect, useSelector } from "react-redux";
-import { updateUsername } from "../redux/actions";
-import { deleteAccount } from "../redux/actions";
-import MyTeamTuneComponent from "../components/myTeamTune/MyTeamTuneComponent";
+import React, { useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { updateUsername } from '../redux/actions';
+import { deleteAccount } from '../redux/actions';
+import MyTeamTuneComponent from '../components/myTeamTune/MyTeamTuneComponent';
 
 /**
  * Manages process of changing user settings
@@ -10,34 +10,22 @@ import MyTeamTuneComponent from "../components/myTeamTune/MyTeamTuneComponent";
  */
 
 function MyTeamTuneView(props) {
+    const user = useSelector((state) => state.user);
+    const onUpdateUsername = (newUsername) => {
+        props.dispatch(updateUsername(newUsername));
+    };
 
-  const user = useSelector((state) => state.user);
-  const onUpdateUsername = (newUsername) => {
-    props.dispatch(updateUsername(newUsername));
-  };
+    const onDeleteAccount = (userId) => {
+        props.dispatch(deleteAccount(userId));
+    };
 
-  const onDeleteAccount = (userId) => {
-    props.dispatch(deleteAccount(userId));
-  };
-
-  useEffect(() => {
-    if (user.user) {
-      
-     /* console.log(user)*/
-      
-    }
-  }, [user, props.history]);
-
-
-  return (
-    <MyTeamTuneComponent
-      user={user}
-      onUpdateUsername={onUpdateUsername}
-      onDeleteAccount={onDeleteAccount}
-    />
-  );
-
+    return (
+        <MyTeamTuneComponent
+            user={user}
+            onUpdateUsername={onUpdateUsername}
+            onDeleteAccount={onDeleteAccount}
+        />
+    );
 }
-
 
 export default connect()(MyTeamTuneView);

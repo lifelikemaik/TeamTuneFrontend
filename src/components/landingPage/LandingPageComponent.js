@@ -264,13 +264,9 @@ function LandingPageComponent(props) {
     useEffect(() => {
         if (user.user) {
             setIsLoggedIn(isLoggedIn => !isLoggedIn);
-            console.log("logged in");
-        } else {
-            console.log("logged out");
         }
     }, [user, props.history]);
 
-    console.log(isLoggedIn)
 
     const SubscriptionCardPremium = () => {
         const bull = <span className={classes.bullet}>•&nbsp;</span>;

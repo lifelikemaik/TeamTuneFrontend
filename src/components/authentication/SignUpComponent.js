@@ -89,10 +89,8 @@ function SignUpComponent(props) {
 
     useEffect(() => {
         // mostly compatible: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
-        //console.log(window.location.search);
         const params = new URLSearchParams(window.location.search);
         const paramcode = params.get("code");
-        console.log(paramcode);
         const isLinked = params.get("isLinked");
         if (isLinked === "true") {
             setIsLinkedToSpotify(true); // Button only pressed once possible

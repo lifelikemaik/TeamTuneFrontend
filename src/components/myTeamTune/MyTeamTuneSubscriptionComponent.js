@@ -165,7 +165,6 @@ function MyTeamTuneSubscriptionComponent(props) {
                                     >
                                         Upgrade to Premium
                                     </Button>
-                                {console.log(isPremium)}
                             </div>
                         </Paper>
                     </div>,

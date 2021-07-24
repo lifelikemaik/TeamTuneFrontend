@@ -10,15 +10,6 @@ import PremiumBookingComponent from "../components/premium/PremiumBookingCompone
  */
 function PremiumBookingView(props) {
 
-    const user = useSelector((state) => state.user);
-    useEffect(() => {
-        if (user.user) {
-          
-         /* console.log(user)*/
-          
-        }
-      }, [user, props.history]);
-
     return (
         <PremiumBookingComponent />
     );
