@@ -101,12 +101,12 @@ export default class PlaylistService {
         });
     }
 
-    static playPlaylist(playlistId) {
+    static playPlaylist(playlistId, songId) {
         const url = PlaylistService.baseURL() + '/' + playlistId + '/play';
         return new Promise((resolve, reject) => {
             HttpService.post(
                 url,
-                {},
+                { songId: songId },
                 function (data) {
                     resolve(data);
                 },
