@@ -1,29 +1,24 @@
 import React, { useEffect, useSelector } from 'react';
-import { PropTypes } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Paper,
-    Button,
-    TextField,
-    Typography,
-    FormControlLabel,
-    Checkbox,
-    Divider,
-} from "@material-ui/core";
+import { Paper, Button, Typography } from "@material-ui/core";
+import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
 
 
 const useStyles = makeStyles((theme) => ({
     changePWRoot: {
         margin: "auto",
     },
-    changeUserNamePaper: {
-        width: "600px",
-        marginBottom: 50,
-        padding: theme.spacing(2),
+    backgroundPaper: {
+        backgroundImage: "linear-gradient(to right, rgba(255,255,255, 0.75), rgba(255,255,255, 1), rgba(255,255,255, 1), rgba(255,255,255, 0.75))",
+        backgroundColor: 'transparent',
+        minWidth: '850px',
+        width: '65%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
-    changePWPaper: {
-        width: "600px",
-        padding: theme.spacing(2),
+    section: {
+        height: 800,
+        fontSize: 20,
     },
     changeCredentialsRow: {
         fontFamily: "Libre Franklin, sans-serif",
@@ -47,6 +42,20 @@ const useStyles = makeStyles((theme) => ({
             opacity: "90%",
         },
     },
+    spotify: {
+        backgroundColor: '#1ED760',
+        color: '#ffffff',
+        fontWeight: 'bold',
+        maxHeight: 60,
+        marginTop: 15,
+        marginLeft: 10,
+        letterSpacing: 1,
+        fontFamily: 'Libre Franklin, sans-serif',
+        borderRadius: 100,
+        '&:hover': {
+            backgroundColor: '#1ED760',
+        },
+    },
 }));
 
 /**
@@ -56,162 +65,42 @@ const useStyles = makeStyles((theme) => ({
 function MyTeamTuneAccountComponent(props) {
     const classes = useStyles();
 
-    const [username, setUsername] = React.useState("");
-    const [newUsername, setNewUsername] = React.useState("");
-    const [currentPassword, setCurrentPassword] = React.useState("");
-    const [newPassword, setNewPassword] = React.useState("");
-    const [newPassword2, setNewPassword2] = React.useState("");
-
-    const [changeUsernameError, setChangeUsernameError] = React.useState("");
-    const [changePasswordError, setChangePasswordError] = React.useState("");
-
-
-    useEffect(() => {
-        if (props.user.error) {
-            setChangeUsernameError(props.user.error);
-            setChangePasswordError(props.user.error);
-        } else {
-            /*console.log(user);*/
-            
-            setChangeUsernameError("");
-            setChangePasswordError("");
-        }
-    }, [props.user]);
-
-    const onChangeUsername = (e) => {
-        setNewUsername(e.target.value);
-        setChangeUsernameError("");
-    };
-
-    const onChangeCurrentPassword = (e) => {
-        setCurrentPassword(e.target.value);
-        setChangePasswordError("");
-    };
-
-    const onChangeNewPassword = (e) => {
-        setNewPassword(e.target.value);
-        setChangePasswordError("");
-    };
-
-    const onChangeNewPassword2 = (e) => {
-        setNewPassword2(e.target.value);
-        setChangePasswordError("");
-    };
-
-    const onUpdateUsername = (e) => {
-        e.preventDefault();
-        console.log(props);
-        props.onUpdateUsername(newUsername);
-    };
-
-    const onUpdatePassword = (e) => {
-        e.preventDefault();
-        props.onUpdatePassword(newPassword);
-    };
-
-    const onBlurPassword = (e) => {
-        if (newPassword !== "" && newPassword2 !== "") {
-            if (newPassword !== newPassword2) {
-                setChangePasswordError("Passwords do not match.");
-            } else {
-                setChangePasswordError("");
+    const spotifyLogoText = (
+        <Button
+            disableRipple
+            variant="contained"
+            className={classes.spotify}
+            endIcon={<SpotifyLogoWithText color={"#ffffff"} />}
+            onClick={() =>
+                window.open(
+                    'https://www.spotify.com/de/account/overview/'
+                )
             }
-        }
-    };
+        >
+            Switch to
+        </Button>
+    );
 
     return (
         <div className={classes.changePWRoot}>
-            <Paper className={classes.changeUserNamePaper} component="form">
-                <div className={classes.changeCredentialsRow}>
-                    <Typography variant="h4" align="center">
-                        Change your username
-                    </Typography>
-                </div>
-                <div className={classes.changeCredentialsRow}>
-                    <p>Current username: {(props.user.user.username)}</p>
-                </div>
-                <div className={classes.changeCredentialsRow}>
-                    <TextField
-                        label="Enter new username"
-                        fullWidth
-                        value={newUsername}
-                        onChange={onChangeUsername}
-                        error={changeUsernameError !== ""}
-                    />
-                </div>
-                <div className={classes.changeCredentialsRow + " " + classes.changeCredentialsButtons}>
-                    <div>
-                        <Button
-                            className={classes.changeCredentialsButton}
-                            variant="contained"
-                            color="primary"
-                            onClick={onUpdateUsername}
-                            disabled={newUsername === "" || changeUsernameError !== ""}
-                            type="submit"
-                        >
-                            Change Username
-                        </Button>
+            <Paper className={classes.backgroundPaper}>
+                <section className={classes.section}>
+                    <div className={classes.changeCredentialsRow}>
+                        <Typography variant="h4" align="center">
+                            Your account overview
+                        </Typography>
                     </div>
-                </div>
-            </Paper>
-
-            <Paper className={classes.changePWPaper} component="form">
-                <div className={classes.changeCredentialsRow}>
-                    <Typography variant="h4" align="center">
-                        Change your password
-                    </Typography>
-                </div>
-                <div className={classes.changeCredentialsRow}>
-                    <TextField
-                        label="Enter your current password"
-                        fullWidth
-                        value={currentPassword}
-                        onChange={onChangeCurrentPassword}
-                        error={changePasswordError !== ""}
-                        onBlur={onBlurPassword}
-                        type="password"
-                    />
-                </div>
-                <div className={classes.changeCredentialsRow}>
-                    <TextField
-                        label="New password"
-                        fullWidth
-                        value={newPassword}
-                        onChange={onChangeNewPassword}
-                        error={changePasswordError !== ""}
-                        onBlur={onBlurPassword}
-                        type="password"
-                    />
-                </div>
-                <div className={classes.changeCredentialsRow}>
-                    <TextField
-                        label="Repeat new password"
-                        fullWidth
-                        value={newPassword2}
-                        onChange={onChangeNewPassword2}
-                        error={changePasswordError !== ""}
-                        onBlur={onBlurPassword}
-                        type="password"
-                    />
-                </div>
-                <div className={classes.changeCredentialsRow + " " + classes.changeCredentialsButtons}>
-                    <div>
-                        <Button
-                            className={classes.changeCredentialsButton}
-                            variant="contained"
-                            color="primary"
-                            onClick={onUpdatePassword}            
-                            disabled={currentPassword === "" || newPassword === "" || newPassword2 === "" || changePasswordError !== ""}
-                            type="submit"
-                        >
-                            Change Password
-                        </Button>
+                    <div className={classes.changeCredentialsRow}>
+                        <h3>Current username: {(props.user.user.username)}</h3>
                     </div>
-                </div>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                        <h3>Check out your Spotify® account:</h3>
+                        {spotifyLogoText}
+                    </div>
+                </section>
             </Paper>
         </div>
     );
-
 }
 
 export default MyTeamTuneAccountComponent;

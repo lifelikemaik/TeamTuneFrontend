@@ -106,8 +106,6 @@ function Header(props) {
                 <Toolbar >
                     {getMenuButtons(headersSideData, false)}
                 </Toolbar>
-
-
             </Toolbar>
         );
     };
