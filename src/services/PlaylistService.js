@@ -288,7 +288,7 @@ export default class PlaylistService {
     static fullRecommendation(playlistId) {
         const url = PlaylistService.baseURL() + '/fullrecommendation/' + playlistId;
         return new Promise((resolve, reject) => {
-            HttpService.put(
+            HttpService.get(
                 url,
                 {},
                 function (data) {

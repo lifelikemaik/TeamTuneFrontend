@@ -535,6 +535,9 @@ function PlaylistDetailsComponent(props) {
                             variant="contained"
                             color="primary"
                             className={classes.sideButton}
+                            onClick={() =>
+                                props.getFullRecommendation(props.playlist._id)
+                            }
                         >
                             Fill up to target
                         </Button>
