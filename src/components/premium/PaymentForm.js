@@ -7,13 +7,12 @@ import {
     Typography,
     Button
 } from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import { check } from "prettier";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +58,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+function useRadioButtons(name) {
+    const [value, setState] = useState(null);
+
+    const handleChange = e => {
+        setState(e.target.value);
+    };
+
+    const inputProps = {
+        name,
+        type: "radio",
+        onChange: handleChange
+    };
+
+    return [value, inputProps];
+}
+
+
 /**
  * For managing the payment option selection
  * @param {props} props
@@ -71,17 +88,8 @@ function PaymentForm(props) {
     const [isCheckedCreditCard, setIsCheckedCreditCard] = React.useState(false);
     const [isCheckedSEPA, setIsCheckedSEPA] = React.useState(false);
 
-    const handleChangePaypal = () => {
-        setIsCheckedPayPal(!isCheckedPayPal);
-    };
+    const [paymentOption, paymentOptionInputProps] = useRadioButtons("paymentOption");
 
-    const handleChangeSEPA = () => {
-        setIsCheckedSEPA(!isCheckedSEPA);
-    };
-
-    const handleChangeCreditCard = () => {
-        setIsCheckedCreditCard(!isCheckedCreditCard);
-    };
 
     return (
         <div className={classes.paymentForm}>
@@ -89,31 +97,33 @@ function PaymentForm(props) {
                 <Grid>
                     <FormControl component="fieldset" className={classes.checkBoxes}>
                         <FormLabel component="legend">Choose your payment option:</FormLabel>
-                        <FormGroup aria-label="position" row>
+                        <RadioGroup aria-label="position" row>
                             <FormControlLabel
-                                control={<Checkbox color="secondary" isChecked={isCheckedPayPal} onChange={handleChangePaypal} />}
-
+                                value="paypal"
+                                control=
+                                {<Radio color="secondary" checked={paymentOption === 'paypal'} {...paymentOptionInputProps} />}
                                 label="PayPal"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
-                                control={<Checkbox color="secondary" isChecked={isCheckedCreditCard} onChange={handleChangeCreditCard} />}
+                                value="credit"
+                                control=
+                                {<Radio color="secondary" checked={paymentOption === 'credit'} {...paymentOptionInputProps} />}
                                 label="Credit Card"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
-                                control={<Checkbox color="secondary" isChecked={isCheckedSEPA} onChange={handleChangeSEPA} />}
+                                value="sepa"
+                                control=
+                                {<Radio color="secondary" checked={paymentOption === 'sepa'} {...paymentOptionInputProps} />}
                                 label="SEPA"
                                 labelPlacement="end"
                             />
-                        </FormGroup>
+                        </RadioGroup>
                     </FormControl>
                 </Grid>
             </Grid>
-            {console.log(isCheckedSEPA)}
-            {console.log(isCheckedPayPal)}
-            {console.log(isCheckedCreditCard)}
-            {!isCheckedPayPal ? (<div />) : (
+            {paymentOption === 'paypal' ? (
                 <div>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
@@ -132,6 +142,7 @@ function PaymentForm(props) {
                                 label="Birthday"
                                 type="date"
                                 defaultValue=""
+                                required
                                 className={classes.textField}
                                 InputLabelProps={{
                                     shrink: true,
@@ -140,8 +151,8 @@ function PaymentForm(props) {
                         </form>
                     </Grid>
                 </div>
-            )}
-            {!isCheckedSEPA ? (<div />) : (
+            ) : (<div />)}
+            {paymentOption === 'sepa' ? (
                 <div>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
@@ -174,8 +185,8 @@ function PaymentForm(props) {
                         />
                     </Grid>
                 </div>
-            )}
-            {!isCheckedCreditCard ? (<div />) : (
+            ) : (<div />)}
+            {paymentOption === 'credit' ? (
                 <div>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
@@ -208,14 +219,15 @@ function PaymentForm(props) {
                         />
                     </Grid>
                 </div>
-            )}
+            ) : (<div />)}
+            {console.log(props.props.history.location.pathname)}
             <div className={classes.bookPremiumButtons}>
                 <Button
                     className={classes.bookPremiumButton}
                     variant="contained"
-                    
+
                     onClick={() => props.props.history.push('/register')}
-                    disabled={!isCheckedPayPal && !isCheckedCreditCard && !isCheckedSEPA}>
+                    disabled={paymentOption === null}>
                     Book Premium {"&"} Register
                 </Button>
             </div>
@@ -225,9 +237,6 @@ function PaymentForm(props) {
 
 PaymentForm.propTypes = {
     Checkboxes: PropTypes.func,
-    isCheckedPayPal: PropTypes.object,
-    isCheckedCreditCard: PropTypes.object,
-    isCheckedSEPA: PropTypes.object,
 };
 
 export default PaymentForm;

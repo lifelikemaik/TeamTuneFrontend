@@ -111,6 +111,7 @@ export function deleteAccount(username) {
         try {
             let resp = await UserService.deleteAccount(username);
             dispatch(onSuccess(resp.user));
+            UserService.logout();
         } catch (e) {
             dispatch(onFailure(e));
         }

@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { withRouter, useHistory } from "react-router-dom";
-import { Paper, Button, TextField, Typography, List, Divider, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Paper, Button, TextField, Typography, List, Divider, ListItem, ListItemIcon, ListItemText, Grid } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
     additionalFeaturesList: {
+        backgroundColor: "#cccccc",
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 600,
         fontFamily: "Libre Franklin, sans-serif",
-        backgroundColor: theme.palette.background.paper,
+
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
@@ -22,9 +23,15 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
     },
     upgradeSubscriptionPaper: {
-        width: "900px",
+        backgroundColor: "#cccccc",
+        width: "1000px",
         height: "380px",
-        padding: theme.spacing(5),
+        fontFamily: "Libre Franklin, sans-serif",
+    },
+    upgradeSubscriptionPaperHeader: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
         fontFamily: "Libre Franklin, sans-serif",
     },
     upgradeSubscriptionRow: {
@@ -37,8 +44,17 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(0),
         },
     },
+    upgradeSubscriptionButtons: {
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+    },
     upgradeSubscriptionButton: {
-        marginTop: 50,
+        bottom: -160,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 20,
         color: "white",
         backgroundColor: "black",
         width: "40%",
@@ -49,15 +65,28 @@ const useStyles = makeStyles((theme) => ({
             opacity: "90%",
         },
     },
-    upgradeSubscriptionButtons: {
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex"
+    cancleSubscriptionButton: {
+        bottom: 20,
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 20,
+        color: "white",
+        backgroundColor: "black",
+        width: "40%",
+        height: "40px",
+        fontSize: 17,
+        '&:hover': {
+            backgroundColor: "#1db954",
+            opacity: "90%",
+        },
+    },
+    whatYouGet: {
+        marginLeft: 20,
+        paddingTop: 5,
     },
     whatYouPay: {
-        marginLeft: 500,
-        marginTop: -245,
+        marginLeft: 650,
+        marginTop: -262,
 
     }
 }));
@@ -66,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
  * For presenting and changing the user settings and more
  * @param {props} props
  */
-
 function PremiumFunctionalitiesList(props) {
 
     const classes = useStyles();
@@ -74,36 +102,37 @@ function PremiumFunctionalitiesList(props) {
         <div className={classes.additionalFeaturesList}>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem>
-                    <ListItemText primary="Additional Feature 1" />
+                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Additional Feature 2" />
+                    <ListItemText primary="Possibility to make playlists public." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Additional Feature 3" />
+                    <ListItemText primary="Control your Spotify® playback directly from TeamTune." />
                 </ListItem>
             </List>
         </div>
     );
 }
 
-
 function MyTeamTuneSubscriptionComponent(props) {
 
     const classes = useStyles();
-
-
     const [isPremium, setIsPremium] = React.useState(false);
     const toggle = React.useCallback(() => setIsPremium(!isPremium));
-    /*var isPremium = false;*/
 
+    useEffect(() => {
+        setIsPremium(JSON.parse(window.localStorage.getItem('isPremium')));
+    }, []);
 
+    useEffect(() => {
+        window.localStorage.setItem('isPremium', isPremium);
+    }, [isPremium]);
 
     const onUpgradeSubscription = () => {
         setIsPremium(isPremium => !isPremium);
-        console.log(isPremium);
     };
 
     return (
@@ -115,43 +144,46 @@ function MyTeamTuneSubscriptionComponent(props) {
                     <h2>Do you want to upgrade to Premium and experience the full TeamTune functionalities?</h2>,
                     <div className={classes.upgradeSubscriptionPaper}>
                         <Paper className={classes.upgradeSubscriptionPaper} component="form">
+                            <div className={classes.whatYouGet}>
+                                <h2 >What you get:</h2>
+                            </div>
                             <div>
-                                <h2>What you get:</h2>
                                 <PremiumFunctionalitiesList />
                                 <Divider orientation="vertical" />
                             </div>
                             <div className={classes.whatYouPay}>
-                                <h2>What you pay:</h2>
-                                <h2>XX,XX€</h2>
+                                <h2>What you pay: 7,99€ / month</h2>
+                            </div>
+                            <div className={classes.upgradeSubscriptionButtons}>
+                                <Grid container justify="flex-end" alignItems="flex-end">
+                                    <Button
+                                        className={classes.upgradeSubscriptionButton}
+                                        isPremium={isPremium}
+                                        onClick={() => { props.history.push('/bookpremium'); onUpgradeSubscription() }}
+                                    >
+
+                                        Upgrade to Premium
+                                    </Button>
+                                </Grid>
+                                {console.log(isPremium)}
                             </div>
                         </Paper>
                     </div>,
-                    <div className={classes.upgradeSubscriptionButtons}>
-                        <Button
-                            className={classes.upgradeSubscriptionButton}
-                            isPremium={isPremium}                            
-                            onClick={() => props.history.push('/bookpremium')}
-                            /*onClick={onUpgradeSubscription}*/
-                        >
-                            
-                            Upgrade to Premium
-                        </Button>
-                        {console.log(props.history.location.pathname)}
-                    </div>
-
                 ]
                 : [
                     <h1>Your current subscription model: Premium</h1>,
                     <Divider orientation="horizontal" />,
                     <h2>You are enjoing the full TeamTune functionalities!</h2>,
                     <div className={classes.upgradeSubscriptionButtons}>
-                        <Button
-                            className={classes.upgradeSubscriptionButton}
-                            onClick={toggle}
-                        /*onClick={onUpgradeSubscription}*/
-                        >
-                            Cancle Premium
-                        </Button>
+                        <Grid container justify="flex-end" alignItems="flex-end">
+                            <Button
+                                className={classes.cancleSubscriptionButton}
+                                onClick={toggle}
+                            /*onClick={onUpgradeSubscription}*/
+                            >
+                                Cancle Premium
+                            </Button>
+                        </Grid>
                     </div>
                 ]}
         </div>

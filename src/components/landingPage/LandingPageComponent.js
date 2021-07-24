@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     cardRoot: {
-        width: 900,
-        height: 400,
+        width: 620,
+        height: 550,
         alignItems: 'center',
         justifyContent: "center",
         marginLeft: 20,
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
     landingPageImage: {
         width: '80%',
-        marginTop: -140,
+        marginTop: 10,
         padding: theme.spacing(5),
     },
     headLines: {
@@ -82,6 +82,12 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         fontFamily: "Libre Franklin, sans-serif",
         backgroundColor: "#cccccc",
+    },
+    priceTag: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+
     },
     section1: {
         height: 700,
@@ -123,6 +129,7 @@ const useStyles = makeStyles((theme) => ({
     cardButton: {
         marginLeft: 'auto',
         marginRight: 'auto',
+        marginTop: 'auto',
         display: 'flex',
         width: "30%",
         height: "50px",
@@ -188,6 +195,10 @@ function PremiumFunctionalitiesList(props) {
                     <ListItemText primary="Control your Spotify® playback directly from TeamTune." />
                 </ListItem>
             </List>
+            <div className={classes.priceTag}>
+                <h3>7,99€ / Month</h3>
+            </div>
+
         </div>
     );
 }
@@ -210,7 +221,8 @@ function SubscriptionCardFree(props) {
                 <FreeFunctionalitiesList />
             </CardContent>
             <CardActions>
-                <Button className={classes.cardButton}
+                <Button
+                    className={classes.cardButton}
                     onClick={() => props.props.history.push('/register')}>
                     Go Free
                 </Button>
@@ -235,7 +247,6 @@ function SubscriptionCardPremium(props) {
                 <Button
                     className={classes.cardButton}
                     onClick={() => props.props.history.push('/bookpremium')}>
-                    {/*console.log(props)*/}
                     Go Premium
                 </Button>
             </CardActions>
@@ -260,7 +271,7 @@ function LandingPageComponent(props) {
                         TeamTune is a platform that allows people, companies and music enthusiasts to collaboratively create a Spotify playlist for every occasion by merging the different tastes with an intelligent recommender system.
                     </Typography>
                     <div className={classes.flexRow}>
-                        <LandingPageImage className={classes.landingPageImage} />
+                        <img src={LandingPageTopImage} className={classes.landingPageImage} />
                     </div>
                 </section>
                 <Divider variant="middle" />
