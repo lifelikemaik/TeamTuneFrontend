@@ -16,8 +16,8 @@ function MyTeamTuneView(props) {
     props.dispatch(updateUsername(newUsername));
   };
 
-  const onDeleteAccount = (username) => {
-    props.dispatch(deleteAccount(username));
+  const onDeleteAccount = (userId) => {
+    props.dispatch(deleteAccount(userId));
   };
 
   useEffect(() => {
