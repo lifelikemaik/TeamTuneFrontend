@@ -10,11 +10,7 @@ import InviteView from "./views/InviteView";
 import PremiumBookingView from "./views/PremiumBookingView";
 import LegalView from "./views/LegalView";
 
-
-
-// routes within the movie database example app
 // used for routing
-
 const routes = [
     {
         path: "/",

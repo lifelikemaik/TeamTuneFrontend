@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
 import {copyPlaylist, getUserPlaylists, playPlaylist, removePlaylist, updatePlaylist} from "../redux/actions";
@@ -7,7 +6,7 @@ import PlaylistListComponent from "../components/playlistLists/PlaylistListCompo
 import Loading from "../components/layout/Loading";
 
 /**
- * Manages the process of getting movie list data
+ * Manages the process of getting playlist list data
  * @param {props} props
  */
 function PlaylistListView(props) {
