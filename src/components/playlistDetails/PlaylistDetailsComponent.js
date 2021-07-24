@@ -623,7 +623,8 @@ function PlaylistDetailsComponent(props) {
                                 getOptionDisabled={(option) => !option.valid} //Disable if audio features don't fit
                                 renderOption={(option) => (
                                     <React.Fragment>
-                                        <div className={classes.searchRow}>
+                                        <div className={classes.searchRow}
+                                             onClick={() => onAddSongToPlaylist(option)}>
                                             <span>
                                                 {option.name} -{' '}
                                                 {getAllArtistsString(
