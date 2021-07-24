@@ -7,7 +7,6 @@ import {
     AccordionDetails,
     AccordionSummary,
     Button,
-    IconButton,
     List,
     ListItem,
     Paper,
@@ -15,7 +14,6 @@ import {
     Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import { useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
@@ -498,7 +496,18 @@ function PlaylistDetailsComponent(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {spotifyLogoText}
                 </div>
-                {props.playlist.is_teamtune_playlist &&
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button
+                        onClick={() => props.history.push('/playlists')}
+                        variant="contained"
+                        color="primary"
+                        className={classes.sideButton}
+                    >
+                        Back to Overview
+                    </Button>
+                </div>
+                {!props.isBrowse &&
+                props.playlist.is_teamtune_playlist &&
                 props.playlist.is_own_playlist ? (
                     <div
                         style={{ display: 'flex', justifyContent: 'flex-end' }}
@@ -514,7 +523,8 @@ function PlaylistDetailsComponent(props) {
                 ) : (
                     <div />
                 )}
-                {props.playlist.is_teamtune_playlist &&
+                {!props.isBrowse &&
+                props.playlist.is_teamtune_playlist &&
                 props.playlist.is_own_playlist ? (
                     <div
                         style={{ display: 'flex', justifyContent: 'flex-end' }}
@@ -530,22 +540,6 @@ function PlaylistDetailsComponent(props) {
                     </div>
                 ) : (
                     <div />
-                )}
-                {props.isBrowse ? (
-                    <div />
-                ) : (
-                    <div
-                        style={{ display: 'flex', justifyContent: 'flex-end' }}
-                    >
-                        <Button
-                            onClick={() => props.history.push('/playlists')}
-                            variant="contained"
-                            color="primary"
-                            className={classes.sideButton}
-                        >
-                            Back to Overview
-                        </Button>
-                    </div>
                 )}
             </div>
         </div>
