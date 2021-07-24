@@ -406,7 +406,7 @@ function LandingPageComponent(props) {
                         Pricing
                     </h1>
                     <h3 className={classes.subscriptionModelHeader}>
-                        Choose between our Free and Premium model:
+                        Choose between our Free and Premium model (coming soon):
                     </h3>
                     <div className={classes.flexRow}>
                         <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
