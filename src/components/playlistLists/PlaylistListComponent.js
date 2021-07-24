@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     filterBarRow: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         padding: 10,
     },
 }));
@@ -135,9 +135,14 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function filterPlaylists(array, onlyTeamTune) {
+function filterPlaylists(array, onlyTeamTune, onlyPublic, onlyPrivate) {
     if(onlyTeamTune){
-        return array.filter(playlist => playlist.is_teamtune_playlist);
+        array = array.filter(playlist => playlist.is_teamtune_playlist);
+    }
+    if(onlyPublic){
+        return array.filter(playlist => playlist.publicity);
+    } else {
+        return array.filter(playlist => !playlist.publicity);
     }
     return array;
 }
@@ -149,8 +154,8 @@ function filterPlaylists(array, onlyTeamTune) {
  * @param {property to filter} onlyTeamTune
  * @returns sorted array
  */
-function stableSort(inputArray, comparator, onlyTeamTune) {
-    const array = filterPlaylists(inputArray, onlyTeamTune);
+function stableSort(inputArray, comparator, onlyTeamTune, onlyPublic, onlyPrivate) {
+    const array = filterPlaylists(inputArray, onlyTeamTune, onlyPublic, onlyPrivate);
     filterPlaylists(array, true);
     // include index into the to sortable array objects
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -176,6 +181,8 @@ function PlaylistListComponent(props) {
     const [orderBy, setOrderBy] = React.useState();
     const [order, setOrder] = React.useState();
     const [onlyTeamTune, setTeamTune] = React.useState(false);
+    const [onlyPublic, setOnlyPublic] = React.useState(false);
+    const [onlyPrivate, setOnlyPrivate] = React.useState(false);
     const [playlistCount, setPlaylistCount] = React.useState(props.playlists.length);
 
     const [page, setPage] = React.useState(0);
@@ -185,6 +192,27 @@ function PlaylistListComponent(props) {
         setTeamTune(!onlyTeamTune);
         if(!onlyTeamTune){
             setPlaylistCount(props.playlists.filter(playlist => playlist.is_teamtune_playlist).length);
+            setPage(0);
+        } else {
+            setPlaylistCount(props.playlists.length);
+        }
+    }
+    const onChangePublic = (event) => {
+        setOnlyPublic(!onlyPublic);
+        setOnlyPrivate(false);
+        if(!onlyPublic){
+            setPlaylistCount(props.playlists.filter(playlist => playlist.publicity).length);
+            setPage(0);
+        } else {
+            setPlaylistCount(props.playlists.length);
+        }
+    }
+
+    const onChangePrivate = (event) => {
+        setOnlyPrivate(!onlyPrivate);
+        setOnlyPublic(false);
+        if(!onlyPrivate){
+            setPlaylistCount(props.playlists.filter(playlist => !playlist.publicity).length);
             setPage(0);
         } else {
             setPlaylistCount(props.playlists.length);
@@ -226,6 +254,34 @@ function PlaylistListComponent(props) {
                             onClick={onChangeTeamTune}
                             style={{ cursor: "pointer"}}>
                             Only TeamTune Playlists
+                        </label>
+                    </div>
+                    <div>
+                        <Checkbox
+                            checked={onlyPublic}
+                            onChange={onChangePublic}
+                            style={{
+                                transform: "scale(1.2)",
+                            }}
+                        />
+                        <label
+                            onClick={onChangePublic}
+                            style={{ cursor: "pointer"}}>
+                            Only Public Playlists
+                        </label>
+                    </div>
+                    <div>
+                        <Checkbox
+                            checked={onlyPrivate}
+                            onChange={onChangePrivate}
+                            style={{
+                                transform: "scale(1.2)",
+                            }}
+                        />
+                        <label
+                            onClick={onChangePrivate}
+                            style={{ cursor: "pointer"}}>
+                            Only Private Playlists
                         </label>
                     </div>
                 </div>
@@ -276,7 +332,9 @@ function PlaylistListComponent(props) {
                             {stableSort(
                                 props.playlists,
                                 getComparator(order, orderBy),
-                                onlyTeamTune
+                                onlyTeamTune,
+                                onlyPublic,
+                                onlyPrivate
                             )
                                 .slice(
                                     page * rowsPerPage,
