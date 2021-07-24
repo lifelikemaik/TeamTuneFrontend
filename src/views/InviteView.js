@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import React from "react";
+import { connect } from "react-redux";
 
-import InviteComponent from "../components/authentication/InviteComponent";
-import {registerInvite} from "../redux/actions";
+import InviteComponent from '../components/authentication/InviteComponent';
+import { registerInvite } from '../redux/actions';
 
 
 /**
@@ -23,4 +22,4 @@ function InviteView(props) {
     );
 }
 
-export default (withRouter(InviteView));
+export default connect()(InviteView);
