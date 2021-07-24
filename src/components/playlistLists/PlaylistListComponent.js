@@ -39,10 +39,12 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(2),
     },
     addPlaylistButton: {
+        fontFamily: "Libre Franklin, sans-serif",
+        borderRadius: 100,
         margin: theme.spacing(2),
         width: "110%",
         height: "40px",
-        fontSize: 17,
+        fontSize: 20,
         color: "black",
         backgroundColor: "1db954",
         '&:hover': {
@@ -243,7 +245,7 @@ function PlaylistListComponent(props) {
                         color="secondary"
                         className={classes.addPlaylistButton}
                     >
-                        Create Playlist
+                        Create a new Playlist
                     </Button>
                 )}
             </div>
