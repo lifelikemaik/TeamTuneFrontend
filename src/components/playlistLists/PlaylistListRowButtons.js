@@ -2,6 +2,7 @@ import {IconButton, Snackbar, Tooltip, withStyles} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Alert } from '@material-ui/lab';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
@@ -61,13 +62,16 @@ function PlaylistListRowButtons(props) {
             props.playlist._id
         );
     }
+
     const followOnClick = (e) => {
         preventBackgroundClick(e);
         props.onClickFollowPlaylist(
             props.playlist.public_id
         );
     }
+
     const makePublicOnClick = (e) => {
+        preventBackgroundClick(e);
         props.onMakePlaylistPublic(
             e,
             props.playlist._id,
@@ -76,21 +80,40 @@ function PlaylistListRowButtons(props) {
         setPublicity(true);
         handleClick('Playlist made public!');
     }
+
     const copyOnClick = (e) => {
+        preventBackgroundClick(e);
         props.onCopyPlaylist(e, props.playlist._id || props.playlist.public_id); // Use public_id on browse where _id doesn't exist, will be converted in the backend
         handleClick('Playlist copied!');
     }
 
     const deleteOnClick = (e) => {
         preventBackgroundClick(e);
+        props.onClickDeletePlaylist(e, props.playlist._id);
         handleClick('Playlist deleted!');
-    }
+    };
+
+    const playOnClick = (e) => {
+        preventBackgroundClick(e);
+        const id = props.isBrowse
+            ? props.playlist.public_id
+            : props.playlist._id;
+        props.onClickPlayPlaylist(id);
+        handleClick('Playback started!');
+    };
 
     const buttons = [
         {
+            label: "Play Playlist",
+            icon: PlayCircleOutlineIcon,
+            display: props.isLoggedIn,
+            message: "Playback started!",
+            on_click: playOnClick,
+        },
+        {
             label: "Copy Invite Link",
             icon: ShareOutlinedIcon,
-            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
+            display: !props.isBrowse && props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
             message: "Link was copied to the clipboard!",
             on_click: shareLinkOnClick,
         },
@@ -118,7 +141,7 @@ function PlaylistListRowButtons(props) {
         {
             label: "Delete Playlist",
             icon: DeleteOutlineOutlinedIcon,
-            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
+            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist && !props.isBrowse,
             message: "Playlist successfully deleted!",
             on_click: deleteOnClick,
         }
@@ -154,6 +177,7 @@ function PlaylistListRowButtons(props) {
 }
 
 PlaylistListRowButtons.propTypes = {
+    isLoggedIn: PropTypes.bool,
     playlist: PropTypes.object,
     isBrowse: PropTypes.bool.isRequired,
     onClickFollowPlaylist: PropTypes.func,

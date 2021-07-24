@@ -10,12 +10,12 @@ import {
     searchForSong,
     getPlaylistLength,
     searchForSongInvite,
-    removeSongFromPlaylist,
+    removeSongFromPlaylist, playPlaylist,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
     // props can be deconstructed into single variables, so you do not need to write "props." all the time
-    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist} = props;
+    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist, playPlaylist} = props;
 
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
@@ -53,6 +53,10 @@ function PlaylistDetailsView(props) {
         }
     }
 
+    const startPlayback = (playlistId, songId) => {
+        playPlaylist(playlistId, songId)
+    }
+
     function checkBrowse(){
         if(match.params.id.length == 64){
             return true;
@@ -75,6 +79,7 @@ function PlaylistDetailsView(props) {
             searchForSong={searchForSongHelper}
             addSongToPlaylist={addSongToPlaylistHelper}
             removeSong={removeSong}
+            startPlayback={startPlayback}
             getPlaylistLength={props.getPlaylistLength}
             user={user.user}
             isBrowse={checkBrowse()}
@@ -95,5 +100,6 @@ export default connect(null, {
     addSongToPlaylist,
     addSongToPlaylistInvite,
     getPlaylistLength,
-    removeSongFromPlaylist
+    removeSongFromPlaylist,
+    playPlaylist
 })(PlaylistDetailsView);

@@ -137,7 +137,7 @@ function SignUpComponent(props) {
             // setIsLinkedToSpotify(true);
 
             // Button only pressed once possible
-            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:4000/callback/register&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public&state=" + generateRandomString(16), "_self");
+            window.open("https://accounts.spotify.com/authorize?client_id=13fc26a1aa724752953370044913e510&response_type=code&redirect_uri=http://localhost:4000/callback/register&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20playlist-modify-private%20playlist-modify-public%20streaming%20user-read-currently-playing%20user-read-playback-state&state=" + generateRandomString(16), "_self");
         }
     }
 
