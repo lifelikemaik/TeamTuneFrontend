@@ -50,6 +50,13 @@ function InviteComponent(props) {
         setRegisterError("");
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && username !== '') {
+            props.onRegister(username, props.match.params.id);
+            props.history.push("/playlist/" + props.match.params.id);
+        }
+    };
+
     return (
         <Paper className={classes.backgroundPaper}>
             <h1>
@@ -66,6 +73,7 @@ function InviteComponent(props) {
                        className={classes.items}
                        value={username}
                        onChange={onChangeUsername}
+                       onKeyDown={handleKeyDown}
             />
 
             <div>
