@@ -165,7 +165,7 @@ export function removePlaylist(playlistId) {
             const result = await PlaylistService.removePlaylist(
                 playlistId
             );
-            dispatch(onSuccess(result.removedSongId));
+            dispatch(onSuccess(result.removedPlaylistId));
         } catch (e) {
             onFailure(e);
         }
