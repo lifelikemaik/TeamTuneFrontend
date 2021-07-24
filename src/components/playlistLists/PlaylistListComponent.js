@@ -179,7 +179,7 @@ function PlaylistListComponent(props) {
     const [playlistCount, setPlaylistCount] = React.useState(props.playlists.length);
 
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const onChangeTeamTune = (event) => {
         setTeamTune(!onlyTeamTune);
@@ -309,7 +309,7 @@ function PlaylistListComponent(props) {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[10, 25]}
                     component="div"
                     count={playlistCount}
                     rowsPerPage={rowsPerPage}
