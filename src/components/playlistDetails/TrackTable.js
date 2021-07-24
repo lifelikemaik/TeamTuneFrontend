@@ -63,7 +63,7 @@ const sortableHeadCells = [
         width: "10%",
     },
     {
-        id: "duration",
+        id: "duration_ms",
         label: "Duration",
         width: "5%",
     },
