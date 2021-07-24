@@ -464,7 +464,7 @@ function PlaylistDetailsComponent(props) {
             disableRipple
             variant="contained"
             className={classes.spotify}
-            endIcon={<SpotifyLogoWithText color={"#ffffff"} />}
+            endIcon={<SpotifyLogoWithText color={'#ffffff'} />}
             onClick={() =>
                 window.open(
                     'https://open.spotify.com/playlist/' +
@@ -513,9 +513,11 @@ function PlaylistDetailsComponent(props) {
                         <Button
                             variant="contained"
                             color="primary"
-                            disabled={(allSongs.length == 0)}
+                            disabled={allSongs.length == 0}
                             className={classes.sideButton}
-                            onClick={() => props.startPlayback(props.playlist._id)}
+                            onClick={() =>
+                                props.startPlayback(props.playlist._id)
+                            }
                         >
                             Start Playback
                         </Button>
@@ -692,7 +694,7 @@ function PlaylistDetailsComponent(props) {
             </div>
         </Paper>
     );
-};
+}
 
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {
@@ -700,7 +702,7 @@ PlaylistDetailsComponent.propTypes = {
     searchForSong: PropTypes.func,
     addSongToPlaylist: PropTypes.func,
     isLoggedIn: PropTypes.bool,
-    isAdmin:PropTypes.bool,
+    isAdmin: PropTypes.bool,
     removeSong: PropTypes.func,
     startPlayback: PropTypes.func,
     getPlaylistLength: PropTypes.func,

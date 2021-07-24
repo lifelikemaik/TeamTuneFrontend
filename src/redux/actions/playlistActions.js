@@ -336,3 +336,21 @@ export function getPlaylistLength(playlistId) {
         }
     };
 }
+
+export function getFullRecommendations(playlistId) {
+    function onSuccess() {
+        return { type: 'RECOMMENDATION_SUCCESS' };
+    }
+    function onFailure(error) {
+        console.log('full recommendations failed', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            await PlaylistService.fullRecommendation(playlistId);
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}

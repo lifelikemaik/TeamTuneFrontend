@@ -10,12 +10,14 @@ import {
     searchForSong,
     getPlaylistLength,
     searchForSongInvite,
-    removeSongFromPlaylist, playPlaylist,
+    removeSongFromPlaylist,
+    playPlaylist,
+    getFullRecommendations,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
     // props can be deconstructed into single variables, so you do not need to write "props." all the time
-    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist, playPlaylist} = props;
+    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist, playPlaylist, getFullRecommendations} = props;
 
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
@@ -64,6 +66,13 @@ function PlaylistDetailsView(props) {
         return false;
     }
 
+    const fullRecommendation = (playlistId) => {
+        if (user.user) {
+            getFullRecommendations(playlistId);
+        }
+    }
+
+
     return !selectedPlaylist ||
         (!selectedPlaylist?.playlist &&
             !selectedPlaylist?.error &&
@@ -80,6 +89,7 @@ function PlaylistDetailsView(props) {
             addSongToPlaylist={addSongToPlaylistHelper}
             removeSong={removeSong}
             startPlayback={startPlayback}
+            getFullRecommendation={fullRecommendation}
             getPlaylistLength={props.getPlaylistLength}
             user={user.user}
             isBrowse={checkBrowse()}
@@ -101,5 +111,6 @@ export default connect(null, {
     addSongToPlaylistInvite,
     getPlaylistLength,
     removeSongFromPlaylist,
-    playPlaylist
+    playPlaylist,
+    getFullRecommendations,
 })(PlaylistDetailsView);
