@@ -77,6 +77,10 @@ const sortableHeadCells = [
  * @returns 1 when b > a, -1 when a < b
  */
 function descendingComparator(a, b, orderBy) {
+    // Special case duration since it needs to be sorted specially
+    if (orderBy === 'duration') {
+        orderBy = 'duration_ms'
+    }
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
