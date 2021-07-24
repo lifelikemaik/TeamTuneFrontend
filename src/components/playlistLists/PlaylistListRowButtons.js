@@ -6,12 +6,13 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 
 function PlaylistListRowButtons(props) {
     const [publicity, setPublicity] = React.useState(props.playlist.publicity);
 
     const [open, setOpen] = React.useState(false);
-    const [messsage, setMessage] = React.useState(false);
+    const [message, setMessage] = React.useState(false);
 
     const handleClick = (message) => {
         setMessage(message);
@@ -33,7 +34,7 @@ function PlaylistListRowButtons(props) {
                 onClick={preventBackgroundClick}
             >
                 <Alert onClose={handleClose} severity="success">
-                    {messsage}
+                    {message}
                 </Alert>
             </Snackbar>
         );
@@ -80,47 +81,55 @@ function PlaylistListRowButtons(props) {
         handleClick('Playlist copied!');
     }
 
+    const deleteOnClick = (e) => {
+        preventBackgroundClick(e);
+        handleClick('Playlist deleted!');
+    }
+
     const buttons = [
         {
             label: "Copy Invite Link",
             icon: ShareOutlinedIcon,
-            browse: false,
-            my_playlists: true,
+            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
             message: "Link was copied to the clipboard!",
             on_click: shareLinkOnClick,
         },
         {
             label: "Follow Playlist",
             icon: FavoriteBorderOutlinedIcon,
-            browse: true,
-            my_playlists: false,
+            display: !(props.playlist.is_own_playlist) && props.isBrowse,
             message: "Playlist was followed on Spotify!",
             on_click: followOnClick,
         },
         {
             label: "Make Public",
             icon: PublicOutlinedIcon,
-            browse: false,
-            my_playlists: true,
+            display: !publicity && (props.playlist.is_own_playlist) && props.playlist.is_teamtune_playlist,
             message: "Playlist successfully made public!",
             on_click: makePublicOnClick,
         },
         {
             label: "Create Copy",
             icon: FileCopyOutlinedIcon,
-            browse: true,
-            my_playlists: true,
+            display: true,
             message: "Playlist successfully copied to your playlists!",
             on_click: copyOnClick,
+        },
+        {
+            label: "Delete Playlist",
+            icon: DeleteOutlineOutlinedIcon,
+            display: props.playlist.is_teamtune_playlist && props.playlist.is_own_playlist,
+            message: "Playlist successfully deleted!",
+            on_click: deleteOnClick,
         }
     ]
 
     const getButtons = (
-        buttons.map(({label, icon, browse, my_playlists, on_click}) => {
+        buttons.map(({label, icon, display, on_click}) => {
             let Icon = icon;
             return (
                 <React.Fragment>
-                    { (props.isBrowse && browse || !(props.isBrowse) && my_playlists) ? [
+                    { display ? [
                         <IconButton onClick={on_click} aria-label={label}>
                             <LightTooltip title={label} arrow placement="top">
                                 <Icon fontSize="large" color="primary"/>

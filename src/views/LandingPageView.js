@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import LandingPageComponent from "../components/LandingPageComponent";
+import LandingPageComponent from "../components/landingPage/LandingPageComponent";
 
 
 /**

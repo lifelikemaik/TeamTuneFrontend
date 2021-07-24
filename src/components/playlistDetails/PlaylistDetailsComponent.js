@@ -10,22 +10,16 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemText,
     Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
     TextField,
     Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Delete } from '@material-ui/icons';
+import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import { useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import SpotifyLogoWithText from './SpotifyLogoWithText';
+import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
+import TrackTable from './TrackTable';
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
@@ -44,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         maxHeight: 60,
         marginTop: 15,
-        marginRight: 20,
         letterSpacing: 1,
         fontFamily: 'Libre Franklin, sans-serif',
         borderRadius: 100,
@@ -53,45 +46,40 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     headerRowA: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 20,
         marginBottom: 20,
     },
     headerRowB: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
     headerColumnA: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
         marginLeft: 20,
         marginBottom: 42,
     },
     headerColumnB: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
     },
     sideButton: {
         borderRadius: 100,
         fontFamily: 'Libre Franklin, sans-serif',
-        width: "60%",
+        width: '70%',
         marginTop: 18,
-        marginRight: 20,
     },
     image: {
         boxShadow: theme.shadows[2],
-        display: "flex",
+        display: 'flex',
         maxWidth: 180,
         maxHeight: 180,
-    },
-    trackImage: {
-        boxShadow: theme.shadows[2],
-        maxWidth: 60,
     },
     root: {
         width: '95%',
@@ -130,32 +118,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
-
 function PlaylistDetailsComponent(props) {
     const classes = useStyles();
     const playlist = props.playlist;
@@ -171,7 +133,9 @@ function PlaylistDetailsComponent(props) {
     const [allSongs, setAllSongs] = React.useState([]);
 
     const foundSongsState = useSelector((state) => state.entities.songs);
-    const removedSongIdState = useSelector((state) => state.entities.removedSongId);
+    const removedSongIdState = useSelector(
+        (state) => state.entities.removedSongId
+    );
 
     const autoCompleteRef = React.createRef();
 
@@ -188,7 +152,9 @@ function PlaylistDetailsComponent(props) {
 
     useEffect(() => {
         if (removedSongIdState) {
-            const newSongs = allSongs.filter(song => song.id !== removedSongIdState);
+            const newSongs = allSongs.filter(
+                (song) => song.id !== removedSongIdState
+            );
             setAllSongs(newSongs);
         }
     }, [removedSongIdState]);
@@ -249,7 +215,7 @@ function PlaylistDetailsComponent(props) {
             added_by: props.user?.username ? props.user.username : '',
             duration_ms: song.duration_ms,
             image_url: song.image_url,
-            id: song.spotify_id //Check if correct, might just be id in some edge cases
+            id: song.spotify_id, //Check if correct, might just be id in some edge cases
         };
     };
 
@@ -263,10 +229,9 @@ function PlaylistDetailsComponent(props) {
 
     const shareLinkOnClick = () => {
         navigator.clipboard.writeText(
-            'http://localhost:3000/invite/' +
-            props.playlist._id
+            'http://localhost:3000/invite/' + props.playlist._id
         );
-    }
+    };
 
     const getStringFromMilliseconds = (milliseconds, includeHours) => {
         const hours = Math.floor(milliseconds / 1000 / 60 / 60);
@@ -340,7 +305,7 @@ function PlaylistDetailsComponent(props) {
         if (song.id) {
             props.removeSong(song.id);
         }
-    }
+    };
 
     const sortHeaders = (fieldSet) => {
         setSortedField(fieldSet);
@@ -423,10 +388,7 @@ function PlaylistDetailsComponent(props) {
     };
 
     const properties = [
-        [
-            'Allow Explicit Songs',
-            playlist.music_info.allow_explicit
-        ],
+        ['Allow Explicit Songs', playlist.music_info.allow_explicit],
         [
             'Acousticness',
             getStringValue(
@@ -505,7 +467,12 @@ function PlaylistDetailsComponent(props) {
             variant="contained"
             className={classes.spotify}
             endIcon={<SpotifyLogoWithText />}
-            onClick={() => window.open("https://open.spotify.com/playlist/" + props.playlist.spotify_id)}
+            onClick={() =>
+                window.open(
+                    'https://open.spotify.com/playlist/' +
+                        props.playlist.spotify_id
+                )
+            }
         >
             Check out on
         </Button>
@@ -514,46 +481,75 @@ function PlaylistDetailsComponent(props) {
     const playlistHeader = (
         <div className={classes.headerRowA}>
             <div className={classes.headerRowB}>
-                <img className={classes.image} src={props.playlist.image_url} />
                 <div className={classes.headerColumnA}>
-                    <Typography variant="h2">
-                        {playlist.title}
-                    </Typography>
+                    <img
+                        className={classes.image}
+                        src={props.playlist.image_url}
+                    />
+                </div>
+                <div className={classes.headerColumnA}>
+                    <Typography variant="h2">{playlist.title}</Typography>
                     <Typography variant="h6">
                         {getStringFromMilliseconds(totalDuration, true)}
                     </Typography>
                 </div>
-
             </div>
             <div className={classes.headerColumnB}>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {spotifyLogoText}
                 </div>
-                {props.isBrowse ? (<div />) : (
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button variant="contained" color="primary" className={classes.sideButton}>
+                {props.playlist.is_teamtune_playlist &&
+                props.playlist.is_own_playlist ? (
+                    <div
+                        style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.sideButton}
+                        >
                             Fill up to target
                         </Button>
                     </div>
+                ) : (
+                    <div />
                 )}
-                {props.isBrowse ? (<div />) : (
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button onClick={shareLinkOnClick} variant="contained" color="primary" className={classes.sideButton}>
+                {props.playlist.is_teamtune_playlist &&
+                props.playlist.is_own_playlist ? (
+                    <div
+                        style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                        <Button
+                            onClick={shareLinkOnClick}
+                            variant="contained"
+                            color="primary"
+                            className={classes.sideButton}
+                        >
                             copy invite link
                         </Button>
                     </div>
+                ) : (
+                    <div />
                 )}
-                {props.isBrowse ? (<div />) : (
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <Button onClick={() => props.history.push('/playlists')} variant="contained" color="primary" className={classes.sideButton}>
+                {props.isBrowse ? (
+                    <div />
+                ) : (
+                    <div
+                        style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                        <Button
+                            onClick={() => props.history.push('/playlists')}
+                            variant="contained"
+                            color="primary"
+                            className={classes.sideButton}
+                        >
                             Back to Overview
                         </Button>
                     </div>
                 )}
-
             </div>
         </div>
-    )
+    );
 
     return (
         <Paper className={classes.backgroundPaper}>
@@ -601,7 +597,9 @@ function PlaylistDetailsComponent(props) {
                         <hr />
                     </div>
                 )}
-                {props.isBrowse ? (<div />) : (
+                {props.isBrowse ? (
+                    <div />
+                ) : (
                     <div className={classes.searchRow}>
                         <div className={classes.textInput}>
                             <Autocomplete
@@ -646,7 +644,7 @@ function PlaylistDetailsComponent(props) {
                                         onChange={(event, value) =>
                                             onChangeSearch(event)
                                         }
-                                        label="Search for songs"
+                                        label="Search for songs to add"
                                         variant="outlined"
                                         fullWidth
                                         onKeyDown={handleKeyDown}
@@ -667,112 +665,21 @@ function PlaylistDetailsComponent(props) {
                 )}
                 <div>
                     <Paper>
-                        <TableContainer>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell
-                                            align="right"
-                                            onClick={() =>
-                                                sortHeaders('number')
-                                            }
-                                        >
-                                            #
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                        >
-                                            Image
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            onClick={() => sortHeaders('title')}
-                                        >
-                                            Title
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            onClick={() =>
-                                                sortHeaders('interpret')
-                                            }
-                                        >
-                                            Interpret
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            onClick={() =>
-                                                sortHeaders('added_by')
-                                            }
-                                        >
-                                            Added by
-                                        </TableCell>
-                                        <TableCell
-                                            align="right"
-                                            onClick={() =>
-                                                sortHeaders('duration_ms')
-                                            }
-                                        >
-                                            Duration
-                                        </TableCell>
-                                        {props.isBrowse ? (<div />) : (
-                                            <TableCell align="right">
-                                                Delete
-                                            </TableCell>
-                                        )}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {allSongs.map((song, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell
-                                                align="right"
-                                                component="th"
-                                                scope="row"
-                                            >
-                                                {index + 1}
-                                            </TableCell>
-                                            <TableCell>
-                                                <img className={classes.trackImage} src={song.image_url} />
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.title}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.interpret}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {song.added_by}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {getStringFromMilliseconds(
-                                                    song.duration_ms,
-                                                    false
-                                                )}
-                                            </TableCell>
-                                            {props.isBrowse ? (<div />) : (
-                                                <TableCell align="right">
-                                                    <IconButton
-                                                        disabled={
-                                                            !props.playlist
-                                                                .is_own_playlist
-                                                        }
-                                                        onClick={() => removeSong(song)}
-                                                    >
-                                                        <Delete />
-                                                    </IconButton>
-                                                </TableCell>
-                                            )}
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        <TrackTable
+                            playlist={props.playlist}
+                            allSongs={allSongs}
+                            getStringFromMilliseconds={
+                                getStringFromMilliseconds
+                            }
+                            removeSong={removeSong}
+                            isBrowse={props.isBrowse}
+                        />
                     </Paper>
                 </div>
             </div>
         </Paper>
     );
-};
+}
 
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {

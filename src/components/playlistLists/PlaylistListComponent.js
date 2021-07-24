@@ -174,12 +174,19 @@ function PlaylistListComponent(props) {
     const [orderBy, setOrderBy] = React.useState();
     const [order, setOrder] = React.useState();
     const [onlyTeamTune, setTeamTune] = React.useState(false);
+    const [playlistCount, setPlaylistCount] = React.useState(props.playlists.length);
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const onChangeTeamTune = (event) => {
         setTeamTune(!onlyTeamTune);
+        if(!onlyTeamTune){
+            setPlaylistCount(props.playlists.filter(playlist => playlist.is_teamtune_playlist).length);
+            setPage(0);
+        } else {
+            setPlaylistCount(props.playlists.length);
+        }
     }
 
     const onRequestSort = (cellId, event) => {
@@ -301,7 +308,7 @@ function PlaylistListComponent(props) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={props.playlists.length}
+                    count={playlistCount}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={onChangePage}

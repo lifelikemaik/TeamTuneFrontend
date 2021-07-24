@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
         minWidth: '850px',
         width: '70%',
+        height: '120%',
         marginLeft: 'auto',
         marginRight: 'auto',
     },
@@ -270,7 +271,7 @@ function CreatePlaylistComponent(props) {
 
     // cancel is called, functionality differs whether it is a new playlist or not
     const onCancel = () => {
-        props.history.push("/");
+        props.history.push("/playlists");
 
     };
 

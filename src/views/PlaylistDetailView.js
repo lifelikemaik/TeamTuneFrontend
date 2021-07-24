@@ -1,7 +1,7 @@
 import { connect, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
-import Loading from '../components/Loading';
-import PlaylistDetailsComponent from '../components/PlaylistDetailsComponent';
+import Loading from '../components/layout/Loading';
+import PlaylistDetailsComponent from '../components/playlistDetails/PlaylistDetailsComponent';
 import {
     addPlaylist,
     addSongToPlaylist,

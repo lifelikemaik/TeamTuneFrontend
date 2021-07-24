@@ -173,7 +173,7 @@ export function removeSongFromPlaylist(playlistId, songId) {
     };
 }
 
-export const getPlaylist = (id) => {
+export const getPlaylist = (id, loggedIn) => {
     function onSuccess(playlist) {
         return { type: 'GETPLAYLIST_SUCCESS', playlist: playlist };
     }
@@ -183,7 +183,7 @@ export const getPlaylist = (id) => {
 
     return async (dispatch, getState) => {
         try {
-            let playlist = await PlaylistService.getPlaylist(id);
+            let playlist = await PlaylistService.getPlaylist(id, loggedIn);
             dispatch(onSuccess(playlist));
         } catch (e) {
             onFailure(e);

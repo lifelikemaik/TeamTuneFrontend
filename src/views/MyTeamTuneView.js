@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { updateUsername } from "../redux/actions";
 import { deleteAccount } from "../redux/actions";
-import MyTeamTuneComponent from "../components/MyTeamTuneComponent";
+import MyTeamTuneComponent from "../components/myTeamTune/MyTeamTuneComponent";
 
 /**
  * Manages process of changing user settings

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
-import InviteComponent from "../components/InviteComponent";
+import InviteComponent from "../components/authentication/InviteComponent";
 import {registerInvite} from "../redux/actions";
 
 
