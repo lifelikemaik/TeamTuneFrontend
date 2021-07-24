@@ -5,6 +5,9 @@ import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import {Paper} from "@material-ui/core";
+import TermsAndConditions from "./TermsAndConditions";
+import Imprint from "./Imprint";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 const useStyles = makeStyles((theme) => ({
     backgroundPaper: {
@@ -71,38 +74,26 @@ export default function LegalComponent() {
         <Paper className={classes.backgroundPaper}>
             <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>Collapsible Group Item #1</Typography>
+                    <Typography>Website Terms and Conditions of Use</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    <TermsAndConditions/>
                 </AccordionDetails>
             </Accordion>
             <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Collapsible Group Item #2</Typography>
+                    <Typography>Imprint</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    <Imprint/>
                 </AccordionDetails>
             </Accordion>
             <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                 <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Collapsible Group Item #3</Typography>
+                    <Typography>Privacy Policy</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    <PrivacyPolicy/>
                 </AccordionDetails>
             </Accordion>
         </Paper>
