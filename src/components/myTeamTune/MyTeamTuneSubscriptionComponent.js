@@ -45,38 +45,41 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     upgradeSubscriptionButtons: {
+        height: 400,
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
     },
     upgradeSubscriptionButton: {
-        bottom: -160,
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: 20,
-        color: "white",
-        backgroundColor: "black",
-        width: "40%",
-        height: "40px",
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        borderRadius: 100,
+        display: 'flex',
         fontSize: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        color: "#96ffd3",
+        backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "#1db954",
+            backgroundColor: "#62D2A2",
+            color: "#000000",
             opacity: "90%",
         },
     },
     cancleSubscriptionButton: {
-        bottom: 20,
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: 20,
-        color: "white",
-        backgroundColor: "black",
-        width: "40%",
-        height: "40px",
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        borderRadius: 100,
+        display: 'flex',
         fontSize: 17,
+        paddingLeft: 20,
+        paddingRight: 20,
+        color: "#96ffd3",
+        backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "#1db954",
+            backgroundColor: "#62D2A2",
+            color: "#000000",
             opacity: "90%",
         },
     },
@@ -120,7 +123,7 @@ function PremiumFunctionalitiesList(props) {
 function MyTeamTuneSubscriptionComponent(props) {
 
     const classes = useStyles();
-    const [isPremium, setIsPremium] = React.useState(false);
+    const [isPremium, setIsPremium] = React.useState(true);
     const toggle = React.useCallback(() => setIsPremium(!isPremium));
 
     useEffect(() => {
@@ -155,16 +158,13 @@ function MyTeamTuneSubscriptionComponent(props) {
                                 <h2>What you pay: 7,99€ / month</h2>
                             </div>
                             <div className={classes.upgradeSubscriptionButtons}>
-                                <Grid container justify="flex-end" alignItems="flex-end">
                                     <Button
                                         className={classes.upgradeSubscriptionButton}
                                         isPremium={isPremium}
                                         onClick={() => { props.history.push('/bookpremium'); onUpgradeSubscription() }}
                                     >
-
                                         Upgrade to Premium
                                     </Button>
-                                </Grid>
                                 {console.log(isPremium)}
                             </div>
                         </Paper>

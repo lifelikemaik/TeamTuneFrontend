@@ -39,10 +39,12 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(2),
     },
     addPlaylistButton: {
+        fontFamily: "Libre Franklin, sans-serif",
+        borderRadius: 100,
         margin: theme.spacing(2),
         width: "110%",
         height: "40px",
-        fontSize: 17,
+        fontSize: 20,
         color: "black",
         backgroundColor: "1db954",
         '&:hover': {
@@ -243,7 +245,7 @@ function PlaylistListComponent(props) {
                         color="secondary"
                         className={classes.addPlaylistButton}
                     >
-                        Create Playlist
+                        Create a new Playlist
                     </Button>
                 )}
             </div>
@@ -294,6 +296,7 @@ function PlaylistListComponent(props) {
                                             onClickDeletePlaylist={
                                                 props.onClickDeletePlaylist
                                             }
+                                            onClickPlayPlaylist={props.onClickPlayPlaylist}
                                             onMakePlaylistPublic={props.onMakePlaylistPublic}
                                             onCopyPlaylist={props.onCopyPlaylist}
                                             isAdmin={props.isAdmin}
@@ -324,8 +327,9 @@ function PlaylistListComponent(props) {
 // attributes of props and their type
 PlaylistListComponent.propTypes = {
     onAddPlaylist: PropTypes.func,
-    onClickDeletePlaylist: PropTypes.func.isRequired,
+    onClickDeletePlaylist: PropTypes.func,
     onClickDisplayPlaylist: PropTypes.func.isRequired,
+    onClickPlayPlaylist: PropTypes.func.isRequired,
     onClickFollowPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
     isLoggedIn: PropTypes.bool,

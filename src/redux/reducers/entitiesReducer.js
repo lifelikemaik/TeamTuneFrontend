@@ -13,6 +13,11 @@ export default function entities(state = {}, action) {
             return { ...state };
         case 'ADDPlaylist_SUCCESS':
             return { ...state };
+        case 'REMOVE_PLAYLIST_SUCCESS':
+            return {
+                ...state,
+                playlists: state.playlists.filter(playlist => playlist._id !== action.removedPlaylistId)
+            }
         case 'UPDATEPLAYLIST_SUCCESS':
             return { ...state };
         case 'ADDSONG_SUCCESS':
@@ -22,6 +27,8 @@ export default function entities(state = {}, action) {
                 ...state,
                 removedSongId: action.removedSongId
             };
+        case 'PLAY_PLAYLIST_SUCCESS':
+            return {...state};
         case 'SEARCHFORSONG_SUCCESS':
             return { songs: action.songs };
         default:

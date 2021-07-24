@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     IconButton,
@@ -11,7 +12,8 @@ import {
     TableRow,
     TableSortLabel,
 } from '@material-ui/core';
-import {Delete} from "@material-ui/icons";
+import { Delete } from '@material-ui/icons';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 const useStyles = makeStyles((theme) => ({
     trackImage: {
@@ -159,6 +161,9 @@ function TrackTable(props) {
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell width="5%" align="left">
+                                Play
+                            </TableCell>
                             <TableCell
                                 align="left"
                                 width="10%"
@@ -196,6 +201,11 @@ function TrackTable(props) {
                             .map((song, index) => {
                                 return (
                                     <TableRow key={index}>
+                                        <TableCell>
+                                            <IconButton onClick={() => props.startPlayback(props.playlist._id, song.id)}>
+                                                <PlayArrowIcon />
+                                            </IconButton>
+                                        </TableCell>
                                         <TableCell>
                                             <img className={classes.trackImage} src={song.image_url} />
                                         </TableCell>
@@ -247,6 +257,13 @@ function TrackTable(props) {
 }
 
 // attributes of props and their type
-TrackTable.propTypes = {};
+TrackTable.propTypes = {
+    playlist: PropTypes.object,
+    allSongs: PropTypes.object,
+    getStringFromMilliseconds: PropTypes.func,
+    removeSong: PropTypes.func,
+    isBrowse: PropTypes.bool,
+    startPlayback: PropTypes.func,
+};
 
 export default TrackTable;

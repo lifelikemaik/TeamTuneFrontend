@@ -2,9 +2,6 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {IconButton, Paper, TableCell, TableRow, Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
-import ImageIcon from "@material-ui/icons/Image";
-import DeleteIcon from "@material-ui/icons/Delete";
-import {Rating} from "@material-ui/lab";
 import PlaylistListRowButtons from "./PlaylistListRowButtons";
 
 // a material ui function. With this way of styling you have the style classes of this component in one place
@@ -57,7 +54,9 @@ function PlaylistListRow(props) {
                     isBrowse={props.isBrowse}
                     onClickFollowPlaylist={props.onClickFollowPlaylist}
                     onMakePlaylistPublic={props.onMakePlaylistPublic}
+                    onClickDeletePlaylist={props.onClickDeletePlaylist}
                     onCopyPlaylist={props.onCopyPlaylist}
+                    onClickPlayPlaylist={props.onClickPlayPlaylist}
                     isLoggedIn={props.isLoggedIn}
                 />
             </TableCell>
@@ -74,6 +73,7 @@ PlaylistListRow.propTypes = {
     onClickDisplayPlaylist: PropTypes.func,
     onMakePlaylistPublic: PropTypes.func,
     onCopyPlaylist: PropTypes.func,
+    onClickPlayPlaylist: PropTypes.func.isRequired,
 };
 
 export default PlaylistListRow;

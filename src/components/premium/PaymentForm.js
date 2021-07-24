@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
         marginBottom: 20,
     },
+    paymentRoot: {
+        height: 450,
+    },
     paymentRow: {
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
@@ -44,15 +47,18 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
     },
     bookPremiumButton: {
-        marginLeft: theme.spacing(1),
-        marginTop: 280,
-        width: "50%",
-        height: "40px",
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        borderRadius: 100,
+        display: 'flex',
         fontSize: 17,
-        color: "white",
+        paddingLeft: 20,
+        paddingRight: 20,
+        color: "#96ffd3",
         backgroundColor: "black",
         '&:hover': {
-            backgroundColor: "#1db954",
+            backgroundColor: "#62D2A2",
+            color: "#000000",
             opacity: "90%",
         },
     },
@@ -60,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function useRadioButtons(name) {
-    const [value, setState] = useState(null);
+    const [value, setState] = useState("paypal");
 
     const handleChange = e => {
         setState(e.target.value);
@@ -124,7 +130,7 @@ function PaymentForm(props) {
                 </Grid>
             </Grid>
             {paymentOption === 'paypal' ? (
-                <div>
+                <div className={classes.paymentRoot}> 
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
                             label="E-Mail address"
@@ -153,7 +159,7 @@ function PaymentForm(props) {
                 </div>
             ) : (<div />)}
             {paymentOption === 'sepa' ? (
-                <div>
+                <div className={classes.paymentRoot}>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
                             label="Debitcard number"
@@ -187,7 +193,7 @@ function PaymentForm(props) {
                 </div>
             ) : (<div />)}
             {paymentOption === 'credit' ? (
-                <div>
+                <div className={classes.paymentRoot}>
                     <Grid item xs={12} sm={6} className={classes.paymentRow}>
                         <TextField
                             label="Credit Card Number"

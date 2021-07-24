@@ -152,6 +152,46 @@ export function addSongToPlaylistInvite(playlistId, songId) {
     };
 }
 
+export function removePlaylist(playlistId) {
+    function onSuccess(removedPlaylistId) {
+        return { type: 'REMOVE_PLAYLIST_SUCCESS', removedPlaylistId: removedPlaylistId };
+    }
+    function onFailure(error) {
+        console.log('failed to remove playlist: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.removePlaylist(
+                playlistId
+            );
+            dispatch(onSuccess(result.removedPlaylistId));
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
+export function playPlaylist(playlistId, songId) {
+    function onSuccess() {
+        return { type: 'PLAY_PLAYLIST_SUCCESS'};
+    }
+    function onFailure(error) {
+        console.log('failed to play playlist: ', error);
+    }
+
+    return async (dispatch) => {
+        try {
+            const result = await PlaylistService.playPlaylist(
+                playlistId, songId
+            );
+            dispatch(onSuccess());
+        } catch (e) {
+            onFailure(e);
+        }
+    };
+}
+
 export function removeSongFromPlaylist(playlistId, songId) {
     function onSuccess(removedSongId) {
         return { type: 'REMOVE_SONG_SUCCESS', removedSongId: removedSongId };

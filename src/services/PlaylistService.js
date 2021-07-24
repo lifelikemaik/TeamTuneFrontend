@@ -1,8 +1,9 @@
 import HttpService from "./HttpService";
+import resolve from "resolve";
 
 export default class PlaylistService {
     static baseURL() {
-        return "http://localhost:4000/playlists";
+        return 'http://localhost:4000/playlists';
     }
 
     static getPlaylists() {
@@ -22,7 +23,7 @@ export default class PlaylistService {
     static getPublicPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL() + "/public",
+                this.baseURL() + '/public',
                 function (data) {
                     resolve(data);
                 },
@@ -36,7 +37,7 @@ export default class PlaylistService {
     static getUserPlaylists() {
         return new Promise(async (resolve, reject) => {
             HttpService.get(
-                this.baseURL() + "/my_playlists",
+                this.baseURL() + '/my_playlists',
                 function (data) {
                     resolve(data);
                 },
@@ -48,7 +49,9 @@ export default class PlaylistService {
     }
 
     static getPlaylist(id, loggedIn) {
-        const url = loggedIn ? `${PlaylistService.baseURL()}/${id}` : `${PlaylistService.baseURL()}/invited/${id}`;
+        const url = loggedIn
+            ? `${PlaylistService.baseURL()}/${id}`
+            : `${PlaylistService.baseURL()}/invited/${id}`;
         return new Promise(async (resolve, reject) => {
             HttpService.get(
                 url,
@@ -56,7 +59,7 @@ export default class PlaylistService {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
                     } else {
-                        reject("Error while retrieving playlist");
+                        reject('Error while retrieving playlist');
                     }
                 },
                 function (textStatus) {
@@ -68,7 +71,6 @@ export default class PlaylistService {
 
     static createPlaylist(playlist) {
         playlist.id = Math.floor(Math.random() * 100000000 + 1).toString();
-
 
         return new Promise((resolve, reject) => {
             HttpService.post(
@@ -84,8 +86,39 @@ export default class PlaylistService {
         });
     }
 
+    static removePlaylist(playlistId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId;
+        return new Promise((resolve, reject) => {
+            HttpService.remove(
+                url,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static playPlaylist(playlistId, songId) {
+        const url = PlaylistService.baseURL() + '/' + playlistId + '/play';
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                url,
+                { songId: songId },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static searchForSong(songName) {
-        const url = PlaylistService.baseURL() + '/songs/' + songName
+        const url = PlaylistService.baseURL() + '/songs/' + songName;
         return new Promise((resolve, reject) => {
             HttpService.get(
                 url,
@@ -105,7 +138,12 @@ export default class PlaylistService {
     }
 
     static searchForSongInvite(songName, playlistId) {
-        const url = PlaylistService.baseURL() + '/songs/' + songName + '/invited/' + playlistId
+        const url =
+            PlaylistService.baseURL() +
+            '/songs/' +
+            songName +
+            '/invited/' +
+            playlistId;
         return new Promise((resolve, reject) => {
             HttpService.get(
                 url,
@@ -125,7 +163,8 @@ export default class PlaylistService {
     }
 
     static addSongToPlaylist(playlistId, songId) {
-        const url = PlaylistService.baseURL() + '/' + playlistId + '/songs/' + songId;
+        const url =
+            PlaylistService.baseURL() + '/' + playlistId + '/songs/' + songId;
         return new Promise((resolve, reject) => {
             HttpService.put(
                 url,
@@ -156,7 +195,12 @@ export default class PlaylistService {
     }
 
     static addSongToPlaylistInvite(playlistId, songId) {
-        const url = PlaylistService.baseURL() + '/invite/' + playlistId + '/songs/' + songId;
+        const url =
+            PlaylistService.baseURL() +
+            '/invite/' +
+            playlistId +
+            '/songs/' +
+            songId;
         return new Promise((resolve, reject) => {
             HttpService.put(
                 url,
@@ -183,8 +227,7 @@ export default class PlaylistService {
                 function (textStatus) {
                     reject(textStatus);
                 }
-            )
-            ;
+            );
         });
     }
 
@@ -197,7 +240,7 @@ export default class PlaylistService {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
                     } else {
-                        reject("Error while retrieving playlist");
+                        reject('Error while retrieving playlist');
                     }
                 },
                 function (textStatus) {
@@ -216,7 +259,7 @@ export default class PlaylistService {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
                     } else {
-                        reject("Error while retrieving playlist length");
+                        reject('Error while retrieving playlist length');
                     }
                 },
                 function (textStatus) {
