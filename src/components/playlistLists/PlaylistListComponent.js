@@ -141,7 +141,7 @@ function filterPlaylists(array, onlyTeamTune, onlyPublic, onlyPrivate) {
     }
     if(onlyPublic){
         return array.filter(playlist => playlist.publicity);
-    } else {
+    } else if(onlyPrivate) {
         return array.filter(playlist => !playlist.publicity);
     }
     return array;
