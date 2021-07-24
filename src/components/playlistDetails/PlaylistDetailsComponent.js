@@ -506,6 +506,7 @@ function PlaylistDetailsComponent(props) {
                         <Button
                             variant="contained"
                             color="primary"
+                            disabled={(allSongs.length == 0)}
                             className={classes.sideButton}
                         >
                             Fill up to target
