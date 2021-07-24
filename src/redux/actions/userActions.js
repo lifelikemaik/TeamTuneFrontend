@@ -32,7 +32,8 @@ export function register(username, password, isAdmin, code) {
         return { type: "LOGIN_SUCCESS", user: user };
     }
     function onFailure(error) {
-        return { type: "LOGIN_FAILURE", error: error };
+        console.log('error on failure: ', error);
+        return { type: "ERROR", error: error };
     }
 
     return async (dispatch) => {
@@ -50,7 +51,7 @@ export function registerInvite(username, playlistId) {
         return { type: "INVITE_SUCCESS", user: user };
     }
     function onFailure(error) {
-        return { type: "INVITE_FAILURE", error: error };
+        return { type: "ERROR", error: error };
     }
 
     return async (dispatch) => {

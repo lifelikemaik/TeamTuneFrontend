@@ -264,13 +264,9 @@ function LandingPageComponent(props) {
     useEffect(() => {
         if (user.user) {
             setIsLoggedIn(isLoggedIn => !isLoggedIn);
-            console.log("logged in");
-        } else {
-            console.log("logged out");
         }
     }, [user, props.history]);
 
-    console.log(isLoggedIn)
 
     const SubscriptionCardPremium = () => {
         const bull = <span className={classes.bullet}>•&nbsp;</span>;
@@ -410,7 +406,7 @@ function LandingPageComponent(props) {
                         Pricing
                     </h1>
                     <h3 className={classes.subscriptionModelHeader}>
-                        Choose between our Free and Premium model:
+                        Choose between our Free and Premium model (coming soon):
                     </h3>
                     <div className={classes.flexRow}>
                         <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>

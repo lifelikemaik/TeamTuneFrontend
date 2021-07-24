@@ -144,7 +144,7 @@ function MyTeamTuneSubscriptionComponent(props) {
                 ? [
                     <h1>Your current subscription model: Free</h1>,
                     <Divider orientation="horizontal" />,
-                    <h2>Do you want to upgrade to Premium and experience the full TeamTune functionalities?</h2>,
+                    <h2>Do you want to upgrade to Premium (coming soon) and experience the full TeamTune functionalities?</h2>,
                     <div className={classes.upgradeSubscriptionPaper}>
                         <Paper className={classes.upgradeSubscriptionPaper} component="form">
                             <div className={classes.whatYouGet}>
@@ -165,7 +165,6 @@ function MyTeamTuneSubscriptionComponent(props) {
                                     >
                                         Upgrade to Premium
                                     </Button>
-                                {console.log(isPremium)}
                             </div>
                         </Paper>
                     </div>,

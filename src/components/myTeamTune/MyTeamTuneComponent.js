@@ -99,7 +99,6 @@ function VerticalTabs(props) {
                     onUpdateUsername={props.onUpdateUsername}
                     onUpdatePassword={props.onUpdatePassword}
                 />
-                {/*console.log(props)*/}
             </TabPanel>
         </div>
     );

@@ -5,7 +5,8 @@ import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
 
 
 const useStyles = makeStyles((theme) => ({
-    changePWRoot: {
+    root: {
+        width: '65%',
         margin: "auto",
     },
     backgroundPaper: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 'auto',
     },
     section: {
+        padding: '24px',
         height: 800,
         fontSize: 20,
     },
@@ -82,7 +84,7 @@ function MyTeamTuneAccountComponent(props) {
     );
 
     return (
-        <div className={classes.changePWRoot}>
+        <div className={classes.root}>
             <Paper className={classes.backgroundPaper}>
                 <section className={classes.section}>
                     <div className={classes.changeCredentialsRow}>

@@ -279,7 +279,6 @@ function PaymentForm(props) {
                     </Grid>
                 </div>
             ) : (<div />)}
-            {console.log(props.props.history.location.pathname)}
             <div className={classes.bookPremiumButtons}>
                 <Button
                     className={classes.bookPremiumButton}

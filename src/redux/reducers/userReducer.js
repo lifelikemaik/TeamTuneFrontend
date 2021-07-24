@@ -23,6 +23,11 @@ const getUser = () => {
 
 export default function user(state = getUser(), action) {
     switch (action.type) {
+        case 'ERROR':
+            return {
+                ...state,
+                error: action.error
+            };
         case "LOGIN_SUCCESS":
             return { user: action.user };
         case "LOGIN_FAILURE":
