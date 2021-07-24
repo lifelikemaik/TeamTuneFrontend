@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     header: {
         paddingRight: 0,
         paddingLeft: 0,
-        "@media (max-width: 1050px)": {
+        "@media (max-width: 1120px)": {
             paddingLeft: 0,
         },
     },
@@ -128,7 +128,7 @@ function Header(props) {
 
     useEffect(() => {
         const setResponsiveness = () => {
-            return window.innerWidth < 1050
+            return window.innerWidth < 1120
                 ? setState((prevState) => ({...prevState, mobileView: true}))
                 : setState((prevState) => ({...prevState, mobileView: false}));
         };
