@@ -1,5 +1,10 @@
 export default function entities(state = {}, action) {
     switch (action.type) {
+        case 'ERROR':
+            return {
+                ...state,
+                error: action.error
+            }
         case 'GETPLAYLISTS_SUCCESS':
             return { playlists: action.playlists };
         case 'GETUSERPLAYLISTS_SUCCESS':

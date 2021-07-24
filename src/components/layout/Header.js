@@ -11,7 +11,7 @@ import {
     Drawer,
     MenuItem,
     Link,
-    Popper, ClickAwayListener, MenuList, Grow, Paper
+    Snackbar
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { motion } from "framer-motion";
@@ -19,6 +19,7 @@ import { motion } from "framer-motion";
 import {useSelector} from "react-redux";
 import {logout} from "../../redux/actions";
 import TeamTuneIconWhite from "../../images/TeamTuneIconWhite";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
     main_options: {
@@ -81,6 +82,47 @@ function Header(props) {
         mobileView: false,
         drawerOpen: false,
     });
+
+    //Show error toastrs
+    const errorMessage = useSelector((state) => state.entities.error);
+    useEffect(() => {
+        if(errorMessage) {
+            setOpen(false);
+            setMessage(errorMessage);
+            setOpen(true);
+        }
+    }, [errorMessage]);
+
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        if (event != null) preventBackgroundClick(event);
+        setOpen(false);
+    };
+
+    const preventBackgroundClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const snackBar = () => {
+        return (
+            <Snackbar
+                open={open}
+                autoHideDuration={2500}
+                onClose={handleClose}
+                onClick={preventBackgroundClick}
+                style={{zIndex: 99999}}
+            >
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
+        );
+    };
+
 
     const {mobileView, drawerOpen} = state;
 
@@ -297,6 +339,7 @@ function Header(props) {
 
     return (
         <header>
+            {snackBar()}
             <AppBar className={header} position="sticky">
                 {mobileView ? displayMobile() : displayDesktop()}
             </AppBar>
