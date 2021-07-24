@@ -3,7 +3,19 @@ import { withRouter, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Typography, Card, CardActions, CardContent, List, Divider, ListItem, ListItemText, Paper } from "@material-ui/core";
+import {
+    Button,
+    Typography,
+    Card,
+    CardActions,
+    CardContent,
+    List,
+    Divider,
+    ListItem,
+    ListItemText,
+    Paper,
+    Grid, Fab
+} from "@material-ui/core";
 import TeamTuneOverviewImage from "../../images/TeamTuneOverviewImage";
 import LandingPageTopImage from "../../images/LandingPageTopImage.png";
 import { motion } from "framer-motion";
@@ -14,13 +26,17 @@ import TuneIcon from '@material-ui/icons/Tune';
 import ShareIcon from '@material-ui/icons/Share';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
+import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
+import FreeIcon from "../../images/FreeIcon";
+import PremiumIcon from "../../images/PremiumIcon";
 
 const useStyles = makeStyles((theme) => ({
     cardRoot: {
-        height: 450,
+        height: 600,
+        maxWidth: 450,
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: "rgba(204,204,204, 0.55)",
+        backgroundColor: "rgba(150,255,211, 0.15)",
     },
     cardHeader: {
         display: "flex",
@@ -107,12 +123,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     cardButtonsFree: {
-        height: 195,
         justifyContent: "center",
         alignItems: "center",
     },
     cardButtonsPremium: {
-        height: 80,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -154,6 +168,20 @@ const useStyles = makeStyles((theme) => ({
     spacing: {
         margin: 20,
     },
+    icon: {
+        height: 100,
+    },
+    features: {
+        height: 510,
+    },
+    fab: {
+        margin: 0,
+        top: 'auto',
+        right: 40,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
+    },
 }));
 
 /**
@@ -161,11 +189,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function FreeFunctionalitiesList(props) {
-
     const classes = useStyles();
-
-
-
     return (
         <div className={classes.additionalFeaturesList}>
             <List component="nav">
@@ -186,7 +210,6 @@ function FreeFunctionalitiesList(props) {
 }
 
 function PremiumFunctionalitiesList() {
-
     const classes = useStyles();
     return (
         <div className={classes.additionalFeaturesList}>
@@ -218,11 +241,13 @@ function PremiumFunctionalitiesList() {
 function LandingPageComponent(props) {
     const classes = useStyles();
 
+    const startRef = useRef(null);
     const featuresRef = useRef(null);
     const pricingRef = useRef(null);
     const instructionsRef = useRef(null);
     const endSectionRef = useRef(null);
 
+    const executeScrollStart = () => startRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     const executeScrollFeatures = () => featuresRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     const executeScrollPricing = () => pricingRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     const executeScrollInstructions = () => instructionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -252,10 +277,13 @@ function LandingPageComponent(props) {
 
         return (
             <Card className={classes.cardRoot} variant="outlined">
-                <CardContent >
+                <CardContent className={classes.features}>
                     <h4 className={classes.cardHeader} style={{ textDecorationLine: 'underline' }}>
                         TeamTune Premium
                     </h4>
+                    <div className={classes.flexRow}>
+                        <PremiumIcon className={classes.icon}/>
+                    </div>
                     <PremiumFunctionalitiesList />
                 </CardContent>
                 <CardActions className={classes.cardButtonsPremium} >
@@ -272,20 +300,21 @@ function LandingPageComponent(props) {
     const SubscriptionCardFree = () => {
         return (
             <Card className={classes.cardRoot} variant="outlined">
-                <CardContent >
+                <CardContent className={classes.features}>
                     <h4 className={classes.cardHeader} style={{ textDecorationLine: 'underline' }}>
                         TeamTune Free
                     </h4>
+                    <div className={classes.flexRow}>
+                        <FreeIcon className={classes.icon}/>
+                    </div>
                     <FreeFunctionalitiesList />
                 </CardContent>
                 <CardActions className={classes.cardButtonsFree}>
-
                     <Button
                         className={classes.cardButton}
                         onClick={() => props.history.push('/register')}>
                         Go Free
                     </Button>
-
                 </CardActions>
             </Card>
         );
@@ -298,48 +327,76 @@ function LandingPageComponent(props) {
                     <h1 className={classes.headLines}>
                         Features
                     </h1>
-                    <div className={classes.flexRow}>
-
-                        <div className={classes.flexColumn}>
-                            <SpotifyLogoWithText color={"#191414"} />
-                            <h4>Connected to Spotify in real time</h4>
-                        </div>
-                        <div className={classes.flexColumn}>
-                            <div className={classes.flexRow}>
-                                <TuneIcon fontSize={"large"} />
-                            </div>
-                            <h4>Customize the settings of your playlist</h4>
-                        </div>
-
-                        <div className={classes.flexColumn}>
-                            <div className={classes.flexRow}>
-                                <FriendsIcon fontSize={"large"} />
-                            </div>
-                            <h4>Invite your Friends to join your Playlist</h4>
-                        </div>
-                    </div>
-                    <div className={classes.flexRow}>
-                        <div className={classes.flexColumn}>
-                            <div className={classes.flexRow}>
-                                <ArtTrackIcon fontSize={"large"} />
-                            </div>
-                            <h4>Explore public playlists of other TeamTune users</h4>
-                        </div>
-                        <div className={classes.flexColumn}>
-                            <div className={classes.flexRow}>
-                                <ShareIcon fontSize={"large"} />
-                            </div>
-                            <h4>Share your TeamTune playlists with the community</h4>
-                        </div>
-                        <div className={classes.flexColumn}>
-                            <div className={classes.flexRow}>
-                                <PlayArrowIcon fontSize={"large"} />
-                            </div>
-                            <h4>Directly start your music from your device</h4>
-                        </div>
-
-                    </div>
-
+                    <Grid container spacing={10}>
+                        <Grid container item spacing={-5}>
+                            <React.Fragment>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <SpotifyLogoWithText color={"#191414"}/>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <TuneIcon fontSize={"large"} />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <FriendsIcon fontSize={"large"} />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Connected to Spotify in real time</h4>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Customize the settings of your playlist</h4>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Invite your Friends to join your Playlist</h4>
+                                    </div>
+                                </Grid>
+                            </React.Fragment>
+                        </Grid>
+                        <Grid container item spacing={2}>
+                            <React.Fragment>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <ArtTrackIcon fontSize={"large"} />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <ShareIcon fontSize={"large"} />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexRow}>
+                                        <PlayArrowIcon fontSize={"large"} />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Explore public playlists of other TeamTune users</h4>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Share your TeamTune playlists with the community</h4>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div className={classes.flexColumn}>
+                                        <h4>Directly start your music from your device</h4>
+                                    </div>
+                                </Grid>
+                            </React.Fragment>
+                        </Grid>
+                    </Grid>
                 </div>
             </section>
         )
@@ -353,13 +410,13 @@ function LandingPageComponent(props) {
                         Pricing
                     </h1>
                     <h3 className={classes.subscriptionModelHeader}>
-                        You can choose between a Free and a Premium model:
+                        Choose between our Free and Premium model:
                     </h3>
                     <div className={classes.flexRow}>
-                        <motion.div whileHover={{ scale: 1.01 }}>
+                        <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
                             <SubscriptionCardFree />
                         </motion.div>
-                        <motion.div whileHover={{ scale: 1.01 }}>
+                        <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
                             <SubscriptionCardPremium />
                         </motion.div>
                     </div>
@@ -415,8 +472,11 @@ function LandingPageComponent(props) {
 
     return (
         <Paper className={classes.backgroundPaper}>
+            <Fab className={classes.fab} onClick={executeScrollStart} color="secondary" aria-label="edit">
+                <ArrowUpwardRoundedIcon/>
+            </Fab>
             <div>
-                <section className={classes.section} id="section1">
+                <section className={classes.section} ref={startRef}>
                     <Typography className={classes.headLines}>
                         Welcome to TeamTune
                     </Typography>
