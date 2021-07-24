@@ -1,30 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { withRouter, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    Button,
-    Typography,
-    Card,
-    CardActions,
-    CardContent,
-    Grid,
-    List,
-    Divider,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Paper
-} from "@material-ui/core";
+import { Button, Typography, Card, CardActions, CardContent, List, Divider, ListItem, ListItemText, Paper } from "@material-ui/core";
 import TeamTuneOverviewImage from "../../images/TeamTuneOverviewImage";
 import LandingPageTopImage from "../../images/LandingPageTopImage.png";
 import { motion } from "framer-motion";
+
 import SpotifyLogoWithText from "../../images/SpotifyLogoWithText";
-import MusicVideoRoundedIcon from '@material-ui/icons/MusicVideoRounded';
-import TuneIcon from '@material-ui/icons/Tune';
 import FriendsIcon from "../../images/FriendsIcon";
+import TuneIcon from '@material-ui/icons/Tune';
 import ShareIcon from '@material-ui/icons/Share';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 
 const useStyles = makeStyles((theme) => ({
     cardRoot: {
@@ -167,10 +156,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-function FreeFunctionalitiesList() {
+/**
+ * Landing page and "home" screen of the web app
+ * @param {props} props
+ */
+function FreeFunctionalitiesList(props) {
 
     const classes = useStyles();
+
+
 
     return (
         <div className={classes.additionalFeaturesList}>
@@ -234,6 +228,25 @@ function LandingPageComponent(props) {
     const executeScrollInstructions = () => instructionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     const executeScrollEndSection = () => endSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
+    const user = useSelector((state) => {
+        // return the currently logged in user from redux store
+        return state.user;
+
+    });
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        if (user.user) {
+            setIsLoggedIn(isLoggedIn => !isLoggedIn);
+            console.log("logged in");
+        } else {
+            console.log("logged out");
+        }
+    }, [user, props.history]);
+
+    console.log(isLoggedIn)
+
     const SubscriptionCardPremium = () => {
         const bull = <span className={classes.bullet}>•&nbsp;</span>;
 
@@ -293,13 +306,14 @@ function LandingPageComponent(props) {
                         </div>
                         <div className={classes.flexColumn}>
                             <div className={classes.flexRow}>
-                                <MusicVideoRoundedIcon fontSize={"large"} />
+                                <TuneIcon fontSize={"large"} />
                             </div>
-                            <h4>Define the Music Style of your Playlist</h4>
+                            <h4>Customize the settings of your playlist</h4>
                         </div>
+
                         <div className={classes.flexColumn}>
                             <div className={classes.flexRow}>
-                                <FriendsIcon fontSize={"large"}/>
+                                <FriendsIcon fontSize={"large"} />
                             </div>
                             <h4>Invite your Friends to join your Playlist</h4>
                         </div>
@@ -307,9 +321,9 @@ function LandingPageComponent(props) {
                     <div className={classes.flexRow}>
                         <div className={classes.flexColumn}>
                             <div className={classes.flexRow}>
-                                <TuneIcon fontSize={"large"} />
+                                <ArtTrackIcon fontSize={"large"} />
                             </div>
-                            <h4>Customize the settings of your playlist</h4>
+                            <h4>Explore public playlists of other TeamTune users</h4>
                         </div>
                         <div className={classes.flexColumn}>
                             <div className={classes.flexRow}>
@@ -319,7 +333,7 @@ function LandingPageComponent(props) {
                         </div>
                         <div className={classes.flexColumn}>
                             <div className={classes.flexRow}>
-                                <PlayArrowIcon fontSize={"large"}/>
+                                <PlayArrowIcon fontSize={"large"} />
                             </div>
                             <h4>Directly start your music from your device</h4>
                         </div>
@@ -378,11 +392,21 @@ function LandingPageComponent(props) {
                     Waste no time and get started!
                 </h1>
                 <div className={classes.tryItButtons}>
-                    <Button
-                        className={classes.standardButton}
-                        onClick={() => props.history.push('/register')}>
-                        LET´S GET STARTED
-                    </Button>
+                    {isLoggedIn
+                        ? <Button
+                            className={classes.standardButton}
+
+                            onClick={() => props.history.push('/playlists')}>
+                            LET´S GET STARTED
+                        </Button>
+                        : <Button
+                            className={classes.standardButton}
+
+                            onClick={() => props.history.push('/register')}>
+                            LET´S GET STARTED
+                        </Button>
+                    }
+
                 </div>
             </div>
         )
