@@ -1,6 +1,6 @@
 # seba-master-teamtune-frontend application
 
-TeamTune database app example application based on React. Backend can be found [here](https://github.com/sebischair/seba-master-movie-backend)
+TeamTune database app example application based on React. Backend can be found [here](https://gitlab.lrz.de/seba-master-2021/team-13/backend)
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ To get you started you can simply clone the [seba-master-teamtune-frontend](http
 
 You need git to clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/frontend) repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
 
-We also use a number of node.js tools to initialize and test [seba-master-teamtune-frontend](https://github.com/sebischair/seba-master-movie-frontend/) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
+We also use a number of node.js tools to initialize and test [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/backend) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 ### Clone TeamTune Project
 
@@ -24,7 +24,7 @@ Clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021
 
 ```
 git clone https://gitlab.lrz.de/seba-master-2021/team-13/frontend
-cd seba-master-teamtune-frontend
+cd frontend
 ```
 
 If you just want to start a new project without the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/frontend) commit history then you can do:
