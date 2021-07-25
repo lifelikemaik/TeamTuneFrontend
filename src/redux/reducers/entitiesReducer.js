@@ -17,7 +17,10 @@ export default function entities(state = {}, action) {
         case 'FOLLOW_Playlist_SUCCESS':
             return { ...state };
         case 'ADDPlaylist_SUCCESS':
-            return { ...state };
+            return {
+                ...state,
+                addedPlaylist: action.playlist
+            };
         case 'REMOVE_PLAYLIST_SUCCESS':
             return {
                 ...state,

@@ -243,8 +243,8 @@ export const getPlaylist = (id, loggedIn) => {
 };
 
 export function addPlaylist(playlist) {
-    function onSuccess() {
-        return { type: 'ADDPlaylist_SUCCESS' };
+    function onSuccess(playlist) {
+        return { type: 'ADDPlaylist_SUCCESS', playlist: playlist};
     }
     function onFailure(error) {
         console.log('add playlist failure', error);
@@ -253,8 +253,8 @@ export function addPlaylist(playlist) {
 
     return async (dispatch) => {
         try {
-            await PlaylistService.createPlaylist(playlist);
-            dispatch(onSuccess());
+            const result = await PlaylistService.createPlaylist(playlist);
+            dispatch(onSuccess(result));
         } catch (e) {
             dispatch(onFailure(e));
         }
