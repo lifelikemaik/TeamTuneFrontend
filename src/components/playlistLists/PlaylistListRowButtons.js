@@ -58,7 +58,7 @@ function PlaylistListRowButtons(props) {
             'Link was copied to the clipboard!'
         );
         navigator.clipboard.writeText(
-            'http://localhost:3000/invite/' +
+            'http://teamtune.fun/invite/' +
             props.playlist._id
         );
     }
