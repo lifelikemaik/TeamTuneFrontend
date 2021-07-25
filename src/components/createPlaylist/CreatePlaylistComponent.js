@@ -109,16 +109,13 @@ function CreatePlaylistComponent(props) {
     const [durationHours, setDurationHours] = React.useState("");
     const [durationMinutes, setDurationMinutes] = React.useState("");
     const [explicit, setExplicit] = React.useState(true);
-    const [mode, setMode] = React.useState("medium");
     const [acousticness, setAcousticness] = React.useState(null);
     const [danceability, setDanceability] = React.useState(null);
     const [energy, setEnergy] = React.useState(null);
     const [instrumentalness, setInstrumentalness] = React.useState(null);
-    const [key, setKey] = React.useState(null);
     const [liveness, setLiveness] = React.useState(null);
     const [loudness, setLoudness] = React.useState(null);
     const [speechiness, setSpeechiness] = React.useState(null);
-    const [tempo, setTempo] = React.useState(null);
     const [valence, setValence] = React.useState(null);
 
 
@@ -201,7 +198,6 @@ function CreatePlaylistComponent(props) {
                 durations_ms: 0,
                 duration_target: getDurationMs(durationHours, durationMinutes),
                 allow_explicit: explicit,
-                mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
                 min_acousticness: convertRadioValueToNumberMin(acousticness),
                 max_acousticness: convertRadioValueToNumberMax(acousticness),
                 min_danceability: convertRadioValueToNumberMin(danceability),
@@ -210,16 +206,12 @@ function CreatePlaylistComponent(props) {
                 max_energy: convertRadioValueToNumberMax(energy),
                 min_instrumentalness: convertRadioValueToNumberMin(instrumentalness),
                 max_instrumentalness: convertRadioValueToNumberMax(instrumentalness),
-                min_key: convertRadioValueToNumberMin(key),
-                max_key: convertRadioValueToNumberMax(key),
                 min_liveness: convertRadioValueToNumberMin(liveness),
                 max_liveness: convertRadioValueToNumberMax(liveness),
                 min_loudness: convertRadioValueToNumberMin(loudness),
                 max_loudness: convertRadioValueToNumberMax(loudness),
                 min_speechiness: convertRadioValueToNumberMin(speechiness),
                 max_speechiness: convertRadioValueToNumberMax(speechiness),
-                min_tempo_min: convertRadioValueToNumberMin(tempo),
-                max_tempo: convertRadioValueToNumberMax(tempo),
                 min_valence: convertRadioValueToNumberMin(valence),
                 max_valence_max: convertRadioValueToNumberMax(valence),
             }
@@ -340,6 +332,7 @@ function CreatePlaylistComponent(props) {
                 <Divider className={classes.marginTop}/>
                 <div>
                     <h1>Filters</h1>
+                    <p style={{marginBottom: '20px'}}>Too many filters can lead to few songs fitting</p>
                     <div className={classes.flexRow}>
                         <FilterSettingRow
                             title={"Danceability"}
@@ -388,20 +381,6 @@ function CreatePlaylistComponent(props) {
                             value={speechiness}
                             description={settingDescriptions.get("speechiness")}
                             onChange={setSpeechiness}/>
-                        <div className={classes.marginInputs}>
-                            <FilterSettingRow
-                                title={"Tempo"}
-                                value={tempo}
-                                description={settingDescriptions.get("tempo")}
-                                onChange={setTempo}/>
-                        </div>
-                    </div>
-                    <div className={classes.flexRow}>
-                        <FilterSettingRow
-                            title={"Key"}
-                            value={key}
-                            description={settingDescriptions.get("key")}
-                            onChange={setKey}/>
                         <div className={classes.marginInputs}>
                             <FilterSettingRow
                                 title={"Valence"}

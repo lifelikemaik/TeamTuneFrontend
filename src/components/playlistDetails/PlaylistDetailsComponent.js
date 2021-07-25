@@ -620,7 +620,7 @@ function PlaylistDetailsComponent(props) {
                         <hr />
                     </div>
                 )}
-                {props.isBrowse ? (
+                {(props.isBrowse || !(playlist.is_own_playlist && playlist.is_teamtune_playlist)) ? (
                     <div />
                 ) : (
                     <div className={classes.searchRow}>
