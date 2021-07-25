@@ -35,6 +35,10 @@ export default function entities(state = {}, action) {
             };
         case 'ADDSONG_SUCCESS':
             return { ...state };
+        case 'RECOMMENDATION_SUCCESS':
+            return { ...state,
+            snapshot_id: action.snapshot_id
+            };
         case 'REMOVE_SONG_SUCCESS':
             return {
                 ...state,

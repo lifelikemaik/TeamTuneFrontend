@@ -22,6 +22,7 @@ function PlaylistDetailsView(props) {
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
     const user = useSelector((state) => state.user);
+    const snapshot_id = useSelector((state) => state.entities.snapshot_id);
 
     // state variable of this functional component
     const [newPlaylist, setNewPlaylist] = React.useState(false);
@@ -32,6 +33,13 @@ function PlaylistDetailsView(props) {
 
         getPlaylist(playlistId, !!user.user);
     }, [match.params]);
+
+    useEffect(() => {
+        if (snapshot_id) {
+            const playlistId = selectedPlaylist.playlist._id;
+            if (playlistId) props.history.push("/playlist/" + playlistId);
+        }
+    }, [snapshot_id]);
 
     const addSongToPlaylistHelper = (playlistId, songId) => {
         if(!(user.user)){

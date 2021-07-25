@@ -338,19 +338,20 @@ export function getPlaylistLength(playlistId) {
 }
 
 export function getFullRecommendations(playlistId) {
-    function onSuccess() {
-        return { type: 'RECOMMENDATION_SUCCESS' };
+    function onSuccess(snapshot_id) {
+        return { type: 'RECOMMENDATION_SUCCESS', snapshot_id: snapshot_id };
     }
     function onFailure(error) {
         console.log('full recommendations failed', error);
+        return { type: 'ERROR', error: error };
     }
 
     return async (dispatch) => {
         try {
-            await PlaylistService.fullRecommendation(playlistId);
-            dispatch(onSuccess());
+            const result = await PlaylistService.fullRecommendation(playlistId);
+            dispatch(onSuccess(result.snapshot_id));
         } catch (e) {
-            onFailure(e);
+            dispatch(onFailure(e));
         }
     };
 }

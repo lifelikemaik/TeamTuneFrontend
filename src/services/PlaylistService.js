@@ -290,7 +290,6 @@ export default class PlaylistService {
         return new Promise((resolve, reject) => {
             HttpService.get(
                 url,
-                {},
                 function (data) {
                     resolve(data);
                 },
