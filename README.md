@@ -4,6 +4,8 @@ TeamTune database app example application based on React. Backend can be found [
 
 ## Prerequisites
 
+In order to use the web application, a Spotify account is mandatory since you connect the app with your Spotify account.
+
 Both for the frontend and the backend:
 
 -   nodejs [official website](https://nodejs.org/en/) - nodejs includes [npm](https://www.npmjs.com/) (node package manager)
