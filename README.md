@@ -10,7 +10,7 @@ Both for the frontend and the backend:
 
 ## Getting Started
 
-To get you started you can simply clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/backend) repository and install all its dependencies:
+To get you started you can simply clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/backend) repository main branch and install all its dependencies:
 
 ### Prerequisites
 
