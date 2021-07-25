@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import {
-    Paper,
-    Button,
-    TextField,
-    Typography,
-    FormControlLabel,
-    Checkbox,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import MyTeamTuneAccountComponent from './MyTeamTuneAccountComponent';
 import MyTeamTuneSubscriptionComponent from './MyTeamTuneSubscriptionComponent';
 import MyTeamTuneDeleteAccountComponent from './MyTeamTuneDeleteAccountComponent';
@@ -105,7 +97,7 @@ function VerticalTabs(props) {
 }
 
 /**
- * For presenting and changing the user settings and more
+ * For passing the props to the sub-components that handle different functionalities
  * @param {props} props
  */
 function MyTeamTuneComponent(props) {

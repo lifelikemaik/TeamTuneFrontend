@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,7 +32,7 @@ import TeamTuneDescription from "../../images/TeamTuneDescription";
 
 const useStyles = makeStyles((theme) => ({
     cardRoot: {
-        height: 600,
+        height: 650,
         maxWidth: 450,
         marginLeft: 10,
         marginRight: 10,
@@ -42,11 +42,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontFamily: "Libre Franklin, sans-serif",
-    },
-    cardText: {
-        display: "flex",
-        alignItems: "flex-end",
         fontFamily: "Libre Franklin, sans-serif",
     },
     landingPageImage: {
@@ -79,15 +74,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         fontFamily: "Libre Franklin, sans-serif",
-    },
-    welcomeTextLine: {
-        marginTop: 10,
-    },
-    welcomeTextBox: {
-        width: 500,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
     },
     additionalFeaturesList: {
         width: '100%',
@@ -123,10 +109,12 @@ const useStyles = makeStyles((theme) => ({
         width: 300,
     },
     cardButtonsFree: {
+        height: 200,
         justifyContent: "center",
         alignItems: "center",
     },
     cardButtonsPremium: {
+        height: 200,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -178,15 +166,19 @@ function FreeFunctionalitiesList(props) {
         <div className={classes.additionalFeaturesList}>
             <List component="nav">
                 <ListItem>
-                    <ListItemText primary="Create new Spotify® playlists based on various music parameters." />
+                    <ListItemText primary="Create new Spotify® playlists based on various filters such as danceability, energy and more." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Mirroring of all your own playlists in your Spotify® account and those you are following." />
+                    <ListItemText primary="Mirroring of all your self-created playlists in your Spotify® account and those you are following." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Create copies of Spotify® playlists (your own and those you are following) and of public TeamTune playlits." />
+                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link." />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Create copies of Spotify® and of public TeamTune playlits." />
                 </ListItem>
             </List>
         </div>
@@ -199,11 +191,15 @@ function PremiumFunctionalitiesList() {
         <div className={classes.additionalFeaturesList}>
             <List component="nav">
                 <ListItem>
-                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link." />
+                    <ListItemText primary="All TeamTune Free functionalities." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Possibility to make playlists public." />
+                    <ListItemText primary="Top up your unfinished playlist to your preferred length based on smart recommendations." />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Make TeamTune playlists public - let other´s enjoy your music!." />
                 </ListItem>
                 <Divider />
                 <ListItem>
@@ -262,7 +258,7 @@ function LandingPageComponent(props) {
                         TeamTune Premium
                     </h4>
                     <div className={classes.flexRow}>
-                        <PremiumIcon className={classes.icon}/>
+                        <PremiumIcon className={classes.icon} />
                     </div>
                     <PremiumFunctionalitiesList />
                 </CardContent>
@@ -285,7 +281,7 @@ function LandingPageComponent(props) {
                         TeamTune Free
                     </h4>
                     <div className={classes.flexRow}>
-                        <FreeIcon className={classes.icon}/>
+                        <FreeIcon className={classes.icon} />
                     </div>
                     <FreeFunctionalitiesList />
                 </CardContent>
@@ -312,7 +308,7 @@ function LandingPageComponent(props) {
                             <React.Fragment>
                                 <Grid item xs={4}>
                                     <div className={classes.flexRow}>
-                                        <SpotifyLogoWithText color={"#191414"}/>
+                                        <SpotifyLogoWithText color={"#191414"} />
                                     </div>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -446,22 +442,16 @@ function LandingPageComponent(props) {
         )
     }
 
-
     return (
         <Paper className={classes.backgroundPaper}>
             <Fab className={classes.fab} onClick={executeScrollStart} color="secondary" aria-label="edit">
-                <ArrowUpwardRoundedIcon/>
+                <ArrowUpwardRoundedIcon />
             </Fab>
             <div>
                 <section className={classes.section} ref={startRef}>
                     <Typography className={classes.headLines}>
                         Welcome to TeamTune
                     </Typography>
-                    {/*
-                    <Typography align="center" flexWrap="wrap" className={classes.welcomeText}>
-                        TeamTune is a platform that allows people, companies and music enthusiasts to collaboratively create a Spotify playlist for every occasion by merging the different tastes with an intelligent recommender system.
-                    </Typography>
-                    */}
                     <div className={classes.flexRow}>
                         <img className={classes.landingPageImage} src={LandingPageTopImage} />
                     </div>

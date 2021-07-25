@@ -1,4 +1,4 @@
-import React, { useEffect, useSelector } from 'react';
+import { React } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Button, Typography } from "@material-ui/core";
 import SpotifyLogoWithText from '../../images/SpotifyLogoWithText';
@@ -33,17 +33,6 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(0),
         },
     },
-    changeCredentialsButtons: {
-        display: "flex",
-        justifyContent: "flex-end",
-    },
-    changeCredentialsButton: {
-        marginLeft: theme.spacing(1),
-        '&:hover': {
-            backgroundColor: "#1db954",
-            opacity: "90%",
-        },
-    },
     spotify: {
         backgroundColor: '#1ED760',
         color: '#ffffff',
@@ -61,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * For changing account settings
+ * For displaying account settings
  * @param {props} props
  */
 function MyTeamTuneAccountComponent(props) {

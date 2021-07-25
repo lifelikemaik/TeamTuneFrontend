@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { connect, useSelector } from "react-redux";
+import { React } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, TextField, Typography } from "@material-ui/core";
+import { Paper, Button, Typography } from "@material-ui/core";
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
 /**
  * For deleting the account of a logged in user
  * @param {props} props
@@ -56,8 +53,6 @@ const useStyles = makeStyles((theme) => ({
 function MyTeamTuneDeleteAccountComponent(props) {
 
     const classes = useStyles();
-
-    const user = useSelector((state) => state.user);
 
     const onDeleteAccount = (e) => {
         e.preventDefault();
