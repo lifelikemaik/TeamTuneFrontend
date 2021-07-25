@@ -527,7 +527,8 @@ function PlaylistDetailsComponent(props) {
                 )}
                 {!props.isBrowse &&
                 props.playlist.is_teamtune_playlist &&
-                props.playlist.is_own_playlist ? (
+                props.playlist.is_own_playlist &&
+                props.isLoggedIn ? (
                     <div
                         style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
