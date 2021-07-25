@@ -28,7 +28,7 @@
         "use-query-params": "^1.2.2"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "HOST=192.168.178.52 PORT=80 react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
