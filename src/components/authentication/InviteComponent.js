@@ -23,7 +23,21 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: "10px",
     },
     button: {
-        margin: "15px",
+        height: "50px",
+        fontSize: 17,
+        width: 200,
+        variant: "outlined",
+        borderRadius: 100,
+        color: "#96ffd3",
+        marginLeft: 5,
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor: "black",
+        '&:hover': {
+            backgroundColor: "#62D2A2",
+            color: "#000000",
+            opacity: "90%",
+        },
     }
 
 }));
