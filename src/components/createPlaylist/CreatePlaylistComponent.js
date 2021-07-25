@@ -200,8 +200,6 @@ function CreatePlaylistComponent(props) {
             music_info: {
                 durations_ms: 0,
                 duration_target: getDurationMs(durationHours, durationMinutes),
-                songs: [],
-                number_songs: 0,
                 allow_explicit: explicit,
                 mode: (convertRadioValueToNumberMin(mode) + convertRadioValueToNumberMax(mode)) / 2,
                 min_acousticness: convertRadioValueToNumberMin(acousticness),
