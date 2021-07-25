@@ -3,7 +3,7 @@ import resolve from "resolve";
 
 export default class PlaylistService {
     static baseURL() {
-        return 'http://localhost:4000/playlists';
+        return 'http://teamtune.fun:4000/playlists';
     }
 
     static getPlaylists() {
