@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import {
@@ -7,7 +8,7 @@ import {
     TextField,
     Typography,
     FormControlLabel,
-    Checkbox,
+    Checkbox, Link,
 } from "@material-ui/core";
 
 
@@ -58,6 +59,15 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 50,
         width: "750px",
     },
+    termsAndConditions: {
+        fontSize: 15,
+        marginBottom: 10,
+        marginTop: 10,
+    },
+    link: {
+        textDecoration: "underline",
+        cursor: "pointer",
+    }
 }));
 
 /**
@@ -65,8 +75,6 @@ const useStyles = makeStyles((theme) => ({
  * @param {props} props
  */
 function SignUpComponent(props) {
-
-
     const classes = useStyles();
 
     const [username, setUsername] = React.useState("");
@@ -149,8 +157,14 @@ function SignUpComponent(props) {
         }
     };
 
-
-
+    const termsAndConditions = () => {
+        const link = <Link className={classes.link} onClick={() => props.history.push('/legal')}>terms and conditions</Link>;
+        return (
+            <Typography className={classes.termsAndConditions}>
+                By clicking on Register you agree with TeamTune's {link}.
+            </Typography>
+        )
+    }
 
     return (
         <div className={classes.usersignUpRoot}>
@@ -203,6 +217,7 @@ function SignUpComponent(props) {
                         <Typography color="error">{registerError}</Typography>
                     </div>
                 ) : null}
+                {termsAndConditions()}
                 <div
                     className={classes.signUpRow + " " + classes.signUpButtons}
                 >
@@ -245,4 +260,4 @@ SignUpComponent.propTypes = {
     onBlurPassword: PropTypes.func,
 };
 
-export default SignUpComponent;
+export default withRouter(SignUpComponent);
