@@ -1,19 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
-import {
-    TextField,
-    Grid,
-    Typography,
-    Button
-} from "@material-ui/core";
+import { TextField, Grid, Button } from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { check } from "prettier";
-
 
 const useStyles = makeStyles((theme) => ({
     checkBoxes: {

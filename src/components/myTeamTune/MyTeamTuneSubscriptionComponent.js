@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { withRouter, useHistory } from "react-router-dom";
-import { Paper, Button, TextField, Typography, List, Divider, ListItem, ListItemIcon, ListItemText, Grid } from "@material-ui/core";
+import { withRouter} from "react-router-dom";
+import { Paper, Button, List, Divider, ListItem, ListItemText, Grid } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
     additionalFeaturesList: {
-        backgroundColor: "#cccccc",
+        paddingLeft: 10,
         width: '100%',
-        maxWidth: 600,
+        maxWidth: 470,
         fontFamily: "Libre Franklin, sans-serif",
 
     },
@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
     },
     upgradeSubscriptionPaper: {
-        backgroundColor: "#cccccc",
+        backgroundColor: "rgba(150,255,211, 0.15)",
         width: "1000px",
-        height: "380px",
+        height: "420px",
         fontFamily: "Libre Franklin, sans-serif",
     },
     upgradeSubscriptionPaperHeader: {
@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     upgradeSubscriptionButtons: {
-        height: 400,
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
@@ -83,19 +82,21 @@ const useStyles = makeStyles((theme) => ({
             opacity: "90%",
         },
     },
-    whatYouGet: {
-        marginLeft: 20,
-        paddingTop: 5,
+    flexRow: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
     },
-    whatYouPay: {
-        marginLeft: 650,
-        marginTop: -262,
-
+    flexColumn: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        textAlign: "center",
     }
 }));
 
 /**
- * For presenting and changing the user settings and more
+ * For presenting and changing the subscription model
  * @param {props} props
  */
 function PremiumFunctionalitiesList(props) {
@@ -103,13 +104,17 @@ function PremiumFunctionalitiesList(props) {
     const classes = useStyles();
     return (
         <div className={classes.additionalFeaturesList}>
-            <List component="nav" aria-label="main mailbox folders">
+            <List component="nav">
                 <ListItem>
-                    <ListItemText primary="Invite your friends, colleagues and everyone else to collaborate on your playlist via a shareable link." />
+                    <ListItemText primary="All TeamTune Free functionalities." />
                 </ListItem>
                 <Divider />
                 <ListItem>
-                    <ListItemText primary="Possibility to make playlists public." />
+                    <ListItemText primary="Top up your unfinished playlist to your preferred length based on smart recommendations." />
+                </ListItem>
+                <Divider />
+                <ListItem>
+                    <ListItemText primary="Make TeamTune playlists public - let other´s enjoy your music!" />
                 </ListItem>
                 <Divider />
                 <ListItem>
@@ -147,24 +152,29 @@ function MyTeamTuneSubscriptionComponent(props) {
                     <h2>Do you want to upgrade to Premium (coming soon) and experience the full TeamTune functionalities?</h2>,
                     <div className={classes.upgradeSubscriptionPaper}>
                         <Paper className={classes.upgradeSubscriptionPaper} component="form">
-                            <div className={classes.whatYouGet}>
-                                <h2 >What you get:</h2>
+                            <div className={classes.flexRow}>
+                                <div className={classes.flexColumn}>
+                                    <h2 >What you get:</h2>
+                                </div>
+                                <div className={classes.flexColumn}>
+                                    <h2>What you pay: 7,99€ / month</h2>
+                                </div>
                             </div>
-                            <div>
+                            <div className={classes.Column}>
                                 <PremiumFunctionalitiesList />
                                 <Divider orientation="vertical" />
                             </div>
-                            <div className={classes.whatYouPay}>
-                                <h2>What you pay: 7,99€ / month</h2>
+                            <div className={classes.flexRow}>
+
                             </div>
                             <div className={classes.upgradeSubscriptionButtons}>
-                                    <Button
-                                        className={classes.upgradeSubscriptionButton}
-                                        isPremium={isPremium}
-                                        onClick={() => { props.history.push('/bookpremium'); onUpgradeSubscription() }}
-                                    >
-                                        Upgrade to Premium
-                                    </Button>
+                                <Button
+                                    className={classes.upgradeSubscriptionButton}
+                                    isPremium={isPremium}
+                                    onClick={() => { props.history.push('/bookpremium'); onUpgradeSubscription() }}
+                                >
+                                    Upgrade to Premium
+                                </Button>
                             </div>
                         </Paper>
                     </div>,
