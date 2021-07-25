@@ -6,7 +6,7 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Button,
+    Button, LinearProgress,
     List,
     ListItem,
     Paper,
@@ -577,6 +577,7 @@ function PlaylistDetailsComponent(props) {
                     <div></div>
                 ) : (
                     <div>
+                        {(props.isLoading) ? (<LinearProgress color="secondary" />) : (<div/>)}
                         <hr />
                         <Accordion
                             expanded={expanded === 'panel1'}
@@ -703,12 +704,14 @@ function PlaylistDetailsComponent(props) {
 // attributes of props and their type
 PlaylistDetailsComponent.propTypes = {
     playlist: PropTypes.object,
+    isLoading: PropTypes.bool,
     searchForSong: PropTypes.func,
     addSongToPlaylist: PropTypes.func,
     isLoggedIn: PropTypes.bool,
     isAdmin: PropTypes.bool,
     removeSong: PropTypes.func,
     startPlayback: PropTypes.func,
+    getFullRecommendation: PropTypes.func,
     getPlaylistLength: PropTypes.func,
     user: PropTypes.object,
     isBrowse: PropTypes.bool,

@@ -23,9 +23,13 @@ function PlaylistDetailsView(props) {
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
     const user = useSelector((state) => state.user);
     const snapshot_id = useSelector((state) => state.entities.snapshot_id);
+    //Recognize errors, stop loading
+    const errorMessage = useSelector((state) => state.entities.error);
+
 
     // state variable of this functional component
     const [newPlaylist, setNewPlaylist] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     useEffect(() => {
         // get id of playlist from URL
@@ -35,8 +39,15 @@ function PlaylistDetailsView(props) {
     }, [match.params]);
 
     useEffect(() => {
+        if(errorMessage) {
+            setLoading(false);
+        }
+    }, [errorMessage]);
+
+    useEffect(() => {
         if (snapshot_id) {
             const playlistId = selectedPlaylist.playlist._id;
+            setLoading(false);
             if (playlistId) props.history.push("/playlist/" + playlistId);
         }
     }, [snapshot_id]);
@@ -77,6 +88,7 @@ function PlaylistDetailsView(props) {
     const fullRecommendation = (playlistId) => {
         if (user.user) {
             getFullRecommendations(playlistId);
+            setLoading(true);
         }
     }
 
@@ -93,6 +105,7 @@ function PlaylistDetailsView(props) {
             playlist={selectedPlaylist.playlist}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === 'admin' : false}
+            isLoading={loading}
             searchForSong={searchForSongHelper}
             addSongToPlaylist={addSongToPlaylistHelper}
             removeSong={removeSong}
