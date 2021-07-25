@@ -262,18 +262,17 @@ export function addPlaylist(playlist) {
 };
 
 export function updatePlaylist(playlistId, updatedPlaylist) {
-    function onSuccess() {
-        return { type: 'UPDATEPLAYLIST_SUCCESS' };
+    function onSuccess(updatedPlaylist) {
+        return { type: 'UPDATEPLAYLIST_SUCCESS', updatedPlaylist: updatedPlaylist };
     }
     function onFailure(error) {
-        console.log('update playlist failure', error);
         return { type: 'ERROR', error: error };
     }
 
     return async (dispatch) => {
         try {
             const result = await PlaylistService.updatePlaylist(playlistId, updatedPlaylist);
-            dispatch(onSuccess());
+            dispatch(onSuccess(result));
         } catch (e) {
             dispatch(onFailure(e));
         }
