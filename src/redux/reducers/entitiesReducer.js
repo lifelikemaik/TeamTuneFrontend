@@ -24,7 +24,15 @@ export default function entities(state = {}, action) {
                 playlists: state.playlists.filter(playlist => playlist._id !== action.removedPlaylistId)
             }
         case 'UPDATEPLAYLIST_SUCCESS':
-            return { ...state };
+            const index = state.playlists.findIndex((playlist) => playlist._id === action.updatedPlaylist._id);
+            if (index > -1) {
+                state.playlists[index] = action.updatedPlaylist;
+            }
+            const newPlaylists = [...state.playlists];
+            return {
+                ...state,
+                playlists: newPlaylists
+            };
         case 'ADDSONG_SUCCESS':
             return { ...state };
         case 'REMOVE_SONG_SUCCESS':
