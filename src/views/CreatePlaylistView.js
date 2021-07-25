@@ -11,13 +11,22 @@ import CreatePlaylistComponent from "../components/createPlaylist/CreatePlaylist
 function CreatePlaylistView(props) {
     // from redux store
     const user = useSelector((state) => state.user);
+    const addedPlaylist = useSelector((state) => {
+        // return the currently logged in user from redux store
+        return state.entities.addedPlaylist;
+    });
+
+    useEffect(() => {
+        if(addedPlaylist) {
+            props.history.push(addedPlaylist._id);
+        }
+    }, [addedPlaylist]);
 
     // for creating a new playlist
     const onCreate = (playlist) => {
         // trigger redux action add playlist
         props.addPlaylist(playlist);
         // navigate back to the playlist list
-        props.history.push("/playlists");
     };
 
     return (
