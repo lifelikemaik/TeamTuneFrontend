@@ -496,16 +496,18 @@ function PlaylistDetailsComponent(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     {spotifyLogoText}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button
-                        onClick={() => props.history.push('/playlists')}
-                        variant="contained"
-                        color="primary"
-                        className={classes.sideButton}
-                    >
-                        Back to Overview
-                    </Button>
-                </div>
+                {props.isLoggedIn ? (
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Button
+                            onClick={() => props.history.push('/playlists')}
+                            variant="contained"
+                            color="primary"
+                            className={classes.sideButton}
+                        >
+                            Back to Overview
+                        </Button>
+                    </div>
+                ) : (<div/>)}
                 {props.isLoggedIn ? (
                     <div
                         style={{ display: 'flex', justifyContent: 'flex-end' }}
@@ -536,6 +538,7 @@ function PlaylistDetailsComponent(props) {
                             variant="contained"
                             color="primary"
                             className={classes.sideButton}
+                            disabled={allSongs.length == 0}
                             onClick={() =>
                                 props.getFullRecommendation(props.playlist._id)
                             }
@@ -548,7 +551,8 @@ function PlaylistDetailsComponent(props) {
                 )}
                 {!props.isBrowse &&
                 props.playlist.is_teamtune_playlist &&
-                props.playlist.is_own_playlist ? (
+                props.playlist.is_own_playlist &&
+                props.isLoggedIn ? (
                     <div
                         style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
@@ -556,6 +560,7 @@ function PlaylistDetailsComponent(props) {
                             onClick={shareLinkOnClick}
                             variant="contained"
                             color="primary"
+                            disabled={!props.isLoggedIn}
                             className={classes.sideButton}
                         >
                             copy invite link
