@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 
-import {copyPlaylist, getUserPlaylists, playPlaylist, removePlaylist, updatePlaylist} from "../redux/actions";
+import {copyPlaylist, getUserPlaylists, playPlaylist, removePlaylist, updatePlaylist, getFullRecommendations} from "../redux/actions";
 import PlaylistListComponent from "../components/playlistLists/PlaylistListComponent";
 import Loading from "../components/layout/Loading";
 
@@ -26,6 +26,9 @@ function PlaylistListView(props) {
         props.dispatch(getUserPlaylists());
     };
 
+    const onRecommendation = async (playlistId) => {
+        props.dispatch(getFullRecommendations(playlistId));
+    };
     const onClickDisplayPlaylist = (id) => {
         // navigate to details of the selected playlist
         props.history.push("/playlist/" + id);
@@ -74,6 +77,7 @@ function PlaylistListView(props) {
             onClickDisplayPlaylist={onClickDisplayPlaylist}
             onAddPlaylist={onAddPlaylist}
             onMakePlaylistPublic={onMakePlaylistPublic}
+            onFullRecommendation={onRecommendation}
             onCopyPlaylist={onCopyPlaylist}
             onClickDeletePlaylist={onClickDeletePlaylist}
             onClickPlayPlaylist={onClickPlayPlaylist}

@@ -10,19 +10,26 @@ import {
     searchForSong,
     getPlaylistLength,
     searchForSongInvite,
-    removeSongFromPlaylist, playPlaylist,
+    removeSongFromPlaylist,
+    playPlaylist,
+    getFullRecommendations,
 } from '../redux/actions';
 
 function PlaylistDetailsView(props) {
     // props can be deconstructed into single variables, so you do not need to write "props." all the time
-    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist, playPlaylist} = props;
+    let { match, getPlaylist, searchForSong, searchForSongInvite, addSongToPlaylist, addSongToPlaylistInvite, removeSongFromPlaylist, playPlaylist, getFullRecommendations} = props;
 
     // from redux store
     const selectedPlaylist = useSelector((state) => state.selectedPlaylist);
     const user = useSelector((state) => state.user);
+    const snapshot_id = useSelector((state) => state.entities.snapshot_id);
+    //Recognize errors, stop loading
+    const errorMessage = useSelector((state) => state.entities.error);
+
 
     // state variable of this functional component
     const [newPlaylist, setNewPlaylist] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     useEffect(() => {
         // get id of playlist from URL
@@ -30,6 +37,20 @@ function PlaylistDetailsView(props) {
 
         getPlaylist(playlistId, !!user.user);
     }, [match.params]);
+
+    useEffect(() => {
+        if(errorMessage) {
+            setLoading(false);
+        }
+    }, [errorMessage]);
+
+    useEffect(() => {
+        if (snapshot_id) {
+            const playlistId = selectedPlaylist.playlist._id;
+            setLoading(false);
+            if (playlistId) props.history.push("/playlist/" + playlistId);
+        }
+    }, [snapshot_id]);
 
     const addSongToPlaylistHelper = (playlistId, songId) => {
         if(!(user.user)){
@@ -64,6 +85,14 @@ function PlaylistDetailsView(props) {
         return false;
     }
 
+    const fullRecommendation = (playlistId) => {
+        if (user.user) {
+            getFullRecommendations(playlistId);
+            setLoading(true);
+        }
+    }
+
+
     return !selectedPlaylist ||
         (!selectedPlaylist?.playlist &&
             !selectedPlaylist?.error &&
@@ -76,10 +105,12 @@ function PlaylistDetailsView(props) {
             playlist={selectedPlaylist.playlist}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === 'admin' : false}
+            isLoading={loading}
             searchForSong={searchForSongHelper}
             addSongToPlaylist={addSongToPlaylistHelper}
             removeSong={removeSong}
             startPlayback={startPlayback}
+            getFullRecommendation={fullRecommendation}
             getPlaylistLength={props.getPlaylistLength}
             user={user.user}
             isBrowse={checkBrowse()}
@@ -101,5 +132,6 @@ export default connect(null, {
     addSongToPlaylistInvite,
     getPlaylistLength,
     removeSongFromPlaylist,
-    playPlaylist
+    playPlaylist,
+    getFullRecommendations,
 })(PlaylistDetailsView);

@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 function PrivacyPolicy(props) {
     return (
         <div>
+                <p>The German version is legally binding.</p>
             <h1>Datenschutzerklärung</h1>
             <p>Verantwortlicher im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung (DSGVO), ist:</p>
             <p>Maik Luu Bach
