@@ -7,7 +7,6 @@ function PremiumIcon(props) {
             viewBox="0 0 95.05 105.13"
             {...props}
         >
-            <title>{"Dance2Asset 1"}</title>
             <g data-name="Layer 2">
                 <g data-name="Layer 1">
                     <circle cx={70.26} cy={39.93} r={8.5} />

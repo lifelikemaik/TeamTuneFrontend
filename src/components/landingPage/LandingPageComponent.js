@@ -16,7 +16,6 @@ import {
     Paper,
     Grid, Fab
 } from "@material-ui/core";
-import TeamTuneOverviewImage from "../../images/TeamTuneOverviewImage";
 import LandingPageTopImage from "../../images/LandingPageTopImage.png";
 import { motion } from "framer-motion";
 
@@ -29,6 +28,7 @@ import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
 import FreeIcon from "../../images/FreeIcon";
 import PremiumIcon from "../../images/PremiumIcon";
+import TeamTuneDescription from "../../images/TeamTuneDescription";
 
 const useStyles = makeStyles((theme) => ({
     cardRoot: {
@@ -97,9 +97,6 @@ const useStyles = makeStyles((theme) => ({
         height: (window.screen.height),
         fontSize: 20,
     },
-    teamTuneOverviewImage: {
-        marginTop: -20,
-    },
     tryItButtons: {
         width: "100%",
         justifyContent: "center",
@@ -122,6 +119,9 @@ const useStyles = makeStyles((theme) => ({
             opacity: "90%",
         },
     },
+    startButton: {
+        width: 300,
+    },
     cardButtonsFree: {
         justifyContent: "center",
         alignItems: "center",
@@ -129,22 +129,6 @@ const useStyles = makeStyles((theme) => ({
     cardButtonsPremium: {
         justifyContent: "center",
         alignItems: "center",
-    },
-    cardButton: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        borderRadius: 100,
-        display: 'flex',
-        fontSize: 17,
-        paddingLeft: 20,
-        paddingRight: 20,
-        color: "#96ffd3",
-        backgroundColor: "black",
-        '&:hover': {
-            backgroundColor: "#62D2A2",
-            color: "#000000",
-            opacity: "90%",
-        },
     },
     backgroundPaper: {
         backgroundImage: "linear-gradient(to right, rgba(255,255,255, 0.75), rgba(255,255,255, 1), rgba(255,255,255, 1), rgba(255,255,255, 0.75))",
@@ -284,7 +268,7 @@ function LandingPageComponent(props) {
                 </CardContent>
                 <CardActions className={classes.cardButtonsPremium} >
                     <Button
-                        className={classes.cardButton}
+                        className={classes.standardButton}
                         onClick={() => props.history.push('/bookpremium')}>
                         Go Premium
                     </Button>
@@ -307,7 +291,7 @@ function LandingPageComponent(props) {
                 </CardContent>
                 <CardActions className={classes.cardButtonsFree}>
                     <Button
-                        className={classes.cardButton}
+                        className={classes.standardButton}
                         onClick={() => props.history.push('/register')}>
                         Go Free
                     </Button>
@@ -429,7 +413,7 @@ function LandingPageComponent(props) {
                     How does it work?
                 </h1>
                 <div className={classes.flexRow}>
-                    <TeamTuneOverviewImage className={classes.teamTunseOverviewImage} />
+                    <TeamTuneDescription className={classes.spacing} />
                 </div>
             </div>
         )
@@ -441,22 +425,19 @@ function LandingPageComponent(props) {
                 <h1 className={classes.headLines}>
                     Interested?
                 </h1>
-                <h1 className={classes.headLines}>
-                    Waste no time and get started!
-                </h1>
                 <div className={classes.tryItButtons}>
                     {isLoggedIn
                         ? <Button
-                            className={classes.standardButton}
+                            className={classes.standardButton + " " + classes.startButton}
 
                             onClick={() => props.history.push('/playlists')}>
-                            LET´S GET STARTED
+                            LET'S GET STARTED
                         </Button>
                         : <Button
-                            className={classes.standardButton}
+                            className={classes.standardButton + " " + classes.startButton}
 
                             onClick={() => props.history.push('/register')}>
-                            LET´S GET STARTED
+                            LET'S GET STARTED
                         </Button>
                     }
 
