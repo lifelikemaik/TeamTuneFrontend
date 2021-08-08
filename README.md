@@ -1,6 +1,6 @@
 # seba-master-teamtune-frontend application
 
-TeamTune database app example application based on React. Backend can be found [here](https://gitlab.lrz.de/seba-master-2021/team-13/backend)
+TeamTune database app example application based on React. Backend can be found [here](https://github.com/lifelikemaik/TeamTuneFrontend)
 
 ## Prerequisites
 
@@ -12,24 +12,24 @@ Both for the frontend and the backend:
 
 ## Getting Started
 
-To get you started you can simply clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/backend) repository main branch and install all its dependencies:
+To get you started you can simply clone the [seba-master-teamtune-frontend](https://github.com/lifelikemaik/TeamTuneFrontend) repository main branch and install all its dependencies:
 
 ### Prerequisites
 
-You need git to clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/frontend) repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
+You need git to clone the [seba-master-teamtune-frontend](https://github.com/lifelikemaik/TeamTuneFrontend) repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
 
-We also use a number of node.js tools to initialize and test [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/backend) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
+We also use a number of node.js tools to initialize and test [seba-master-teamtune-frontend](https://github.com/lifelikemaik/TeamTuneFrontend) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 ### Clone TeamTune Project
 
-Clone the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/frontend) repository using [git](http://git-scm.com/):
+Clone the [seba-master-teamtune-frontend](https://github.com/lifelikemaik/TeamTuneFrontend) repository using [git](http://git-scm.com/):
 
 ```
 git clone https://gitlab.lrz.de/seba-master-2021/team-13/frontend
 cd frontend
 ```
 
-If you just want to start a new project without the [seba-master-teamtune-frontend](https://gitlab.lrz.de/seba-master-2021/team-13/frontend) commit history then you can do:
+If you just want to start a new project without the [seba-master-teamtune-frontend](https://github.com/lifelikemaik/TeamTuneFrontend) commit history then you can do:
 
 ```bash
 git clone --depth=1 https://gitlab.lrz.de/seba-master-2021/team-13/frontend <your-project-name>
