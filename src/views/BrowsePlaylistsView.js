@@ -64,6 +64,7 @@ function BrowsePlaylistsView(props) {
           onClickDisplayPlaylist={onClickDisplayPlaylist}
           isLoggedIn={!!user.user}
           isBrowse={true}
+          user={user.user}
           onCopyPlaylist={onCopyPlaylist}
           onClickFollowPlaylist={onClickFollowPlaylist}
           onClickPlayPlaylist={onClickPlayPlaylist}

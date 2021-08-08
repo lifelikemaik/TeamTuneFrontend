@@ -360,6 +360,7 @@ function PlaylistListComponent(props) {
                                             isAdmin={props.isAdmin}
                                             isBrowse={props.isBrowse}
                                             isLoggedIn={props.isLoggedIn}
+                                            user={props.user}
                                         />
                                     );
                                 })}

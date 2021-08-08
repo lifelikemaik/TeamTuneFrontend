@@ -120,7 +120,7 @@ function PlaylistListRowButtons(props) {
         {
             label: "Follow Playlist",
             icon: FavoriteBorderOutlinedIcon,
-            display: !(props.playlist.is_own_playlist) && props.isBrowse,
+            display: props.isBrowse && !(props.playlist.owner == props.user?._id),
             message: "Playlist was followed on Spotify!",
             on_click: followOnClick,
         },

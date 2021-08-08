@@ -58,6 +58,7 @@ function PlaylistListRow(props) {
                     onCopyPlaylist={props.onCopyPlaylist}
                     onClickPlayPlaylist={props.onClickPlayPlaylist}
                     isLoggedIn={props.isLoggedIn}
+                    user={props.user}
                 />
             </TableCell>
         </TableRow>
