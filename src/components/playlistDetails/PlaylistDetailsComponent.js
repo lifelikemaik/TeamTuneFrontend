@@ -227,7 +227,7 @@ function PlaylistDetailsComponent(props) {
 
     const shareLinkOnClick = () => {
         navigator.clipboard.writeText(
-            'http://localhost:3000/invite/' + props.playlist._id
+            'https://teamtune.fun/invite/' + props.playlist._id
         );
     };
 

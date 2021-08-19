@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 export default class CallbackService {
     static baseURL() {
-        return "http://localhost:4000/callback";
+        return "https://backend.teamtune.fun/callback";
     }
 
     static getCallback() {

@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 export default class UserService {
     static baseURL() {
-        return "http://localhost:4000/auth";
+        return "https://backend.teamtune.fun/auth";
     }
 
     static register(user, pass, isAdmin, code) {
